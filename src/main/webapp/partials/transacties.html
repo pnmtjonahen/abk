@@ -1,0 +1,66 @@
+<!--
+Copyright (C) 2013 Philippe Tjon-A-Hen philippe@tjonahen.nl
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<div class="page-header">
+    <h1>Transacties</h1>
+</div>
+<ul class="nav nav-tabs">
+    <li ng-class="navClass('transacties')"><a href="#/transacties">Transacties</a></li>
+    <li ng-class="navClass('upload')"><a href="#/upload">Upload</a></li>
+</ul>
+<form>
+Search: <input ng-model="query" ng-blur="filter()"/>
+</form>
+<table class="table table-hover">
+    <tr>
+        <th style="width: 5%">#</th>
+        <th style="width: 5%">datum</th>
+        <th style="width: 15%">rekening</th>
+        <th style="width: 2%">code</th>
+        <th style="width: 2%">d/c</th>
+        <th style="width: 5%">bedrag</th>
+        <th style="width: 10%">mutatie soort</th>
+        <th style="width: 15%">tegen rekening</th>
+        <th style="width: 15%">naam</th>
+        <th style="width: 30%">omschrijving</th>
+    </tr>
+    <tr ng-repeat="transactie in transacties">
+        <td>{{transactie.id}}</td>
+        <td>{{transactie.datum | date:'shortDate'}}</td>
+        <td>{{transactie.rekening}}</td>
+        <td>{{transactie.code}}</td>
+        <td>{{transactie.bijAf}}</td>
+        <td ng-class="dcClass(transactie.bijAf)" style="text-align: right">{{transactie.bedrag | number:2}}</td>
+        <td>{{transactie.mutatiesoort}}</td>
+        <td>{{transactie.tegenrekeningRekening}}</td>
+        <td>{{transactie.tegenrekeningNaam}}</td>
+        <td>{{transactie.mededeling}}</td>
+    </tr>
+</table>
+<ul class="pager">
+    <li class="previous">
+        <a hrwf="#" ng-click='prevPage()'>&larr; Later</a>
+    </li>
+    <li class="next">
+        <a ng-click='nextPage()'>Eerder &rarr;</a>
+    </li>
+</ul>
+<div ng-if="showDebug">
+<hr/>
+Debug View:
+<pre>transacties={{page | json}}</pre>
+</div>

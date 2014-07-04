@@ -1,0 +1,51 @@
+<!--
+Copyright (C) 2013 Philippe Tjon-A-Hen philippe@tjonahen.nl
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<div class="page-header">
+    <h1>Upload Transacties</h1>
+</div>
+<ul class="nav nav-tabs">
+    <li ng-class="navClass('transacties')"><a href="#/transacties">Transacties</a></li>
+    <li ng-class="navClass('upload')"><a href="#/upload">Upload</a></li>
+</ul>
+<div ng-controller="UploadCtrl">
+
+    <div class="control-group">
+        <div class="controls">
+            <span class="btn btn-success fileinput-button">
+                <i class="icon-plus icon-white"></i>
+                <input type="file" name="file" data-url="rest/upload" 
+                       multiple upload><span>Add files...</span>
+            </span>
+        </div>
+    </div>
+    <div>
+        <span ng-show="!files.length">No files selected</span>
+        <ul>
+            <li ng-repeat="file in files">{{file}}</li>
+        </ul>
+    </div>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary pull-left" ng-click="upload()">Upload</button>
+    </div>
+    <div class="progress" ng-show="percentage">
+        <div class="bar" style="width: {{percentage}}%;"></div>
+    </div>
+
+
+
+</div>

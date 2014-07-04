@@ -1,0 +1,46 @@
+<!--
+Copyright (C) 2013 Philippe Tjon-A-Hen philippe@tjonahen.nl
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<div class="page-header">
+        <h1>Rekeningen</h1>
+    </div>
+<form name="rekeningenForm">
+    <table class="table table-hover">
+        <tr><th>nummer</th><th>naam</th><th>startbedrag</th><th></th></tr>
+        <tr ng-repeat="rekening in rekeningen">
+            <td>
+                <input name="nummer" type="text" ng-model="rekening.rekening" required  />
+            </td>
+            <td>
+                <input name="naam" type="text" ng-model="rekening.naam" required />
+            </td>
+            <td>
+                <input name="startbedrag" type="number" ng-model="rekening.beginSaldo" required placeholder="initieel bedrag"/>
+            </td>
+            <td><i class="icon-remove" ng-click="remove(rekening)"></i></td>
+        </tr>
+    </table>
+    <button class="btn btn-primary" ng-disabled="rekeningenForm.$invalid" ng-click="add()">Nieuwe rekening</button>
+    <button class="btn" ng-disabled="rekeningenForm.$invalid" ng-click="save()">Opslaan</button>
+</form> 
+<div ng-if="showDebug">
+        <br/>{{saveMessage}}
+        <hr/>
+        Debug View:
+        <pre>rekeningen={{collection | json}}</pre>
+        <pre>rekeningenForm.error = {{rekeningenForm.$error}}</pre>
+        <pre>rekeningenForm.valid = {{rekeningenForm.$valid}}</pre>
+</div>

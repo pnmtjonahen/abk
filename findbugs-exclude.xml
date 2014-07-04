@@ -1,0 +1,14 @@
+<FindBugsFilter>
+     <Match>
+          <Class name="nl.tjonahen.abk.domein.entity.Kostenplaats_" />
+     </Match>
+     <Match>
+          <Class name="nl.tjonahen.abk.domein.entity.Rekening_" />
+     </Match>
+     <Match>
+          <Class name="nl.tjonahen.abk.domein.entity.TegenRekening_" />
+     </Match>
+     <Match>
+          <Class name="nl.tjonahen.abk.domein.entity.Transactie_" />
+     </Match>
+</FindBugsFilter>

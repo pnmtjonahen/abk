@@ -1,0 +1,60 @@
+<!--
+Copyright (C) 2013 Philippe Tjon-A-Hen philippe@tjonahen.nl
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!-- see 
+    http://www.bootply.com/63956# 
+    http://jsfiddle.net/huyz/x8Y2F/3/
+-->
+<div class="page-header">
+    <h1>Kostenplaatsen</h1>
+</div>
+<tree-grid tree-data = "tree_data" col-Defs = "col_defs" expand-level = "2" on-select = "my_tree_handler(branch)"> </tree-grid> 
+<button class="btn btn-primary" type="button" ng-click="addKostenplaats()">Toevoegen Hoofd Kostenplaats</button>
+<button class="btn" type="button" ng-click="save()">Opslaan</button>
+<script type="text/ng-template"  id="tree_kostenplaatsen.html">
+
+    <div class="row-fluid" ng-if="hasNoSubkostenplaatsen(data.subkostenplaatsen)" >
+    <div class="span1" ng-click="selectKostenplaats(data)">{{data.naam}}</div>
+    <div class="span3" ng-click="selectKostenplaats(data)">{{data.filter}}</div>
+    <div class="span1 offset6"><i class="icon-plus" ng-click="addSubKostenplaats(data)"></i><i class="icon-minus" ng-click="removeKostenplaats(data)"></i></div>
+    </div>
+    <div class="row-fluid" ng-if="hasSubkostenplaatsen(data.subkostenplaatsen)" >
+    <div class="span1" ng-click="selectKostenplaats(data)"><label class="tree-toggle nav-header">{{data.naam}}</label></div>
+    <div class="span3" ng-click="selectKostenplaats(data)"><label class="tree-toggle nav-header">{{data.filter}}</label></div>
+    <div class="span1 offset6"><i class="icon-plus" ng-click="addSubKostenplaats(data)"></i><i class="icon-minus" ng-click="removeKostenplaats(data)"></i></div>
+    </div>
+    <ul class="nav nav-list tree" ui:sortable ng:model="data.subkostenplaatsen" >
+    <li ng-repeat="data in data.subkostenplaatsen" ng-include="'tree_kostenplaatsen.html'"></li>
+    </ul>
+
+</script>
+<ul class="nav nav-list" ui:sortable ng-model="kostenplaatsen">
+    <li ng-repeat="data in kostenplaatsen" ng-include="'tree_kostenplaatsen.html'"></li>
+</ul>
+
+<form ng-show="selected()" name="kostenplaatsForm">
+    <input name="naam" type="text" ng-model="kostenplaats.naam" required autofocus="true" placeholder="geef een naam in..."/>
+    <input name="filter" type="text" ng-model="kostenplaats.filter" required ngc-blur="leaveEdit()" placeholder="geef een filter in..."/>
+</form>
+<div ng-if="showDebug">
+    <br/>{{saveMessage}}
+    <hr/>
+    Debug View:
+    <pre>collection={{collection | json}}</pre>
+    <pre>kostenplaats={{kostenplaats | json}}</pre>
+    <pre>kostenplaatsForm.error = {{kostenplaatsForm.$error}}</pre>
+    <pre>kostenplaatsForm.valid = {{kostenplaatsForm.$valid}}</pre>
+</div>
