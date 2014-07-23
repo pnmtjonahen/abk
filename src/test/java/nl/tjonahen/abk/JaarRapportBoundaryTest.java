@@ -40,12 +40,12 @@ import org.mockito.MockitoAnnotations;
  *
  * @author Philippe Tjon-A-Hen philippe@tjonahen.nl
  */
-public class YearReportBoundaryTest {
+public class JaarRapportBoundaryTest {
     @Mock
     private ABKBusiness aBKBusiness;
 
     @InjectMocks
-    private YearReportBoundary systemUnderTest;
+    private JaarRapportBoundary systemUnderTest;
 
     /**
      * Init mocks

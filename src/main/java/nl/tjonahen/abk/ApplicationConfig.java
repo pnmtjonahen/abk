@@ -52,12 +52,12 @@ public class ApplicationConfig extends Application {
      * given list with all resources defined in the project.
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(nl.tjonahen.abk.JaarRapportBoundary.class);
         resources.add(nl.tjonahen.abk.KostenplaatsenBoundary.class);
         resources.add(nl.tjonahen.abk.RekeningenBoundary.class);
         resources.add(nl.tjonahen.abk.RekeningenPerMaandBoundary.class);
         resources.add(nl.tjonahen.abk.TransactiesBoundary.class);
         resources.add(nl.tjonahen.abk.UploadBoundry.class);
-        resources.add(nl.tjonahen.abk.YearReportBoundary.class);
     }
     
 }

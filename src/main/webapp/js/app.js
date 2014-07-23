@@ -23,7 +23,7 @@ myApp.config(['$routeProvider', function($routeProvider) {
                 when('/kostenplaatsen', {templateUrl: 'partials/kostenplaatsen.html', controller: KostenplaatsenCtrl}).
                 when('/transacties', {templateUrl: 'partials/transacties.html', controller: TransactiesCtrl}).
                 when('/upload', {templateUrl: 'partials/upload.html', controller: UploadCtrl}).
-                when('/yearreport', {templateUrl: 'partials/yearreport.html', controller: YearReportCtrl}).
+                when('/jaarrapport', {templateUrl: 'partials/jaarrapport.html', controller: JaarRapportCtrl}).
                 when('/rekeningenpermaand', {templateUrl: 'partials/rekeningenpermaand.html', controller: RekeningenpermaandCtrl}).
                 otherwise({redirectTo: '/home'});
     }]);

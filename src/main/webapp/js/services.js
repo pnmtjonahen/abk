@@ -51,8 +51,8 @@ abkServiceModule.factory('kostenplaatsenService', function($resource) {
 });
 
 
-abkServiceModule.factory('yearreportService', function($resource) {
-    return $resource('/abk/rest/yearreport/', {}, {
+abkServiceModule.factory('jaarrapportService', function($resource) {
+    return $resource('/abk/rest/jaarrapport/', {}, {
         query:  {method: 'GET', params: {}, isArray: true}
     });
 });

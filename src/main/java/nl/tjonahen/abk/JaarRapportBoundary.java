@@ -36,9 +36,9 @@ import nl.tjonahen.abk.domein.entity.Transactie;
  *
  * @author Philippe Tjon-A-Hen philippe@tjonahen.nl
  */
-@Path("yearreport")
+@Path("/jaarrapport")
 @Stateless
-public class YearReportBoundary {
+public class JaarRapportBoundary {
     
     @EJB
     private ABKBusiness aBKBusiness;
@@ -73,7 +73,7 @@ public class YearReportBoundary {
     private void addChildren(YearReport yearReport, final Periode period, Kostenplaats kp, 
                 List<Transactie> transacties) 
     {
-        for (Kostenplaats sKp : kp.getSubkostenplaatsen()) {
+        for (final Kostenplaats sKp : kp.getSubkostenplaatsen()) {
             YearReport subYearReport = new YearReport();
             subYearReport.setName(sKp.getNaam());
             Maand start = period.getStart();

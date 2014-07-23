@@ -41,7 +41,7 @@ import nl.tjonahen.abk.domein.value.Periode;
  *
  * @author Philippe Tjon-A-Hen philippe@tjonahen.nl
  */
-@Path("rekeningenpermaand")
+@Path("/rekeningenpermaand")
 @Stateless
 public class RekeningenPerMaandBoundary {
 

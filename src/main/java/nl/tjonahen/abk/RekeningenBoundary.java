@@ -32,7 +32,7 @@ import nl.tjonahen.abk.domein.Rekeningen;
  * @author Philippe Tjon-A-Hen philippe@tjonahen.nl
  */
 @ApplicationScoped
-@Path("rekeningen")
+@Path("/rekeningen")
 public class RekeningenBoundary {
 
     @EJB

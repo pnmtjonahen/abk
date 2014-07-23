@@ -30,8 +30,8 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "yearreport", propOrder = {
-    "name", "children", "kosten1", "kosten2", "kosten3", "kosten4", "kosten5", "kosten6", "kosten7", "kosten8", 
-        "kosten9", "kosten10", "kosten11", "kosten12"
+    "name", "children", "currentMin11", "currentMin10", "currentMin9", "currentMin8", "currentMin7", "currentMin6", "currentMin5", "currentMin4", 
+        "currentMin3", "currentMin2", "currentMin1", "current"
 })
 @XmlRootElement(name = "financieelrapportpermaand")
 public class YearReport {

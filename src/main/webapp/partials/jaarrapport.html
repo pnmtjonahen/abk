@@ -19,11 +19,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <h1>Rapporten</h1>
 </div>
 <ul class="nav nav-tabs">
-    <li ng-class="navClass('yearreport')"><a href="#/yearreport">Kostenplaatsen per maand</a></li>
+    <li ng-class="navClass('jaarrapport')"><a href="#/jaarrapport">Kostenplaatsen per maand</a></li>
     <li ng-class="navClass('rekeningenpermaand')"><a href="#/rekeningenpermaand">Rekeningen per maand</a></li>
 </ul>
-<tree-grid tree-data = "tree_data">      
-</tree-grid>
+<tree-grid tree-data = "tree_data" col-Defs = "col_defs" ></tree-grid>
 <div ng-if="showDebug">
     <hr/>
     Debug View:

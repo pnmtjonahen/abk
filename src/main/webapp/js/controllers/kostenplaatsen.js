@@ -34,12 +34,12 @@ function KostenplaatsenCtrl($scope, kostenplaatsenService) {
     });
     $scope.my_tree_handler = function(branch){
         $scope.kostenplaats = branch;
-    }
+    };
     $scope.save = function() {
         kostenplaatsenService.update({kostenplaats: $scope.kostenplaatsen}, function() {
-            $scope.saveMessage = 'Saved.....';
+            $scope.saveMessage = 'Saved...';
         }, function() {
-            $scope.saveMessage = 'error.....';
+            $scope.saveMessage = 'Error...';
         });
     };
 
@@ -71,7 +71,7 @@ function KostenplaatsenCtrl($scope, kostenplaatsenService) {
                 $scope.kostenplaatsen = $scope.collection.kostenplaats;
             });
         }, function() {
-            $scope.saveMessage = "an error Occurred.......";
+            $scope.saveMessage = "An Error Occurred...";
         });
     };
 

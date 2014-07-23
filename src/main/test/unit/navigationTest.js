@@ -1,5 +1,5 @@
 /* 
- * Copyright (C) 2013 Philippe Tjon-A-Hen philippe@tjonahen.nl
+ * Copyright (C) 2014 Philippe Tjon-A-Hen philippe@tjonahen.nl
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,18 +14,28 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-function YearReportCtrl($scope, $location, yearreportService) {
-    $scope.tree_data = [{name:"", current:"", currentMin1:"", currentMin2:"", currentMin3:"", currentMin4:"", currentMin5:"", currentMin6:"", currentMin7:"", currentMin8:"", currentMin9:"", currentMin10:"", currentMin11:""}]
+'use strict';
+
+describe('navigation test', function() {
+    var scopeMock = {};
+    var createController;
     
-    yearreportService.query(function(data) {
-        $scope.tree_data = data;
+    beforeEach(module('abkServices'));
+    beforeEach(module('abkApp'));
+
+    beforeEach(inject(function($controller) {
+        scopeMock = {};
+
+        createController = function() {
+            $controller('navCtrl', {$scope: scopeMock});
+        };
+
+    }));
+    
+    it('should set active on current page', function() {
+        createController();
+        
+        expect(scopeMock.navClass([])).toBe('');
+        expect(scopeMock.navClass(['home',''])).toBe('active');
     });
-
-    $scope.navClass = function(page) {
-        var currentRoute = $location.path().substring(1) || 'yearreport';
-        return page === currentRoute ? 'active' : '';
-    };
-
-
-}
-
+});
