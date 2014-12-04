@@ -1,0 +1,67 @@
+<div ng-if='storing'>
+    <div class="container" id="parent">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="row ">
+                    <div class="col-md-4 col-md-offset-4 alert alert-warning text-center">Saving...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div ng-if='!storing'>
+    <table class="table table-hover table-bordered table-condensed table-striped table-responsive">
+        <thead>
+            <tr>
+                <th nowrap></th>
+                <th>Name</th>
+                <th>Filter</th>
+                <th nowrap></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="c in data" ng-show='showRow(c)'>
+                <td nowrap>
+                    <span style="cursor: pointer;" class="glyphicon glyphicon-plus"  ng-click='selectRow(c)' ng-if="c.list"></span>
+                </td>
+                <td class="col-md-1"><div contenteditable="true" ng-class="c.parent ? 'text-right' : 'text - left'" ng-model="c.name"></div></td>
+                <td class="col-md-11"><div contenteditable="true" ng-model="c.filter"></div></td>
+                <td nowrap>
+                    <span style="cursor: pointer;" class="glyphicon glyphicon-trash" ng-click='delete(c)'></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="btn-group">
+        <button ng-click='store()' class='btn btn-primary'> save </button>
+        <button ng-click='add()' class='btn btn-default'> add </button>
+    </div>
+</div>
+<script type="text/ng-template" id="addTemplateId">
+<div class="dialog-contents">
+    <table class="table table-condensed table-responsive">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Filter</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <td><input name="name" type="text" ng-model="costcenter.name" required autofocus="true" placeholder="geef een naam in..."/></td>
+            <td><input name="filter" type="text" ng-model="costcenter.filter" required placeholder="geef een filter in..."/></td>
+            </tr>
+        </body>
+    </table>
+    <div class="btn-group">
+        <button class='btn btn-primary' ng-click="confirm()">Ok</button>
+        <button class='btn btn-default' ng-click="closeThisDialog()">Cancel</button>
+    </div>
+</div>
+</script>
+<div ng-if="showDebug">
+    <hr/>
+    Debug View:
+    <pre>data={{data| json}}</pre>
+</div>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1416920793401" clover="3.2.0">
+	<project timestamp="1416920793402"  name="All Files" >
+		<metrics statements="164"  coveredstatements="85"  conditionals="30"  coveredconditionals="10"  methods="50"  coveredmethods="21"  elements="244"  coveredelements="116"  complexity="0"  packages="4"  files="9"  classes="9"  loc="547"  ncloc="547" />
+		<package name="scripts" >
+			<metrics statements="38"  coveredstatements="15"  conditionals="0"  coveredconditionals="0"  methods="17"  coveredmethods="4" />
+			<file name="app.js"  path="./app/scripts/app.js" >
+				<metrics statements="17"  coveredstatements="7"  conditionals="0"  coveredconditionals="0"  methods="6"  coveredmethods="1" />
+				<line num="27"  count="1"  type="stmt" />
+				<line num="39"  count="1"  type="stmt" />
+				<line num="40"  count="6"  type="stmt" />
+				<line num="41"  count="6"  type="stmt" />
+				<line num="42"  count="6"  type="stmt" />
+				<line num="46"  count="1"  type="stmt" />
+				<line num="47"  count="0"  type="stmt" />
+				<line num="49"  count="0"  type="stmt" />
+				<line num="52"  count="0"  type="stmt" />
+				<line num="53"  count="0"  type="stmt" />
+				<line num="54"  count="0"  type="stmt" />
+				<line num="55"  count="0"  type="stmt" />
+				<line num="56"  count="0"  type="stmt" />
+				<line num="57"  count="0"  type="stmt" />
+				<line num="64"  count="1"  type="stmt" />
+				<line num="65"  count="0"  type="stmt" />
+				<line num="66"  count="0"  type="stmt" />
+			</file>
+			<file name="routes.js"  path="./app/scripts/routes.js" >
+				<metrics statements="2"  coveredstatements="2"  conditionals="0"  coveredconditionals="0"  methods="1"  coveredmethods="1" />
+				<line num="19"  count="1"  type="stmt" />
+				<line num="20"  count="6"  type="stmt" />
+			</file>
+			<file name="services.js"  path="./app/scripts/services.js" >
+				<metrics statements="19"  coveredstatements="6"  conditionals="0"  coveredconditionals="0"  methods="10"  coveredmethods="2" />
+				<line num="20"  count="1"  type="stmt" />
+				<line num="22"  count="1"  type="stmt" />
+				<line num="23"  count="4"  type="stmt" />
+				<line num="28"  count="1"  type="stmt" />
+				<line num="29"  count="3"  type="stmt" />
+				<line num="36"  count="1"  type="stmt" />
+				<line num="37"  count="0"  type="stmt" />
+				<line num="38"  count="0"  type="stmt" />
+				<line num="40"  count="0"  type="stmt" />
+				<line num="41"  count="0"  type="stmt" />
+				<line num="44"  count="0"  type="stmt" />
+				<line num="47"  count="0"  type="stmt" />
+				<line num="48"  count="0"  type="stmt" />
+				<line num="49"  count="0"  type="stmt" />
+				<line num="51"  count="0"  type="stmt" />
+				<line num="54"  count="0"  type="stmt" />
+				<line num="55"  count="0"  type="stmt" />
+				<line num="57"  count="0"  type="stmt" />
+				<line num="60"  count="0"  type="stmt" />
+			</file>
+		</package>
+		<package name="scripts.components" >
+			<metrics statements="3"  coveredstatements="2"  conditionals="0"  coveredconditionals="0"  methods="1"  coveredmethods="0" />
+			<file name="module.js"  path="./app/scripts/components/module.js" >
+				<metrics statements="3"  coveredstatements="2"  conditionals="0"  coveredconditionals="0"  methods="1"  coveredmethods="0" />
+				<line num="1"  count="1"  type="stmt" />
+				<line num="3"  count="1"  type="stmt" />
+				<line num="5"  count="0"  type="stmt" />
+			</file>
+		</package>
+		<package name="scripts.controllers" >
+			<metrics statements="88"  coveredstatements="67"  conditionals="22"  coveredconditionals="10"  methods="21"  coveredmethods="17" />
+			<file name="about.js"  path="./app/scripts/controllers/about.js" >
+				<metrics statements="3"  coveredstatements="2"  conditionals="0"  coveredconditionals="0"  methods="2"  coveredmethods="1" />
+				<line num="26"  count="1"  type="stmt" />
+				<line num="27"  count="1"  type="stmt" />
+				<line num="28"  count="0"  type="stmt" />
+			</file>
+			<file name="contact.js"  path="./app/scripts/controllers/contact.js" >
+				<metrics statements="1"  coveredstatements="1"  conditionals="0"  coveredconditionals="0"  methods="1"  coveredmethods="1" />
+				<line num="26"  count="1"  type="stmt" />
+			</file>
+			<file name="home.js"  path="./app/scripts/controllers/home.js" >
+				<metrics statements="65"  coveredstatements="45"  conditionals="20"  coveredconditionals="8"  methods="15"  coveredmethods="12" />
+				<line num="26"  count="1"  type="stmt" />
+				<line num="28"  count="3"  type="stmt" />
+				<line num="29"  count="3"  type="stmt" />
+				<line num="30"  count="54"  type="stmt" />
+				<line num="31"  count="54"  type="stmt" />
+				<line num="32"  count="1674"  type="stmt" />
+				<line num="34"  count="54"  type="stmt" />
+				<line num="38"  count="3"  type="stmt" />
+				<line num="39"  count="3"  type="stmt" />
+				<line num="40"  count="3"  type="stmt" />
+				<line num="41"  count="3"  type="stmt" />
+				<line num="42"  count="3"  type="stmt" />
+				<line num="43"  count="3"  type="stmt" />
+				<line num="44"  count="3"  type="stmt" />
+				<line num="45"  count="93"  type="stmt" />
+				<line num="46"  count="93"  type="stmt" />
+				<line num="49"  count="3"  type="stmt" />
+				<line num="51"  count="3"  type="stmt" />
+				<line num="53"  count="3"  type="stmt" />
+				<line num="55"  count="3"  type="stmt" />
+				<line num="59"  count="3"  type="stmt" />
+				<line num="60"  count="51"  type="stmt" />
+				<line num="61"  count="51"  type="cond"  truecount="1"  falsecount="1" />
+				<line num="62"  count="0"  type="stmt" />
+				<line num="66"  count="3"  type="stmt" />
+				<line num="67"  count="0"  type="stmt" />
+				<line num="68"  count="0"  type="stmt" />
+				<line num="70"  count="0"  type="stmt" />
+				<line num="71"  count="0"  type="stmt" />
+				<line num="74"  count="3"  type="stmt" />
+				<line num="75"  count="0"  type="stmt" />
+				<line num="77"  count="0"  type="stmt" />
+				<line num="78"  count="0"  type="stmt" />
+				<line num="79"  count="0"  type="stmt" />
+				<line num="80"  count="0"  type="stmt" />
+				<line num="84"  count="3"  type="stmt" />
+				<line num="85"  count="3"  type="stmt" />
+				<line num="89"  count="3"  type="stmt" />
+				<line num="90"  count="3"  type="stmt" />
+				<line num="92"  count="3"  type="stmt" />
+				<line num="94"  count="3"  type="stmt" />
+				<line num="95"  count="300"  type="stmt" />
+				<line num="96"  count="5100"  type="cond"  truecount="2"  falsecount="0" />
+				<line num="97"  count="3300"  type="cond"  truecount="2"  falsecount="0" />
+				<line num="98"  count="384"  type="stmt" />
+				<line num="100"  count="1800"  type="cond"  truecount="1"  falsecount="1" />
+				<line num="101"  count="0"  type="stmt" />
+				<line num="102"  count="0"  type="cond"  truecount="0"  falsecount="4" />
+				<line num="103"  count="0"  type="stmt" />
+				<line num="108"  count="300"  type="stmt" />
+				<line num="113"  count="3"  type="stmt" />
+				<line num="115"  count="3"  type="stmt" />
+				<line num="116"  count="684"  type="stmt" />
+				<line num="117"  count="684"  type="cond"  truecount="1"  falsecount="1" />
+				<line num="118"  count="0"  type="stmt" />
+				<line num="119"  count="0"  type="cond"  truecount="0"  falsecount="2" />
+				<line num="120"  count="0"  type="stmt" />
+				<line num="122"  count="0"  type="cond"  truecount="0"  falsecount="2" />
+				<line num="123"  count="0"  type="stmt" />
+				<line num="125"  count="0"  type="stmt" />
+				<line num="131"  count="3"  type="stmt" />
+				<line num="132"  count="1"  type="stmt" />
+				<line num="133"  count="2"  type="cond"  truecount="1"  falsecount="1" />
+				<line num="134"  count="2"  type="stmt" />
+				<line num="136"  count="0"  type="stmt" />
+			</file>
+			<file name="reports.js"  path="./app/scripts/controllers/reports.js" >
+				<metrics statements="19"  coveredstatements="19"  conditionals="2"  coveredconditionals="2"  methods="3"  coveredmethods="3" />
+				<line num="26"  count="1"  type="stmt" />
+				<line num="28"  count="1"  type="stmt" />
+				<line num="47"  count="1"  type="stmt" />
+				<line num="48"  count="1"  type="stmt" />
+				<line num="49"  count="1"  type="stmt" />
+				<line num="51"  count="1"  type="stmt" />
+				<line num="58"  count="1"  type="stmt" />
+				<line num="59"  count="13"  type="stmt" />
+				<line num="60"  count="416"  type="stmt" />
+				<line num="64"  count="1"  type="stmt" />
+				<line num="65"  count="100"  type="stmt" />
+				<line num="66"  count="100"  type="stmt" />
+				<line num="67"  count="100"  type="stmt" />
+				<line num="68"  count="100"  type="cond"  truecount="2"  falsecount="0" />
+				<line num="69"  count="91"  type="stmt" />
+				<line num="71"  count="9"  type="stmt" />
+				<line num="75"  count="1"  type="stmt" />
+				<line num="76"  count="13"  type="stmt" />
+				<line num="77"  count="403"  type="stmt" />
+			</file>
+		</package>
+		<package name="scripts.d3graph" >
+			<metrics statements="35"  coveredstatements="1"  conditionals="8"  coveredconditionals="0"  methods="11"  coveredmethods="0" />
+			<file name="module.js"  path="./app/scripts/d3graph/module.js" >
+				<metrics statements="35"  coveredstatements="1"  conditionals="8"  coveredconditionals="0"  methods="11"  coveredmethods="0" />
+				<line num="18"  count="1"  type="stmt" />
+				<line num="20"  count="0"  type="stmt" />
+				<line num="29"  count="0"  type="stmt" />
+				<line num="30"  count="0"  type="stmt" />
+				<line num="34"  count="0"  type="stmt" />
+				<line num="35"  count="0"  type="stmt" />
+				<line num="38"  count="0"  type="stmt" />
+				<line num="39"  count="0"  type="cond"  truecount="0"  falsecount="2" />
+				<line num="40"  count="0"  type="stmt" />
+				<line num="41"  count="0"  type="stmt" />
+				<line num="42"  count="0"  type="stmt" />
+				<line num="46"  count="0"  type="stmt" />
+				<line num="47"  count="0"  type="stmt" />
+				<line num="50"  count="0"  type="stmt" />
+				<line num="51"  count="0"  type="stmt" />
+				<line num="61"  count="0"  type="stmt" />
+				<line num="63"  count="0"  type="stmt" />
+				<line num="64"  count="0"  type="stmt" />
+				<line num="66"  count="0"  type="stmt" />
+				<line num="72"  count="0"  type="stmt" />
+				<line num="78"  count="0"  type="stmt" />
+				<line num="80"  count="0"  type="stmt" />
+				<line num="83"  count="0"  type="stmt" />
+				<line num="87"  count="0"  type="stmt" />
+				<line num="88"  count="0"  type="stmt" />
+				<line num="90"  count="0"  type="stmt" />
+				<line num="91"  count="0"  type="stmt" />
+				<line num="92"  count="0"  type="stmt" />
+				<line num="95"  count="0"  type="stmt" />
+				<line num="100"  count="0"  type="stmt" />
+				<line num="110"  count="0"  type="stmt" />
+				<line num="111"  count="0"  type="stmt" />
+				<line num="124"  count="0"  type="stmt" />
+				<line num="125"  count="0"  type="cond"  truecount="0"  falsecount="6" />
+				<line num="129"  count="0"  type="stmt" />
+			</file>
+		</package>
+	</project>
+</coverage>

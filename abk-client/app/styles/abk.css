@@ -1,0 +1,27 @@
+
+table.transactions {
+    font-size: small;
+}
+
+
+p.debit {
+    font-style: italic;
+    color: red;
+}
+td.matched {
+}
+
+td.unmatched {
+    color: blue;
+}
+
+@media screen and (max-width: 768px) {
+  .day {
+    visibility: hidden;
+    display:none;
+  }
+  .screentablet {
+    visibility: hidden;
+    display:none;
+  }
+}

@@ -1,0 +1,809 @@
+[
+    {
+        "id": 71,
+        "meta": {
+            "href": "http://localhost:8080/abk-backend/rest/costcenters/71"
+        },
+        "filter": ".*CREDITCARD.*",
+        "name": "CreditCard",
+        "list": [
+        ]
+    }
+    ,
+    {
+        "id": 74,
+        "meta": {
+            "href": "http://localhost:8080/abk-backend/rest/costcenters/74"
+        },
+        "name": "Bootschappen",
+        "list": [
+            {
+                "id": 75,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/75"
+                },
+                "filter": ".*Jumbo.*|.*JUMBO.*",
+                "name": "Jumbo",
+                "parent": {
+                    "id": 74,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/74"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 76,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/76"
+                },
+                "filter": ".*LIDL.*|.*Lidl.*",
+                "name": "Lidl",
+                "parent": {
+                    "id": 74,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/74"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 77,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/77"
+                },
+                "filter": ".*Coop.*|.*COOP.*",
+                "name": "Coop",
+                "parent": {
+                    "id": 74,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/74"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 89,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/89"
+                },
+                "filter": ".*MITRA.*",
+                "name": "Mitra Slijterij",
+                "parent": {
+                    "id": 74,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/74"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 90,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/90"
+                },
+                "filter": ".*xenos.*|.*Xenos.*",
+                "name": "Xenos",
+                "parent": {
+                    "id": 74,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/74"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 93,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/93"
+                },
+                "filter": ".*KARWEI.*",
+                "name": "Karwei",
+                "parent": {
+                    "id": 74,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/74"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 104,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/104"
+                },
+                "filter": ".*AH to go.*|.*ALBERT HEIJN.*",
+                "name": "AH",
+                "parent": {
+                    "id": 74,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/74"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 111,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/111"
+                },
+                "filter": ".*BLOKKER.*|.*Blokker.*",
+                "name": "Blokker",
+                "parent": {
+                    "id": 74,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/74"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 112,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/112"
+                },
+                "filter": ".*C1000.*",
+                "name": "C1000",
+                "parent": {
+                    "id": 74,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/74"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 113,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/113"
+                },
+                "filter": ".*ACTION.*",
+                "name": "ACTION",
+                "parent": {
+                    "id": 74,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/74"
+                    }
+                },
+                "list": [
+                ]
+            }
+        ]
+    },
+    {
+        "id": 78,
+        "meta": {
+            "href": "http://localhost:8080/abk-backend/rest/costcenters/78"
+        },
+        "name": "Verzekering",
+        "list": [
+            {
+                "id": 79,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/79"
+                },
+                "filter": ".*AGIS.*",
+                "name": "Agis",
+                "parent": {
+                    "id": 78,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/78"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 94,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/94"
+                },
+                "filter": ".*Zicht Pakket Polis.*",
+                "name": "Zicht Risico",
+                "parent": {
+                    "id": 78,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/78"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 96,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/96"
+                },
+                "filter": ".*NATIONALE NEDERLANDEN.*",
+                "name": "NATIONALE NEDERLANDEN",
+                "parent": {
+                    "id": 78,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/78"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 97,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/97"
+                },
+                "filter": ".*REAAL LEVENSVERZEKERING.*",
+                "name": "REAAL LEVENSVERZEKERING",
+                "parent": {
+                    "id": 78,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/78"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 98,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/98"
+                },
+                "filter": ".*BNP PARIBAS CARDIF SCH.*",
+                "name": "BNP PARIBAS CARDIF SCH",
+                "parent": {
+                    "id": 78,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/78"
+                    }
+                },
+                "list": [
+                ]
+            }
+        ]
+    },
+    {
+        "id": 80,
+        "meta": {
+            "href": "http://localhost:8080/abk-backend/rest/costcenters/80"
+        },
+        "filter": ".*BELASTINGDIENST.*",
+        "name": "Belastingdienst",
+        "list": [
+            {
+                "id": 109,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/109"
+                },
+                "filter": ".*BSRTiel.*",
+                "name": "Lokale belasting BSRTiel",
+                "parent": {
+                    "id": 80,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/80"
+                    }
+                },
+                "list": [
+                ]
+            }
+        ]
+    },
+    {
+        "id": 81,
+        "meta": {
+            "href": "http://localhost:8080/abk-backend/rest/costcenters/81"
+        },
+        "name": "Kinderen",
+        "list": [
+            {
+                "id": 82,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/82"
+                },
+                "filter": "",
+                "name": "Kay",
+                "parent": {
+                    "id": 81,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/81"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 83,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/83"
+                },
+                "filter": ".*NL90INGB0001344275.*",
+                "name": "Kyra",
+                "parent": {
+                    "id": 81,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/81"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 84,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/84"
+                },
+                "filter": ".*NL98INGB0001363725.*",
+                "name": "Amber",
+                "parent": {
+                    "id": 81,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/81"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 85,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/85"
+                },
+                "filter": ".*NL81INGB0685358658.*",
+                "name": "Veerle-Sophie",
+                "parent": {
+                    "id": 81,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/81"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 86,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/86"
+                },
+                "filter": "",
+                "name": "Mark",
+                "parent": {
+                    "id": 81,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/81"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 100,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/100"
+                },
+                "filter": ".*Simyo:0642319010.*",
+                "name": "Simyo:0642319010 (Amber)",
+                "parent": {
+                    "id": 81,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/81"
+                    }
+                },
+                "list": [
+                ]
+            }
+        ]
+    },
+    {
+        "id": 91,
+        "meta": {
+            "href": "http://localhost:8080/abk-backend/rest/costcenters/91"
+        },
+        "name": "Diverse",
+        "list": [
+            {
+                "id": 92,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/92"
+                },
+                "filter": ".*UT Kiosk.*|.*UT KIOSK.*",
+                "name": "Kiosk Utrecht",
+                "parent": {
+                    "id": 91,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/91"
+                    }
+                },
+                "list": [
+                ]
+            }
+        ]
+    },
+    {
+        "id": 101,
+        "meta": {
+            "href": "http://localhost:8080/abk-backend/rest/costcenters/101"
+        },
+        "name": "Ziektekosten",
+        "list": [
+            {
+                "id": 99,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/99"
+                },
+                "filter": ".*Chiropractie.*",
+                "name": "Chiropractie",
+                "parent": {
+                    "id": 101,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/101"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 102,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/102"
+                },
+                "filter": ".*beijersbergen.*",
+                "name": "beijersbergen",
+                "parent": {
+                    "id": 101,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/101"
+                    }
+                },
+                "list": [
+                ]
+            }
+        ]
+    },
+    {
+        "id": 106,
+        "meta": {
+            "href": "http://localhost:8080/abk-backend/rest/costcenters/106"
+        },
+        "name": "Uitjes",
+        "list": [
+            {
+                "id": 107,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/107"
+                },
+                "filter": ".*CineMec BV EDE.*|.*CINEMEC.*",
+                "name": "Bios",
+                "parent": {
+                    "id": 106,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/106"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 108,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/108"
+                },
+                "filter": ".*MCD TIEL.*",
+                "name": "McDonnalds",
+                "parent": {
+                    "id": 106,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/106"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 110,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/110"
+                },
+                "filter": ".*OOA C.V. Automaat .*",
+                "name": "Parkeren",
+                "parent": {
+                    "id": 106,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/106"
+                    }
+                },
+                "list": [
+                ]
+            }
+        ]
+    },
+    {
+        "id": 51,
+        "meta": {
+            "href": "http://localhost:8080/abk-backend/rest/costcenters/51"
+        },
+        "filter": ".*SALARIS.*",
+        "name": "Salaris",
+        "list": [
+        ]
+    },
+    {
+        "id": 52,
+        "meta": {
+            "href": "http://localhost:8080/abk-backend/rest/costcenters/52"
+        },
+        "filter": "",
+        "name": "Huis",
+        "list": [
+            {
+                "id": 95,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/95"
+                },
+                "filter": ".*UPC.*",
+                "name": "UPC",
+                "parent": {
+                    "id": 52,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/52"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 103,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/103"
+                },
+                "filter": ".*Electrabel Nederland.*",
+                "name": "Electrabel Nederland",
+                "parent": {
+                    "id": 52,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/52"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 53,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/53"
+                },
+                "filter": ".*SPAARHYPOTHEEK.*",
+                "name": "Hypotheek",
+                "parent": {
+                    "id": 52,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/52"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 54,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/54"
+                },
+                "filter": ".*WONINGFONDS.*",
+                "name": "Woningfonds",
+                "parent": {
+                    "id": 52,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/52"
+                    }
+                },
+                "list": [
+                ]
+            }
+        ]
+    },
+    {
+        "id": 55,
+        "meta": {
+            "href": "http://localhost:8080/abk-backend/rest/costcenters/55"
+        },
+        "filter": "",
+        "name": "Sparen",
+        "list": [
+            {
+                "id": 87,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/87"
+                },
+                "filter": ".*Comfortspaarrekening.*",
+                "name": "Comfortspaarrekening",
+                "parent": {
+                    "id": 55,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/55"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 56,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/56"
+                },
+                "filter": ".*Z 593-87452.*",
+                "name": "Oranje rekening",
+                "parent": {
+                    "id": 55,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/55"
+                    }
+                },
+                "list": [
+                ]
+            }
+        ]
+    },
+    {
+        "id": 57,
+        "meta": {
+            "href": "http://localhost:8080/abk-backend/rest/costcenters/57"
+        },
+        "filter": "",
+        "name": "Sport",
+        "list": [
+            {
+                "id": 88,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/88"
+                },
+                "filter": ".*MANEGE RAVENS.*",
+                "name": "Paardrijden",
+                "parent": {
+                    "id": 57,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/57"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 58,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/58"
+                },
+                "filter": ".*DIPNOI.*",
+                "name": "Duikteam DIPNOI",
+                "parent": {
+                    "id": 57,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/57"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 59,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/59"
+                },
+                "filter": ".*Body Dynamics.*|.*Body-Dynamics.*",
+                "name": "Body Dynamics",
+                "parent": {
+                    "id": 57,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/57"
+                    }
+                },
+                "list": [
+                ]
+            }
+        ]
+    },
+    {
+        "id": 60,
+        "meta": {
+            "href": "http://localhost:8080/abk-backend/rest/costcenters/60"
+        },
+        "filter": "",
+        "name": "Kas opname",
+        "list": [
+            {
+                "id": 73,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/73"
+                },
+                "filter": ".*MINITIX.*",
+                "name": "MiniTix",
+                "parent": {
+                    "id": 60,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/60"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 105,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/105"
+                },
+                "filter": ".*ING>TIEL>4003 ZN.*|.*ING>TIEL>4006 BG.*",
+                "name": "PIN",
+                "parent": {
+                    "id": 60,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/60"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 61,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/61"
+                },
+                "filter": ".*CHIPKNIP.*",
+                "name": "OPL. CHIPKNIP",
+                "parent": {
+                    "id": 60,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/60"
+                    }
+                },
+                "list": [
+                ]
+            }
+        ]
+    },
+    {
+        "id": 62,
+        "meta": {
+            "href": "http://localhost:8080/abk-backend/rest/costcenters/62"
+        },
+        "filter": "",
+        "name": "OV",
+        "list": [
+            {
+                "id": 63,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/63"
+                },
+                "filter": ".*Kaartnummer:3528020061568163.*",
+                "name": "Mijn OV-chip",
+                "parent": {
+                    "id": 62,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/62"
+                    }
+                },
+                "list": [
+                ]
+            },
+            {
+                "id": 64,
+                "meta": {
+                    "href": "http://localhost:8080/abk-backend/rest/costcenters/64"
+                },
+                "filter": ".*Kaartnummer:3528020055930650.*",
+                "name": "Amber/Veerle",
+                "parent": {
+                    "id": 62,
+                    "meta": {
+                        "href": "http://localhost:8080/abk-backend/rest/costcenters/62"
+                    }
+                },
+                "list": [
+                ]
+            }
+        ]
+    }
+]

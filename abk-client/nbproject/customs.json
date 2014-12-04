@@ -1,0 +1,19 @@
+{
+    "elements": {
+        "line-graph": {
+            "attributes": {
+                "xdomain": {},
+                "data": {},
+                "linecolors": {},
+                "yaxislabel": {},
+                "ydomain": {}
+            }
+        },
+        "amount": {
+            "attributes": {
+                "data": {}
+            }
+        }
+    },
+    "attributes": {}
+}
