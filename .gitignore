@@ -1,2 +1,6 @@
 /nb-configuration.xml
 /nbactions.xml
+/abk-backend/target/
+/abk-client/bower_components/
+/abk-client/docs/
+/abk-client/node_modules/
