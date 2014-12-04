@@ -27,7 +27,6 @@
     "load-grunt-tasks": "^0.4.0",
     "time-grunt": "^0.3.1",
     "karma-coverage": "~0.2.6",
-    "grunt-ngdoc": "~0.1.3",
     "grunt-ngdocs": "~0.2.6"
   },
   "engines": {
