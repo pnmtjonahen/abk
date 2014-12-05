@@ -76,9 +76,7 @@ public class CostCentersResource {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response get(@Context UriInfo uriInfo
-            , @PathParam("id") final Long id
-            , @DefaultValue("0") @QueryParam("expand") int expand) {
+    public Response get(@Context UriInfo uriInfo, @PathParam("id") final Long id, @DefaultValue("0") @QueryParam("expand") int expand) {
         Optional<CostCenter> optional = this.get(id, expand);
         if (optional.isPresent()) {
             return Response.ok(optional.get().updateHref(new HRef(uriInfo.getAbsolutePath().toString()).stripId()))
@@ -105,20 +103,22 @@ public class CostCentersResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response post(List<CostCenter> costcenters) {
-        
-        update(costcenters);
-        
+        nullIds(costcenters);
+        removeAll();
+        insertAll(costcenters);
+
         return Response.status(Response.Status.ACCEPTED).build();
     }
-    
-    private void update(List<CostCenter> costcenters) {
+
+    private void nullIds(List<CostCenter> costcenters) {
         for (CostCenter cc : costcenters) {
-            update(cc.getId(), cc);
-            if (cc.getList() != null && !cc.getList().isEmpty()) {
-                update(cc.getList());
+            cc.setId(null);
+            if (cc.getList() != null) {
+                nullIds(cc.getList());
             }
         }
     }
+
     /**
      * replace cost center defined by id
      *
@@ -184,7 +184,7 @@ public class CostCentersResource {
     }
 
     private boolean update(Long id, CostCenter costCenter) {
-        Kostenplaats current= null;
+        Kostenplaats current = null;
         if (id == null) {
             current = new Kostenplaats();
             entityManager.persist(current);
@@ -216,5 +216,46 @@ public class CostCentersResource {
         }
         entityManager.remove(current);
         return true;
+    }
+
+    private void removeAll() {
+        entityManager.createNamedQuery("Kostenplaats.deleteAll").executeUpdate();
+    }
+
+    private void insertAll(List<CostCenter> costcenters) {
+        for (CostCenter cc : costcenters) {
+            insertNewRoot(cc);
+        }
+    }
+
+    private void insertNewRoot(CostCenter costCenter) {
+        Kostenplaats current = new Kostenplaats();
+        current.setFilter(costCenter.getFilter());
+        current.setNaam(costCenter.getName());
+        entityManager.persist(current);
+        entityManager.flush();
+        
+        if (costCenter.getList() != null) {
+            for (CostCenter cc : costCenter.getList()) {
+                insertNewSub(current, cc);
+            }
+        }
+    }
+
+    private void insertNewSub(Kostenplaats parent, CostCenter costCenter) {
+        Kostenplaats current = new Kostenplaats();
+        current.setFilter(costCenter.getFilter());
+        current.setNaam(costCenter.getName());
+        current.setParent(parent);
+        entityManager.persist(current);
+        entityManager.flush();
+        
+        if (costCenter.getList() != null) {
+            for (CostCenter cc : costCenter.getList()) {
+                insertNewSub(current, cc);
+            }
+        }
+        
+        
     }
 }

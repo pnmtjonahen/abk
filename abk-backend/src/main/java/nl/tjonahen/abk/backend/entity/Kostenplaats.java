@@ -43,6 +43,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "KOSTENPLAATS")
 @XmlRootElement
 @NamedQueries({
+    @NamedQuery(name = "Kostenplaats.deleteAll", query = "DELETE FROM Kostenplaats"),
     @NamedQuery(name = "Kostenplaats.findAll", query = "SELECT k FROM Kostenplaats k"),
     @NamedQuery(name = "Kostenplaats.findById", query = "SELECT k FROM Kostenplaats k WHERE k.id = :id"),
     @NamedQuery(name = "Kostenplaats.findByRoot", query = "SELECT k FROM Kostenplaats k WHERE k.parent IS NULL")})
