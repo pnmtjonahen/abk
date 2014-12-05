@@ -46,7 +46,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Kostenplaats.deleteAll", query = "DELETE FROM Kostenplaats"),
     @NamedQuery(name = "Kostenplaats.findAll", query = "SELECT k FROM Kostenplaats k"),
     @NamedQuery(name = "Kostenplaats.findById", query = "SELECT k FROM Kostenplaats k WHERE k.id = :id"),
-    @NamedQuery(name = "Kostenplaats.findByRoot", query = "SELECT k FROM Kostenplaats k WHERE k.parent IS NULL")})
+    @NamedQuery(name = "Kostenplaats.findByRoot", query = "SELECT k FROM Kostenplaats k WHERE k.parent IS NULL ORDER BY k.naam")})
 public class Kostenplaats implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
