@@ -86,7 +86,7 @@ function CostCenterCtrl($scope, $q, costCentersService, ngDialog) {
                 $scope.costcenters.push($scope.costcenter);
             } else {
                 $scope.parent.costcenter.list.push($scope.costcenter);
-                $scope.costcenter.parent = $scope.parent.costcenter;
+                $scope.costcenter.parent = {id:$scope.parent.costcenter.id};
             }
             $scope.costcenter = {name: '', filter: ''};
             $scope.parent = {costcenter: undefined};
