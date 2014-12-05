@@ -39,26 +39,53 @@
     </div>
 </div>
 <script type="text/ng-template" id="addTemplateId">
-<div class="dialog-contents">
-    <table class="table table-condensed table-responsive">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Filter</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-            <td><input name="name" type="text" ng-model="costcenter.name" required autofocus="true" placeholder="geef een naam in..."/></td>
-            <td><input name="filter" type="text" ng-model="costcenter.filter" required placeholder="geef een filter in..."/></td>
-            </tr>
-        </body>
-    </table>
-    <div class="btn-group">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well well-sm">
+                <form class="form-horizontal" method="post">
+                    <fieldset>
+                        <legend class="text-center header">New CostCenter</legend>
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label>Parent CostCenter</label>
+                            </div>
+                            <div class="col-md-8">
+                                <select ng-model="parent.costcenter" ng-options="c.name for c in costcenters">
+                                    <option value=""/>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label>Name</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input id="fname" name="costcenter.name" type="text" placeholder="Name" class="form-control" ng-model="costcenter.name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label>Filter</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input id="ffilter" name="costcenter.filter" type="text" placeholder="Filter" class="form-control" ng-model="costcenter.filter">
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            <div class="btn-group">
         <button class='btn btn-primary' ng-click="confirm()">Ok</button>
         <button class='btn btn-default' ng-click="closeThisDialog()">Cancel</button>
     </div>
+
+            </div>
+        </div>
+    </div>
 </div>
+    
+
 </script>
 <div ng-if="showDebug">
     <hr/>
