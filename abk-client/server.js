@@ -1,3 +1,3 @@
 var connect = require('connect');
 var serveStatic = require('serve-static');
-connect().use(serveStatic('docs')).listen(8081);
+connect().use(serveStatic('app')).listen(8081);

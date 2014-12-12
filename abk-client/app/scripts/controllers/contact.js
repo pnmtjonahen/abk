@@ -18,10 +18,10 @@
 
 /**
  * @ngdoc function
- * @name abkClientApp.controller:ContactCtrl
+ * @name abkClientApp.controller:ContactController
  * @description
- * # ContactCtrl
+ * # ContactController
  * Controller of the Contact page
  */
-function ContactCtrl() {
-}
+angular.module('abkClientApp').controller("ContactController", function() {
+});

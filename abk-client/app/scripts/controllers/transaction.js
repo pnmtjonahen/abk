@@ -18,28 +18,30 @@
 
 /**
  * @ngdoc function
- * @name abkClientApp.controller:TransactionCtrl
+ * @name abkClientApp.controller:TransactionController
  * @description
- * # TransactionCtrl
+ * # TransactionController
  * Controller of the abkClientApp
  */
-function TransactionCtrl($scope, $q, currentDate, transactionsService, costCentersService) {
-    $scope.data = undefined;
-    $scope.showall = false;
-    $scope.range = currentDate.range();
+angular.module('abkClientApp').controller("TransactionController", function($q, currentDate, transactionsService, costCentersService) {
+    this.data = undefined;
+    this.showall = false;
+    this.range = currentDate.range();
 
-    $scope.previous = function () {
-        $scope.range.start.setMonth($scope.range.start.getMonth() - 1);
-        $scope.range.end.setMonth($scope.range.end.getMonth() - 1);
-        $scope.data = undefined;
+    var that = this;
+    
+    this.previous = function () {
+        that.range.start.setMonth(that.range.start.getMonth() - 1);
+        that.range.end.setMonth(that.range.end.getMonth() - 1);
+        that.data = undefined;
 
         retrieveData();
     };
 
-    $scope.next = function () {
-        $scope.range.start.setMonth($scope.range.start.getMonth() + 1);
-        $scope.range.end.setMonth($scope.range.end.getMonth() + 1);
-        $scope.data = undefined;
+    this.next = function () {
+        that.range.start.setMonth(that.range.start.getMonth() + 1);
+        that.range.end.setMonth(that.range.end.getMonth() + 1);
+        that.data = undefined;
 
         retrieveData();
     };
@@ -55,18 +57,18 @@ function TransactionCtrl($scope, $q, currentDate, transactionsService, costCente
     };
 
     var retrieveData = function () {
-        $q.all([transactionsService.get({q: 'date=[' + $scope.range.start.toJSON() + ' ' + $scope.range.end.toJSON() + ']', limit: 9999,
+        $q.all([transactionsService.get({q: 'date=[' + that.range.start.toJSON() + ' ' + that.range.end.toJSON() + ']', limit: 9999,
                 fields: 'date,debitCreditIndicator,amount,description,contraAccountName', orderby: 'date desc'}).$promise,
             costCentersService.get({expand: 3}).$promise]).then(function (result) {
 
-            $scope.data = result[0];
+            that.data = result[0];
             var costcenters = result[1];
 
             costcenters.list.forEach(processCostcenters);
 
 
 
-            $scope.data.list.forEach(function (t) {
+            that.data.list.forEach(function (t) {
                 t.matched = false;
                 if (t.debitCreditIndicator === 'debit') {
                     t.amount = {amount: -parseFloat(t.amount)};
@@ -96,4 +98,4 @@ function TransactionCtrl($scope, $q, currentDate, transactionsService, costCente
     };
 
     retrieveData();
-}
+});

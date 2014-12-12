@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Controller: ContactCtrl', function () {
+describe('Controller: ContactController', function () {
 
     // load the controller's module
     beforeEach(module('abkServices'));
@@ -12,7 +12,7 @@ describe('Controller: ContactCtrl', function () {
     beforeEach(inject(function ($controller) {
         scopeMock = {};
         createController = function () {
-            $controller('ContactCtrl', {'$scope':scopeMock});
+            $controller('ContactController');
         };
     }));
     it('should have be able to create controller', function () {

@@ -23,30 +23,43 @@
  * # HomeCtrl
  * Controller of the abkClientApp
  */
-function HomeCtrl($scope, $q, currentDate, transactionsService, costCentersService) {
+angular.module('abkClientApp').controller("HomeController", function ($q, currentDate, transactionsService, costCentersService) {
 
-    $scope.range = currentDate.range();
+    this.range = currentDate.range();
+    this.lastDay = undefined;
+    this.data = undefined;
+    this.dayheader = [];
+    this.header = [];
+
+    this.total = [];
+    this.totalAmount = undefined;
+    this.totalUnAccounted = undefined;
+
+    this.current;
+
+    var that = this;
 
     var buildDataRow = function () {
         var data = [];
-        for (var i = 0; i < $scope.lastDay; i++) {
+        for (var i = 0; i < that.lastDay; i++) {
             data.push({day: i});
         }
         return data;
     };
 
 
-    var init = function () {
-        $scope.lastDay = new Date($scope.range.start.getFullYear(), $scope.range.start.getMonth() + 1, 0).getDate();
-        $scope.data = undefined;
-        $scope.dayheader = [];
-        $scope.header = [];
+    function init() {
+        that.lastDay = new Date(that.range.start.getFullYear(), that.range.start.getMonth() + 1, 0).getDate();
+        that.data = undefined;
+        that.dayheader = [];
+        that.header = [];
 
-        $scope.total = [];
-        $scope.totalAmount = undefined;
-        $scope.totalUnAccounted = undefined;
+        that.total = [];
+        that.totalAmount = undefined;
+        that.totalUnAccounted = undefined;
 
-    };
+    }
+    ;
     init();
 
 
@@ -55,59 +68,59 @@ function HomeCtrl($scope, $q, currentDate, transactionsService, costCentersServi
         if (e.filter) {
             e.filter = new RegExp(e.filter.trim(), 'i');
         }
-        $scope.data.push({sum: {amount: 0}, costcenter: e, data: buildDataRow()});
+        that.data.push({sum: {amount: 0}, costcenter: e, data: buildDataRow()});
         if (e.list) {
             e.list.forEach(processCostcenters);
         }
     };
 
-    $scope.previous = function () {
-        $scope.range.start.setMonth($scope.range.start.getMonth() - 1);
-        $scope.range.end.setMonth($scope.range.end.getMonth() - 1);
+    this.previous = function () {
+        that.range.start.setMonth(that.range.start.getMonth() - 1);
+        that.range.end.setMonth(that.range.end.getMonth() - 1);
 
         init();
         retrieveData();
     };
 
-    $scope.next = function () {
-        $scope.range.start.setMonth($scope.range.start.getMonth() + 1);
-        $scope.range.end.setMonth($scope.range.end.getMonth() + 1);
+    this.next = function () {
+        that.range.start.setMonth(that.range.start.getMonth() + 1);
+        that.range.end.setMonth(that.range.end.getMonth() + 1);
         init();
         retrieveData();
     };
 
 
     var retrieveData = function () {
-        $q.all([transactionsService.get({q: 'date=[' + $scope.range.start.toJSON() + ' ' + $scope.range.end.toJSON() + ']', limit: 9999,
+        $q.all([transactionsService.get({q: 'date=[' + that.range.start.toJSON() + ' ' + that.range.end.toJSON() + ']', limit: 9999,
                 fields: 'date,debitCreditIndicator,amount,description,contraAccountName'}).$promise,
             costCentersService.get({expand: 3}).$promise]).then(function (result) {
-            
-            $scope.dayheader = function () {
+
+            that.dayheader = function () {
                 var weekdays = ["s", "m", "t", "w", "t", "f", "s"];
                 var ddata = [];
-                var today = new Date($scope.range.start);
-                for (var i = 0; i < $scope.lastDay; i++) {
+                var today = new Date(that.range.start);
+                for (var i = 0; i < that.lastDay; i++) {
                     today.setDate(i + 1);
                     ddata.push({day: weekdays[today.getDay()]});
                 }
 
                 return ddata;
             }();
-            for (var j = 0; j < $scope.lastDay; j++) {
-                $scope.header.push('' + (j + 1));
+            for (var j = 0; j < that.lastDay; j++) {
+                that.header.push('' + (j + 1));
             }
 
-            $scope.total = buildDataRow();
-            
-            $scope.data = [];
-            
+            that.total = buildDataRow();
+
+            that.data = [];
+
             var transactions = result[0];
             var costcenters = result[1];
 
             costcenters.list.forEach(processCostcenters);
 
             transactions.list.forEach(function (t) {
-                $scope.data.forEach(function (c) {
+                that.data.forEach(function (c) {
                     if (c.costcenter.filter &&
                             (c.costcenter.filter.test(t.description) || c.costcenter.filter.test(t.contraAccountName))) {
                         updateAmount(c.data, t);
@@ -122,16 +135,16 @@ function HomeCtrl($scope, $q, currentDate, transactionsService, costCentersServi
                         });
                     }
                 });
-                updateAmount($scope.total, t);
+                updateAmount(that.total, t);
             });
-            $scope.data.forEach(function (c) {
+            that.data.forEach(function (c) {
                 c.sum = {amount: sum(c.data)};
             });
-            $scope.totalAmount = sum($scope.total);
-            var totalAccounted = $scope.data.reduce(function (t, c) {
+            that.totalAmount = sum(that.total);
+            var totalAccounted = that.data.reduce(function (t, c) {
                 return {sum: {amount: t.sum.amount + c.sum.amount}};
             }, {sum: {amount: 0}}).sum.amount;
-            $scope.totalUnAccounted = $scope.totalAmount - totalAccounted;
+            that.totalUnAccounted = that.totalAmount - totalAccounted;
         });
     };
 
@@ -139,7 +152,7 @@ function HomeCtrl($scope, $q, currentDate, transactionsService, costCentersServi
 
     var updateAmount = function (data, t) {
         var transactionDate = new Date(t.date);
-        if (transactionDate.getMonth() === $scope.range.start.getMonth()) {
+        if (transactionDate.getMonth() === that.range.start.getMonth()) {
             var day = transactionDate.getDate() - 1;
             if (data[day].amount === undefined) {
                 data[day].amount = 0;
@@ -162,26 +175,25 @@ function HomeCtrl($scope, $q, currentDate, transactionsService, costCentersServi
         }, {amount: 0}).amount;
     };
 
-    $scope.current;
-    $scope.showRow = function (row) {
+    this.showRow = function (row) {
         if (row.costcenter.parent !== undefined) {
-            if ($scope.current !== undefined) {
-                return $scope.current.id === row.costcenter.parent.id;
+            if (that.current !== undefined) {
+                return that.current.id === row.costcenter.parent.id;
             }
             return false;
         }
         return true;
     };
 
-    $scope.selectRow = function (row) {
-        if ($scope.current === row.costcenter) {
-            $scope.current = undefined;
+    this.selectRow = function (row) {
+        if (that.current === row.costcenter) {
+            that.current = undefined;
         } else {
-            $scope.current = row.costcenter;
+            that.current = row.costcenter;
         }
     };
 
-    $scope.weekday = function (index) {
-        return $scope.dayheader[index].day !== 's';
+    this.weekday = function (index) {
+        return that.dayheader[index].day !== 's';
     };
-}
+});

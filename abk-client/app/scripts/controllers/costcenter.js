@@ -18,17 +18,22 @@
 
 /**
  * @ngdoc function
- * @name abkClientApp.controller:CostCenterCtrl
+ * @name abkClientApp.controller:CostCenterController
  * @description
- * # CostCenterCtrl
+ * # CostCenterController
  * Controller forcost centers
  */
-function CostCenterCtrl($scope, $q, costCentersService, ngDialog) {
-    $scope.data = undefined;
-    $scope.costcenters;
+angular.module('abkClientApp').controller("CostCenterController", function(costCentersService, ngDialog) {
+    this.data = undefined;
+    this.costcenters;
+    this.current;
+    this.storing = false;
+    this.costcenter = {name: '', filter: ''};
+    this.parent = {costcenter: undefined};
 
+    var that = this;
     var processCostcenters = function (e) {
-        $scope.data.push(e);
+        that.data.push(e);
         if (e.list) {
             e.list.forEach(processCostcenters);
         }
@@ -36,62 +41,58 @@ function CostCenterCtrl($scope, $q, costCentersService, ngDialog) {
 
     var retrieveCostCenters = function () {
         costCentersService.get({expand: 3}, function (data) {
-            $scope.data = [];
+            that.data = [];
             data.list.forEach(processCostcenters);
-            $scope.costcenters = data.list;
+            that.costcenters = data.list;
         });
     };
     retrieveCostCenters();
 
-    $scope.current;
-    $scope.showRow = function (row) {
+    this.showRow = function (row) {
         if (row.parent !== undefined) {
-            if ($scope.current !== undefined) {
-                return $scope.current.id === row.parent.id;
+            if (that.current !== undefined) {
+                return that.current.id === row.parent.id;
             }
             return false;
         }
         return true;
     };
 
-    $scope.selectRow = function (row) {
-        if ($scope.current === row) {
-            $scope.current = undefined;
+    this.selectRow = function (row) {
+        if (that.current === row) {
+            that.current = undefined;
         } else {
-            $scope.current = row;
+            that.current = row;
         }
     };
 
-    $scope.storing = false;
-    $scope.store = function () {
-        $scope.storing = true;
-        costCentersService.post($scope.costcenters, function () {
-            $scope.storing = false;
+    this.store = function () {
+        that.storing = true;
+        costCentersService.post(that.costcenters, function () {
+            that.storing = false;
             retrieveCostCenters();
         }, function () {
-            $scope.storing = false;
+            that.storing = false;
             retrieveCostCenters();
         });
     };
 
-    $scope.costcenter = {name: '', filter: ''};
-    $scope.parent = {costcenter: undefined};
 
-    $scope.add = function () {
+    this.add = function () {
         ngDialog.openConfirm({
             template: "addTemplateId",
             scope: $scope
         }).then(function () {
-            if ($scope.parent.costcenter === undefined) {
-                $scope.costcenters.push($scope.costcenter);
+            if (that.parent.costcenter === undefined) {
+                that.costcenters.push(that.costcenter);
             } else {
-                $scope.parent.costcenter.list.push($scope.costcenter);
-                $scope.costcenter.parent = {id:$scope.parent.costcenter.id};
+                that.parent.costcenter.list.push(that.costcenter);
+                that.costcenter.parent = {id:that.parent.costcenter.id};
             }
-            $scope.costcenter = {name: '', filter: ''};
-            $scope.parent = {costcenter: undefined};
-            $scope.data = [];
-            $scope.costcenters.forEach(processCostcenters);
+            that.costcenter = {name: '', filter: ''};
+            that.parent = {costcenter: undefined};
+            that.data = [];
+            that.costcenters.forEach(processCostcenters);
 
         }, function () {
 
@@ -106,17 +107,17 @@ function CostCenterCtrl($scope, $q, costCentersService, ngDialog) {
         }
 
     }
-    $scope.delete = function (row) {
+    this.delete = function (row) {
         if (row.parent === undefined) {
-            removeFromList(row, $scope.costcenters);
+            removeFromList(row, that.costcenters);
         } else {
-            for (var i = 0; i < $scope.costcenters.length; i++) {
-                if ($scope.costcenters[i].id === row.parent.id) {
-                    removeFromList(row, $scope.costcenters[i].list);
+            for (var i = 0; i < that.costcenters.length; i++) {
+                if (that.costcenters[i].id === row.parent.id) {
+                    removeFromList(row, that.costcenters[i].list);
                 }
             }
         }
-        $scope.data = [];
-        $scope.costcenters.forEach(processCostcenters);
+        that.data = [];
+        that.costcenters.forEach(processCostcenters);
     };
-}
+});

@@ -17,31 +17,31 @@
 'use strict';
 /**
  * @ngdoc overview
- * @name abk.config 
+ * @name abkConfig 
  * @description
  * A module containing configuration for the application.
  */
-angular.module('abk.config', []);
+angular.module('abkConfig', []);
 
 /**
  * @ngdoc service  
- * @name abk.config.backendConfig
+ * @name abkConfig.backendConfig
  * @description 
  * holds the backend configuration items
  */
-angular.module('abk.config').constant('backendConfig', {
+angular.module('abkConfig').constant('backendConfig', {
     /**
      * @ngdoc property  
-     * @name abk.config.backendConfig#resourcePath
-     * @propertyOf abk.config.backendConfig
+     * @name abkConfig.backendConfig#resourcePath
+     * @propertyOf abkConfig.backendConfig
      * @returns {string} the server url 
      */
     resourcePath: 'http://localhost:8080/abk-backend/rest',
     
     /**
      * @ngdoc property  
-     * @name abk.config.backendConfig#uploadPath
-     * @propertyOf abk.config.backendConfig
+     * @name abkConfig.backendConfig#uploadPath
+     * @propertyOf abkConfig.backendConfig
      * @returns {string} the server url where uploads should be posted 
      */
     uploadPath: 'http://localhost:8080/abk-backend/upload'

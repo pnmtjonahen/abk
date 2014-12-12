@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-function UploadCtrl($scope, FileUploader, backendConfig) {
+angular.module('abkClientApp').controller("UploadController", function($scope, FileUploader, backendConfig) {
     var uploader = $scope.uploader = new FileUploader({
         url: backendConfig.uploadPath
     });
@@ -66,4 +66,4 @@ function UploadCtrl($scope, FileUploader, backendConfig) {
 //    };
 
 //    console.info('uploader', uploader);
-};
+});

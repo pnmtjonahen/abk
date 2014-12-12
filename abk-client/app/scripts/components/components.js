@@ -17,15 +17,15 @@
 'use strict';
 /**
  * @ngdoc overview
- * @name abk.components 
+ * @name abkComponents 
  * @description
  * A module containing components used by the application.
  */
-angular.module('abk.components', []);
+angular.module('abkComponents', []);
 
 /**
  * @ngdoc directive
- * @name abk.components.directive:amount
+ * @name abkComponents.directive:amount
  * @restrict E
  * @description
  * Formats an double as an amount. 
@@ -49,7 +49,7 @@ p.credit {
  * </pre>
  *  
  * @example
-    <doc:example module="abk.components">
+    <doc:example module="abkComponents">
         <doc:source>
             <style>
                 table.amount {
@@ -100,7 +100,7 @@ p.credit {
  *
  * @param {Object} data an object with an amount property. 
  */
-angular.module('abk.components').directive('amount', [
+angular.module('abkComponents').directive('amount', [
     function () {
         return {
             restrict: 'E',
@@ -116,7 +116,7 @@ angular.module('abk.components').directive('amount', [
 
 /**
  * @ngdoc service
- * @name abk.components.service:currentDate
+ * @name abkComponents.service:currentDate
  * @description
  * factory to get the current date or the current date range (start of month to end of month)
  * @example 
@@ -126,7 +126,7 @@ angular.module('abk.components').directive('amount', [
     var range = currentDate.range();
  </pre>
  */
-angular.module('abk.components').factory('currentDate', function () {
+angular.module('abkComponents').factory('currentDate', function () {
     return {
         current: function () {
             return new Date();
@@ -142,13 +142,13 @@ angular.module('abk.components').factory('currentDate', function () {
 
 /**
  * @ngdoc directive
- * @name abk.components.directive:contenteditable
+ * @name abkComponents.directive:contenteditable
  * 
  * @description
  * http://gaboesquivel.com/blog/2014/in-place-editing-with-contenteditable-and-angularjs/
  * 
  * @example
-    <doc:example module="abk.components">
+    <doc:example module="abkComponents">
         <doc:source>
             <script>
                 function Ctrl() {
@@ -164,7 +164,7 @@ angular.module('abk.components').factory('currentDate', function () {
  *
  * @param {Object} ngModel the model object. 
  */
-angular.module('abk.components').directive("contenteditable", function() {
+angular.module('abkComponents').directive("contenteditable", function() {
   return {
     require: "ngModel",
     link: function(scope, element, attrs, ngModel) {

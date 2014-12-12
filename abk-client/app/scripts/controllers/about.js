@@ -18,13 +18,19 @@
 
 /**
  * @ngdoc function
- * @name abkClientApp.controller:AboutCtrl
+ * @name abkClientApp.controller:AboutController
  * @description
- * # AboutCtrl
+ * # AboutController
  * Controller of the About page
  */
-function AboutCtrl($scope, $rootScope) {
-    $scope.debug = function() {
+angular.module('abkClientApp').controller("AboutController", AboutController);
+
+function AboutController($rootScope) {
+    $rootScope.showDebug = false;
+    
+    this.debug = function () {
         $rootScope.showDebug = !$rootScope.showDebug;
-    };    
-}
+    };
+   
+};
+

@@ -18,21 +18,21 @@
 
 /**
  * @ngdoc overview
- * @name D3Graph 
+ * @name d3Graph 
  * @description
  * A module containing D3 graph directives.
  */
-angular.module('D3Graph', []);
+angular.module('d3Graph', []);
 
 /**
  * @ngdoc directive
- * @name D3Graph.directive:lineGraph
+ * @name d3Graph.directive:lineGraph
  * @restrict E
  * @description
  * A multi line graph. Draws a x.y line graph using D3 library, make sure that you embed the graph into a bootstrap container-fluid div.
  * @example
  * @example
- <doc:example module="D3Graph">
+ <doc:example module="d3Graph">
  <doc:source>
  <div class="container-fluid">
  <div ng-controller="Ctrl">
@@ -44,7 +44,7 @@ angular.module('D3Graph', []);
  </div>
  </div>
  <script>
- angular.module('D3Graph').controller('Ctrl',['$scope', function($scope) {
+ angular.module('d3Graph').controller('Ctrl',['$scope', function($scope) {
  $scope.xdomain = [0, 10];
  $scope.ydomain = [10, 0];
  $scope.colornames = ['black', 'red'];
@@ -63,7 +63,7 @@ angular.module('D3Graph', []);
  *    
  *
  */
-angular.module('D3Graph').directive('lineGraph', ['$window',
+angular.module('d3Graph').directive('lineGraph', ['$window',
     function ($window) {
         return {
             restrict: 'E',

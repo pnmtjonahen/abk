@@ -16,29 +16,8 @@
  */
 'use strict';
 
-/**
- * @ngdoc overview
- * @name abkClientApp
- * @description
- * # abkClientApp
- *
- * Main module of the application.
- */
-angular
-        .module('abkClientApp', [
-//            'ngAnimate',
-//            'ngCookies',
-//            'ngSanitize',
-            'ngTouch',
-            'ngRoute',
-            'pasvaz.bindonce',
-            'abkServices',
-            'd3Graph',
-            'abkComponents',
-            'angularFileUpload',
-            'ngDialog'
-        ]);
-
-
-
-
+angular.module('abkClientApp').controller("HeaderController", function($scope, $location) {
+    $scope.isActive = function (viewLocation) {
+        return viewLocation === $location.path();
+    };
+});

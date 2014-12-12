@@ -1,18 +1,17 @@
 'use strict';
 
-describe('Controller: ReportsCtrl', function () {
+describe('Controller: ReportsController', function () {
 
     // load the controller's module
     beforeEach(module('abkServices'));
     beforeEach(module('abkClientApp'));
 
-    var scopeMock,
+    var reportCtrl,
             $httpBackend,
             createController,
             currentDateMock;
 
     beforeEach(inject(function (_$httpBackend_, $controller) {
-        scopeMock = {};
         currentDateMock = {
             current: function () {
                 return new Date(2014, 11, 19, 0, 0, 0, 0);
@@ -24,7 +23,7 @@ describe('Controller: ReportsCtrl', function () {
 
         createController = function () {
             $httpBackend.expectGET('http://localhost:8080/abk-backend/rest/transactions?fields=date,debitCreditIndicator,amount,contraAccountName&limit=9999&q=date%3D%5B0113-12-18T23:00:00.000Z+2014-12-18T23:00:00.000Z%5D');
-            $controller('ReportsCtrl', {$scope: scopeMock, currentDate: currentDateMock});
+            reportCtrl = $controller('ReportsController', {currentDate: currentDateMock});
             $httpBackend.flush();
         };
     }));
@@ -37,7 +36,7 @@ describe('Controller: ReportsCtrl', function () {
     it('should have a report with data', function () {
         createController();
 
-        expect(scopeMock.report.month.length).toBe(13);
+        expect(reportCtrl.month.length).toBe(13);
     });
 
 });

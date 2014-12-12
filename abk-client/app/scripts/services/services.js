@@ -18,20 +18,20 @@
 'use strict';
 /**
  * @ngdoc overview
- * @name abk.services
+ * @name abkServices
  * @description
  * 
  * Module defines the services the application uses.
  */
-angular.module('abk.services', ['ngResource', 'abk.config']);
+angular.module('abkServices', ['ngResource', 'abkConfig']);
 
 /**
  * @ngdoc service 
- * @name abk.services.transactionService
+ * @name abkServices.transactionService
  * @requires $resource
- * @requires abk.config.backendConfig
+ * @requires abkConfig.backendConfig
 **/
-angular.module('abk.services').factory('transactionsService', function($resource, backendConfig) {
+angular.module('abkServices').factory('transactionsService', function($resource, backendConfig) {
     return $resource(backendConfig.resourcePath + '/transactions', {}, {
         get:  {method:'GET', params:{}, isArray:false}
     });
@@ -39,11 +39,11 @@ angular.module('abk.services').factory('transactionsService', function($resource
 
 /**
  * @ngdoc service 
- * @name abk.services.costCentersService
+ * @name abkServices.costCentersService
  * @requires $resource
- * @requires abk.config.backendConfig
+ * @requires abkConfig.backendConfig
 **/
-angular.module('abk.services').factory('costCentersService', function($resource, backendConfig) {
+angular.module('abkServices').factory('costCentersService', function($resource, backendConfig) {
     return $resource(backendConfig.resourcePath + '/costcenters/:id', {id:'@id'}, {
         get:  {method:'GET', params:{}, isArray:false},
         post: {method: 'PUT', params: {}, isArray: true},

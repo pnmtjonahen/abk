@@ -1,9 +1,9 @@
 <ul class="pagination .pagination-lg">
-    <li><a ng-click='previous()' style="cursor: pointer;"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
-    <li><a ng-click='next()' style="cursor: pointer;"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
+    <li><a ng-click='homeCtrl.previous()' style="cursor: pointer;"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
+    <li><a ng-click='homeCtrl.next()' style="cursor: pointer;"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
 </ul>
-<p>{{range.start| date : shortDate}}&nbsp;-&nbsp;{{range.end| date : shortDate}}</p>
-<div ng-if="data === undefined">
+<p>{{homeCtrl.range.start| date : shortDate}}&nbsp;-&nbsp;{{range.end| date : shortDate}}</p>
+<div ng-if="homeCtrl.data === undefined">
     <div class="container" id="parent">
         <div class="row">
             <div class="col-lg-12">
@@ -14,42 +14,42 @@
         </div>
     </div>
 </div>
-<table ng-if="data !== undefined" class="table table-hover table-bordered table-condensed table-striped table-responsive">
+<table ng-if="homeCtrl.data !== undefined" class="table table-hover table-bordered table-condensed table-striped table-responsive">
     <thead>
         <tr class='day'>
             <th>&nbsp;</th>
             <th>&nbsp;</th>
-            <th ng-repeat="h in dayheader">{{weekday($index) ? h.day : ''}}</th>
+            <th ng-repeat="h in homeCtrl.dayheader">{{homeCtrl.weekday($index) ? h.day : ''}}</th>
         </tr>
         <tr>
             <th>Activity</th>
             <th>Total</th>
-            <th class='day' ng-repeat="h in header">{{weekday($index) ? h : ''}}</th>
+            <th class='day' ng-repeat="h in homeCtrl.header">{{homeCtrl.weekday($index) ? h : ''}}</th>
         </tr>
     </thead>
     <tfoot>
         <tr>
             <td>Total</td>
             <td><amount data='{amount:totalAmount}'/></td>
-<td class='day' ng-repeat="rdata in total"><amount data='rdata'/></td>
-</tr>
-<tr>
-    <td>Un-Accounted</td>
-    <td><amount data='{amount:totalUnAccounted}'/></td>
-</tr>
-</tfoot>
-<tbody>
-    <tr bindonce ng-repeat="row in data" ng-show='showRow(row)'>
-        <td ng-click='selectRow(row)' ><p ng-class="row.costcenter.parent ? 'text-right' : 'text-left'">{{row.costcenter.name}}</p></td>
-        <td ><amount data='row.sum'/></td>
-<td class='day' ng-repeat="rdata in row.data"><amount data='rdata'/></td>
-</tr>
-</tbody>
-</table>
+            <td class='day' ng-repeat="rdata in homeCtrl.total"><amount data='rdata'/></td>
+            </tr>
+            <tr>
+                <td>Un-Accounted</td>
+                <td><amount data='{amount:homeCtrl.totalUnAccounted}'/></td>
+            </tr>
+        </tfoot>
+        <tbody>
+            <tr bindonce ng-repeat="row in homeCtrl.data" ng-show='homeCtrl.showRow(row)'>
+                <td ng-click='homeCtrl.selectRow(row)' ><p ng-class="row.costcenter.parent ? 'text-right' : 'text-left'">{{row.costcenter.name}}</p></td>
+                <td ><amount data='row.sum'/></td>
+                <td class='day' ng-repeat="rdata in row.data"><amount data='rdata'/></td>
+            </tr>
+        </tbody>
+    </table>
 <nav>
     <ul class="pagination .pagination-lg">
-        <li><a ng-click='previous()' style="cursor: pointer;"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
-        <li><a ng-click='next()' style="cursor: pointer;"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
+        <li><a ng-click='homeCtrl.previous()' style="cursor: pointer;"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
+        <li><a ng-click='homeCtrl.next()' style="cursor: pointer;"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
     </ul>
 </nav>
 <div ng-if="showDebug">
