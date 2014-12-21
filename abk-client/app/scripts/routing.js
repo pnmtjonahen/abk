@@ -15,16 +15,60 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 'use strict';
-angular.module('abkClientApp').config(['$routeProvider', function($routeProvider) {
-        $routeProvider.
-                when('/home', {templateUrl: 'views/home.html', controller: 'HomeController', controllerAs:'homeCtrl'}).
-                when('/about', {templateUrl: 'views/about.html', controller: 'AboutController', controllerAs:'aboutCtrl'}).
-                when('/contact', {templateUrl: 'views/contact.html', controller: 'ContactController', controllerAs:'ContactCtrl'}).
-                when('/transaction', {templateUrl: 'views/transaction.html', controller: 'TransactionController', controllerAs:'transactionCtrl'}).
-                when('/reports', {templateUrl: 'views/reports.html', controller: 'ReportsController', controllerAs:'reportCtrl'}).
-                when('/costcenter', {templateUrl: 'views/costcenter.html', controller: 'CostCenterController', controllerAs:'costCenterCtrl'}).
-                when('/upload', {templateUrl: 'views/upload.html', controller: 'UploadController'})
-        ;
-//                .
-//                otherwise({redirectTo: '/home'});
-    }]);
+angular.module('abkClientApp').config(function ($stateProvider, $urlRouterProvider) {
+
+    $urlRouterProvider.otherwise('/home');
+
+    $stateProvider
+
+            // HOME STATES AND NESTED VIEWS ========================================
+            .state('home', {
+                url: '/home',
+                templateUrl: 'views/home.html',
+                controller: 'HomeController',
+                controllerAs: 'homeCtrl'
+            })
+            .state('costcalculation', {
+                url: '/costcalculation',
+                templateUrl: 'views/costcalculation.html',
+                controller: 'CostCalculationController',
+                controllerAs: 'costcalculationCtrl'
+            })
+
+            .state('about', {
+                url: '/about',
+                templateUrl: 'views/about.html',
+                controller: 'AboutController',
+                controllerAs: 'aboutCtrl'
+            })
+
+            .state('contact', {
+                url: '/contact',
+                templateUrl: 'views/contact.html',
+                controller: 'ContactController',
+                controllerAs: 'ContactCtrl'
+            })
+            .state('transaction', {
+                url:'/transaction',
+                templateUrl: 'views/transaction.html', 
+                controller: 'TransactionController', 
+                controllerAs: 'transactionCtrl'
+            })
+            .state('reports', {
+                url:'/reports',
+                templateUrl: 'views/reports.html', 
+                controller: 'ReportsController', 
+                controllerAs: 'reportCtrl'
+            })
+            .state('costcenter', {
+                url:'/costcenter',
+                templateUrl: 'views/costcenter.html', 
+                controller: 'CostCenterController', 
+                controllerAs: 'costCenterCtrl'
+            })
+            .state('upload', {
+                url:'/upload',
+                templateUrl: 'views/upload.html', 
+                controller: 'UploadController'
+            });
+});

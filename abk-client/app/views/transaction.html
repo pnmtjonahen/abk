@@ -35,7 +35,7 @@
         </tr>
     </tbody>
     <tbody ng-if="transactionCtrl.showall">
-        <tr ng-repeat="t in transactionCtrl.data.list">
+        <tr ng-animate=" 'animate' " ng-repeat="t in transactionCtrl.data.list">
             <td class="screentablet" ng-class="t.matched ? 'matched' : 'unmatched'">{{t.costcenter}}</td>
             <td ng-class="t.matched ? 'matched' : 'unmatched'" nowrap>{{t.date | date:shortDate}}</td>
             <td ng-class="t.matched ? 'matched' : 'unmatched'"><amount data='t.amount'/></td>

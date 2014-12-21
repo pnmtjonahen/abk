@@ -26,17 +26,17 @@
  */
 angular
         .module('abkClientApp', [
-//            'ngAnimate',
-//            'ngCookies',
-//            'ngSanitize',
+            'ngAnimate',
+            'ngCookies',
+            'ngSanitize',
             'ngTouch',
-            'ngRoute',
             'pasvaz.bindonce',
             'abkServices',
             'd3Graph',
             'abkComponents',
             'angularFileUpload',
-            'ngDialog'
+            'ngDialog',
+            'ui.router'
         ]);
 
 
