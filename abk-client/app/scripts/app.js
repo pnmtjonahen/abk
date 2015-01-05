@@ -24,7 +24,7 @@
  *
  * Main module of the application.
  */
-angular
+var app = angular
         .module('abkClientApp', [
             'ngAnimate',
             'ngCookies',
@@ -38,7 +38,4 @@ angular
             'ngDialog',
             'ui.router'
         ]);
-
-
-
 

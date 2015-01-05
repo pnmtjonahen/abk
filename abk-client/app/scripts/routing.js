@@ -26,49 +26,73 @@ angular.module('abkClientApp').config(function ($stateProvider, $urlRouterProvid
                 url: '/home',
                 templateUrl: 'views/home.html',
                 controller: 'HomeController',
-                controllerAs: 'homeCtrl'
+                controllerAs: 'homeCtrl',
+                data : {
+                    requireLogin: false
+                }
             })
             .state('costcalculation', {
                 url: '/costcalculation',
                 templateUrl: 'views/costcalculation.html',
                 controller: 'CostCalculationController',
-                controllerAs: 'costcalculationCtrl'
+                controllerAs: 'costcalculationCtrl',
+                data : {
+                    requireLogin: false
+                }
             })
 
             .state('about', {
                 url: '/about',
                 templateUrl: 'views/about.html',
                 controller: 'AboutController',
-                controllerAs: 'aboutCtrl'
+                controllerAs: 'aboutCtrl',
+                data : {
+                    requireLogin: false
+                }
             })
 
             .state('contact', {
                 url: '/contact',
                 templateUrl: 'views/contact.html',
                 controller: 'ContactController',
-                controllerAs: 'ContactCtrl'
+                controllerAs: 'ContactCtrl',
+                data : {
+                    requireLogin: false
+                }
             })
             .state('transaction', {
                 url:'/transaction',
                 templateUrl: 'views/transaction.html', 
                 controller: 'TransactionController', 
-                controllerAs: 'transactionCtrl'
+                controllerAs: 'transactionCtrl',
+                data : {
+                    requireLogin: false
+                }
             })
             .state('reports', {
                 url:'/reports',
                 templateUrl: 'views/reports.html', 
                 controller: 'ReportsController', 
-                controllerAs: 'reportCtrl'
+                controllerAs: 'reportCtrl',
+                data : {
+                    requireLogin: false
+                }
             })
             .state('costcenter', {
                 url:'/costcenter',
                 templateUrl: 'views/costcenter.html', 
                 controller: 'CostCenterController', 
-                controllerAs: 'costCenterCtrl'
+                controllerAs: 'costCenterCtrl',
+                data : {
+                    requireLogin: false
+                }
             })
             .state('upload', {
                 url:'/upload',
                 templateUrl: 'views/upload.html', 
-                controller: 'UploadController'
+                controller: 'UploadController',
+                data : {
+                    requireLogin: false
+                }
             });
 });

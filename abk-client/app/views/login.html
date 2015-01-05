@@ -1,0 +1,36 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well well-sm">
+                <form class="form-horizontal" method="post">
+                    <fieldset>
+                        <legend class="text-center header">Login</legend>
+
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label>Name</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input id="fname" name="name" type="text" placeholder="Name" class="form-control" ng-model="LoginCtrl.name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <label>Password</label>
+                            </div>
+                            <div class="col-md-8">
+                                <input id="fpassword" name="password" type="text" placeholder="Filter" class="form-control" ng-model="LoginCtrl.password">
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                <div class="btn-group">
+                    <button class='btn btn-primary' ng-click="submit()">Login</button>
+                    <button class='btn btn-default' ng-click="cancel()">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+

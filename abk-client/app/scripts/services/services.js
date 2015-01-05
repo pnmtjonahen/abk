@@ -50,3 +50,11 @@ angular.module('abkServices').factory('costCentersService', function($resource, 
         delete: {method: 'DELETE', params: {}, isArray:false}
     });
 });
+
+angular.module('abkServices').factory('UsersApi', function($resource, backendConfig) {
+    return $resource(backendConfig.resourcePath + '/login', {}, {
+        login: {method: 'PUT', params: {}, isArray: true},
+    });
+});
+
+

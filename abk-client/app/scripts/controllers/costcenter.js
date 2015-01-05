@@ -28,8 +28,6 @@ angular.module('abkClientApp').controller("CostCenterController", function(costC
     this.costcenters;
     this.current;
     this.storing = false;
-    this.costcenter = {name: '', filter: ''};
-    this.parent = {costcenter: undefined};
 
     var that = this;
     var processCostcenters = function (e) {
@@ -48,6 +46,9 @@ angular.module('abkClientApp').controller("CostCenterController", function(costC
     };
     retrieveCostCenters();
 
+    this.revert = function() {
+        retrieveCostCenters()
+    };
     this.showRow = function (row) {
         if (row.parent !== undefined) {
             if (that.current !== undefined) {
@@ -81,21 +82,24 @@ angular.module('abkClientApp').controller("CostCenterController", function(costC
     this.add = function () {
         ngDialog.openConfirm({
             template: "addTemplateId",
-            scope: $scope
-        }).then(function () {
-            if (that.parent.costcenter === undefined) {
-                that.costcenters.push(that.costcenter);
-            } else {
-                that.parent.costcenter.list.push(that.costcenter);
-                that.costcenter.parent = {id:that.parent.costcenter.id};
-            }
-            that.costcenter = {name: '', filter: ''};
-            that.parent = {costcenter: undefined};
-            that.data = [];
-            that.costcenters.forEach(processCostcenters);
-
-        }, function () {
-
+            controller: ['$scope','costCentersService', function($scope, costCentersService) {
+                $scope.costcenters = that.costcenters;
+                $scope.costcenter = {name: '', filter: ''};
+                $scope.parent = {costcenter: undefined};
+                
+                
+                $scope.ok = function() {
+                    if ($scope.parent.costcenter === undefined) {
+                        that.costcenters.push($scope.costcenter);
+                    } else {
+                        $scope.parent.costcenter.list.push($scope.costcenter);
+                        $scope.costcenter.parent = {id:$scope.parent.costcenter.id};
+                    }
+                    that.data = [];
+                    that.costcenters.forEach(processCostcenters);
+                    $scope.confirm();
+                };
+            }]
         });
     };
 

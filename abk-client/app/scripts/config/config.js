@@ -36,7 +36,7 @@ angular.module('abkConfig').constant('backendConfig', {
      * @propertyOf abkConfig.backendConfig
      * @returns {string} the server url 
      */
-    resourcePath: 'http://localhost:8080/abk-backend/rest',
+    resourcePath: 'https://localhost:8181/abk-backend/rest',
     
     /**
      * @ngdoc property  
@@ -44,7 +44,7 @@ angular.module('abkConfig').constant('backendConfig', {
      * @propertyOf abkConfig.backendConfig
      * @returns {string} the server url where uploads should be posted 
      */
-    uploadPath: 'http://localhost:8080/abk-backend/upload'
+    uploadPath: 'https://localhost:8181/abk-backend/upload'
 });
 
 

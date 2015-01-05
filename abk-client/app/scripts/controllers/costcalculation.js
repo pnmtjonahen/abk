@@ -90,62 +90,66 @@ angular.module('abkClientApp').controller("CostCalculationController", function 
     };
 
 
+    function processResult(result) {
+
+        that.dayheader = function () {
+            var weekdays = ["s", "m", "t", "w", "t", "f", "s"];
+            var ddata = [];
+            var today = new Date(that.range.start);
+            for (var i = 0; i < that.lastDay; i++) {
+                today.setDate(i + 1);
+                ddata.push({day: weekdays[today.getDay()]});
+            }
+
+            return ddata;
+        }();
+        for (var j = 0; j < that.lastDay; j++) {
+            that.header.push('' + (j + 1));
+        }
+
+        that.total = buildDataRow();
+
+        that.data = [];
+
+        var transactions = result[0];
+        var costcenters = result[1];
+
+        costcenters.list.forEach(processCostcenters);
+
+        transactions.list.forEach(function (t) {
+            that.data.forEach(function (c) {
+                if (c.costcenter.filter &&
+                        (c.costcenter.filter.test(t.description) || c.costcenter.filter.test(t.contraAccountName))) {
+                    updateAmount(c.data, t);
+
+                }
+                if (c.costcenter.list) {
+                    c.costcenter.list.forEach(function (sc) {
+                        if (sc.filter &&
+                                (sc.filter.test(t.description) || sc.filter.test(t.contraAccountName))) {
+                            updateAmount(c.data, t);
+                        }
+                    });
+                }
+            });
+            updateAmount(that.total, t);
+        });
+        that.data.forEach(function (c) {
+            c.sum = {amount: sum(c.data)};
+        });
+        that.totalAmount = sum(that.total);
+        var totalAccounted = that.data.reduce(function (t, c) {
+            return {sum: {amount: t.sum.amount + c.sum.amount}};
+        }, {sum: {amount: 0}}).sum.amount;
+        that.totalUnAccounted = that.totalAmount - totalAccounted;
+    };
+    
+    
+    
     var retrieveData = function () {
         $q.all([transactionsService.get({q: 'date=[' + that.range.start.toJSON() + ' ' + that.range.end.toJSON() + ']', limit: 9999,
                 fields: 'date,debitCreditIndicator,amount,description,contraAccountName'}).$promise,
-            costCentersService.get({expand: 3}).$promise]).then(function (result) {
-
-            that.dayheader = function () {
-                var weekdays = ["s", "m", "t", "w", "t", "f", "s"];
-                var ddata = [];
-                var today = new Date(that.range.start);
-                for (var i = 0; i < that.lastDay; i++) {
-                    today.setDate(i + 1);
-                    ddata.push({day: weekdays[today.getDay()]});
-                }
-
-                return ddata;
-            }();
-            for (var j = 0; j < that.lastDay; j++) {
-                that.header.push('' + (j + 1));
-            }
-
-            that.total = buildDataRow();
-
-            that.data = [];
-
-            var transactions = result[0];
-            var costcenters = result[1];
-
-            costcenters.list.forEach(processCostcenters);
-
-            transactions.list.forEach(function (t) {
-                that.data.forEach(function (c) {
-                    if (c.costcenter.filter &&
-                            (c.costcenter.filter.test(t.description) || c.costcenter.filter.test(t.contraAccountName))) {
-                        updateAmount(c.data, t);
-
-                    }
-                    if (c.costcenter.list) {
-                        c.costcenter.list.forEach(function (sc) {
-                            if (sc.filter &&
-                                    (sc.filter.test(t.description) || sc.filter.test(t.contraAccountName))) {
-                                updateAmount(c.data, t);
-                            }
-                        });
-                    }
-                });
-                updateAmount(that.total, t);
-            });
-            that.data.forEach(function (c) {
-                c.sum = {amount: sum(c.data)};
-            });
-            that.totalAmount = sum(that.total);
-            var totalAccounted = that.data.reduce(function (t, c) {
-                return {sum: {amount: t.sum.amount + c.sum.amount}};
-            }, {sum: {amount: 0}}).sum.amount;
-            that.totalUnAccounted = that.totalAmount - totalAccounted;
-        });
+            costCentersService.get({expand: 3}).$promise]).then(processResult);
     };
 
     retrieveData();
