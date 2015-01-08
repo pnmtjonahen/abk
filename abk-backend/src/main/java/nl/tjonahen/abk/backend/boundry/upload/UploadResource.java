@@ -70,7 +70,7 @@ public class UploadResource extends HttpServlet {
     private MessageDigest md;
 
     private CsvJSScripting scripting;
-    
+
     private boolean headers;
     private boolean dryRun;
 
@@ -78,7 +78,8 @@ public class UploadResource extends HttpServlet {
     public void init() throws ServletException {
         super.init();
 
-        final CsvReader reader = entityManager.createNamedQuery("CsvReader.findAll", CsvReader.class).getResultList().get(0);
+        final CsvReader reader = entityManager.createNamedQuery("CsvReader.findAll", 
+                                        CsvReader.class).getResultList().get(0);
         this.scripting = new CsvJSScripting(reader.getScript());
         this.headers = reader.isHeaders();
         this.dryRun = reader.isDryRun();
@@ -87,7 +88,7 @@ public class UploadResource extends HttpServlet {
         } catch (NoSuchAlgorithmException ex) {
             throw new ServletException(ex);
         }
-        
+
     }
 
     /**
@@ -123,14 +124,12 @@ public class UploadResource extends HttpServlet {
         }
     }
 
- 
-
     private boolean processPartJsParsing(InputStream inputStream) {
         try {
             new BufferedReader(new InputStreamReader(inputStream, "UTF-8"))
                     .lines()
                     .skip(headers ? 1 : 0)
-                    .forEach(s -> {
+                    .forEach((String s) -> {
                         try {
                             FinancialTransaction ft = scripting.parse(s);
                             Fintransactie trans = new Fintransactie();
@@ -147,10 +146,13 @@ public class UploadResource extends HttpServlet {
                             if (!dryRun) {
                                 transactionProcessor.process(trans);
                             }
-                        } catch (UnsupportedEncodingException | NumberFormatException | NoSuchMethodException | ScriptException ex) {
-                            LOGGER.severe(ex.getMessage() + " data->" + s);
+                        } catch (UnsupportedEncodingException 
+                                    | NumberFormatException 
+                                    | NoSuchMethodException 
+                                    | ScriptException ex) {
+                            LOGGER.log(Level.SEVERE, "{0} data->{1}", new Object[]{ex.getMessage(), s});
                         }
-                    });
+            });
         } catch (UnsupportedEncodingException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
             return false;
@@ -159,7 +161,7 @@ public class UploadResource extends HttpServlet {
         return true;
     }
 
-        private void updateHash(Fintransactie ft) throws UnsupportedEncodingException {
+    private void updateHash(Fintransactie ft) throws UnsupportedEncodingException {
         md.update(ft.getRekening().getBytes("UTF-8"));
         md.update(ft.getBedrag().toString().getBytes("UTF-8"));
         md.update(ft.getCode().getBytes("UTF-8"));
