@@ -50,6 +50,9 @@ public class CsvReader implements Serializable {
 
     @Column(name = "HEADERS")
     private boolean headers;
+
+    @Column(name = "DRYRUN")
+    private boolean dryRun;
     
     @Lob
     @Column(name = "SCRIPT")
@@ -79,4 +82,13 @@ public class CsvReader implements Serializable {
         this.script = script;
     }
 
+    public boolean isDryRun() {
+        return dryRun;
+    }
+
+    public void setDryRun(boolean dryRun) {
+        this.dryRun = dryRun;
+    }
+
+    
 }

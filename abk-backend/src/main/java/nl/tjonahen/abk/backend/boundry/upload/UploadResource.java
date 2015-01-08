@@ -22,6 +22,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -60,8 +67,12 @@ public class UploadResource extends HttpServlet {
     @PersistenceContext
     private EntityManager entityManager;
 
+    private MessageDigest md;
+
     private CsvJSScripting scripting;
+    
     private boolean headers;
+    private boolean dryRun;
 
     @Override
     public void init() throws ServletException {
@@ -70,6 +81,13 @@ public class UploadResource extends HttpServlet {
         final CsvReader reader = entityManager.createNamedQuery("CsvReader.findAll", CsvReader.class).getResultList().get(0);
         this.scripting = new CsvJSScripting(reader.getScript());
         this.headers = reader.isHeaders();
+        this.dryRun = reader.isDryRun();
+        try {
+            this.md = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException ex) {
+            throw new ServletException(ex);
+        }
+        
     }
 
     /**
@@ -125,7 +143,10 @@ public class UploadResource extends HttpServlet {
                             trans.setBedrag(Double.valueOf(ft.getAmount().replace(',', '.')));
                             trans.setMutatiesoort(ft.getMutatiesoort());
                             trans.setMededeling(ft.getDescription());
-                            transactionProcessor.process(trans);
+                            updateHash(trans);
+                            if (!dryRun) {
+                                transactionProcessor.process(trans);
+                            }
                         } catch (UnsupportedEncodingException | NumberFormatException | NoSuchMethodException | ScriptException ex) {
                             LOGGER.severe(ex.getMessage() + " data->" + s);
                         }
@@ -136,6 +157,27 @@ public class UploadResource extends HttpServlet {
         }
 
         return true;
+    }
+
+        private void updateHash(Fintransactie ft) throws UnsupportedEncodingException {
+        md.update(ft.getRekening().getBytes("UTF-8"));
+        md.update(ft.getBedrag().toString().getBytes("UTF-8"));
+        md.update(ft.getCode().getBytes("UTF-8"));
+        md.update(ft.getTegenrekeningnaam().getBytes("UTF-8"));
+        md.update(ft.getTegenrekeningrekening().getBytes("UTF-8"));
+        final Date datum = ft.getDatum();
+
+        final LocalDateTime ldt = LocalDateTime.ofInstant(
+                Instant.ofEpochMilli(datum.getTime()), ZoneId.systemDefault());
+
+        md.update(ldt.format(DateTimeFormatter.ISO_DATE).getBytes("UTF-8"));
+        md.update(ft.getBijaf().getBytes("UTF-8"));
+        md.update(ft.getMededeling().getBytes("UTF-8"));
+        md.update(ft.getMutatiesoort().getBytes("UTF-8"));
+
+        byte[] digest = md.digest();
+        BigInteger bigInt = new BigInteger(1, digest);
+        ft.setHash(bigInt.toString(16));
     }
 
     /**
