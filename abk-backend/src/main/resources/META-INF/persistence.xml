@@ -3,6 +3,7 @@
   <persistence-unit name="nl.tjonahen_abk-backend_war_1.1-SNAPSHOTPU" transaction-type="JTA">
     <jta-data-source>jdbc/abk</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties/>
+    <properties>
+    </properties>
   </persistence-unit>
 </persistence>

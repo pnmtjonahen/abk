@@ -43,6 +43,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "FINTRANSACTIE")
 @XmlRootElement
 @NamedQueries({
+    @NamedQuery(name = "Fintransactie.findAll", query = "SELECT f FROM Fintransactie f"),  
     @NamedQuery(name = "Fintransactie.findById", query = "SELECT f FROM Fintransactie f WHERE f.id = :id")
 })
 public class Fintransactie implements Serializable {
@@ -61,7 +62,7 @@ public class Fintransactie implements Serializable {
     @Column(name = "CODE")
     private String code;
     @Column(name = "DATUM")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date datum;
     @Lob
     @Column(name = "MEDEDELING")
@@ -81,9 +82,10 @@ public class Fintransactie implements Serializable {
     @JoinColumn(name = "ACCOUNT_REKENING", referencedColumnName = "REKENING")
     @ManyToOne
     private Rekening accountRekening;
-    @JoinColumn(name = "TEGENREKENING_REKENING", referencedColumnName = "REKENING")
-    @ManyToOne
-    private Tegenrekening tegenrekeningRekening;
+    
+    @Size(max = 255)
+    @Column(name = "hash", unique = true)
+    private String hash;
 
     /**
      * 
@@ -187,13 +189,15 @@ public class Fintransactie implements Serializable {
         this.accountRekening = accountRekening;
     }
 
-    public Tegenrekening getTegenrekeningRekening() {
-        return tegenrekeningRekening;
+    public String getHash() {
+        return hash;
     }
 
-    public void setTegenrekeningRekening(Tegenrekening tegenrekeningRekening) {
-        this.tegenrekeningRekening = tegenrekeningRekening;
+    public void setHash(String hash) {
+        this.hash = hash;
     }
+
+    
 
     @Override
     public int hashCode() {

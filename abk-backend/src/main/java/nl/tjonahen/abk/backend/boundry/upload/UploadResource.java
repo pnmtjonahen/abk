@@ -17,7 +17,6 @@
 package nl.tjonahen.abk.backend.boundry.upload;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -29,6 +28,9 @@ import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.script.ScriptException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -36,8 +38,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import nl.tjonahen.abk.backend.CsvJSScripting;
+import nl.tjonahen.abk.backend.entity.CsvReader;
 import nl.tjonahen.abk.backend.entity.Fintransactie;
-import nl.tjonahen.csvreader.CsvReader;
+import nl.tjonahen.abk.backend.model.FinancialTransaction;
 
 /**
  *
@@ -48,9 +52,25 @@ import nl.tjonahen.csvreader.CsvReader;
 public class UploadResource extends HttpServlet {
 
     private static final Logger LOGGER = Logger.getLogger(UploadResource.class.getName());
+    private static final long serialVersionUID = 1L;
 
     @EJB
     private TransactionProcessor transactionProcessor;
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    private CsvJSScripting scripting;
+    private boolean headers;
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+
+        final CsvReader reader = entityManager.createNamedQuery("CsvReader.findAll", CsvReader.class).getResultList().get(0);
+        this.scripting = new CsvJSScripting(reader.getScript());
+        this.headers = reader.isHeaders();
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -74,7 +94,7 @@ public class UploadResource extends HttpServlet {
             out.println("Received " + request.getParts().size() + " parts ...<br>");
             for (Part part : request.getParts()) {
                 final String fileName = part.getSubmittedFileName();
-                if (processPart(part.getInputStream())) {
+                if (processPartJsParsing(part.getInputStream())) {
                     out.println("... process sucess... " + fileName + " part<br>");
                 } else {
                     out.println("... process error... " + fileName + " part<br>");
@@ -85,47 +105,36 @@ public class UploadResource extends HttpServlet {
         }
     }
 
-    private boolean processPart(InputStream inputStream) throws FileNotFoundException {
-        final CsvReader reader;
+ 
+
+    private boolean processPartJsParsing(InputStream inputStream) {
         try {
-            reader = new CsvReader(new BufferedReader(new InputStreamReader(inputStream, "UTF-8")));
+            new BufferedReader(new InputStreamReader(inputStream, "UTF-8"))
+                    .lines()
+                    .skip(headers ? 1 : 0)
+                    .forEach(s -> {
+                        try {
+                            FinancialTransaction ft = scripting.parse(s);
+                            Fintransactie trans = new Fintransactie();
+                            trans.setDatum(makeDate(ft.getDate()));
+                            trans.setTegenrekeningnaam(ft.getContraAccountName());
+                            trans.setRekening(ft.getAccountNumber());
+                            trans.setTegenrekeningrekening(ft.getContraAccountNumber());
+                            trans.setCode(ft.getCode());
+                            trans.setBijaf(ft.getDebitCreditIndicator().equals("debit") ? "Af" : "Bij");
+                            trans.setBedrag(Double.valueOf(ft.getAmount().replace(',', '.')));
+                            trans.setMutatiesoort(ft.getMutatiesoort());
+                            trans.setMededeling(ft.getDescription());
+                            transactionProcessor.process(trans);
+                        } catch (UnsupportedEncodingException | NumberFormatException | NoSuchMethodException | ScriptException ex) {
+                            LOGGER.severe(ex.getMessage() + " data->" + s);
+                        }
+                    });
         } catch (UnsupportedEncodingException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
             return false;
         }
-        try {
-            reader.readHeaders();
-            while (reader.readRecord()) {
-                Fintransactie trans = new Fintransactie();
-                //                "Datum",
-                final GregorianCalendar c = new GregorianCalendar();
-                int count = 0;
-                c.setTime(makeDate(reader.get(count++)));
-                trans.setDatum(c.getTime());
-//                "Naam / Omschrijving",
-                trans.setTegenrekeningnaam(reader.get(count++));
-//                "Rekening",
-                trans.setRekening(reader.get(count++));
-//                "Tegenrekening",
-                trans.setTegenrekeningrekening(reader.get(count++));
-//                "Code",
-                trans.setCode(reader.get(count++));
-//                "Af Bij",
-                trans.setBijaf(reader.get(count++));
-//                "Bedrag (EUR)",
-                trans.setBedrag(Double.valueOf(reader.get(count++).replace(',', '.')));
-//                "MutatieSoort",
-                trans.setMutatiesoort(reader.get(count++));
-//                "Mededelingen"
-                trans.setMededeling(reader.get(count++));
 
-                transactionProcessor.process(trans);
-            }
-        } catch (IOException | NumberFormatException ex) {
-            LOGGER.severe(reader.getRawRecord());
-
-        }
-        reader.close();
         return true;
     }
 
@@ -172,6 +181,5 @@ public class UploadResource extends HttpServlet {
 
         return cal.getTime();
     }
-
 
 }

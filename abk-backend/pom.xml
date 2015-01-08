@@ -30,12 +30,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>nl.tjonahen</groupId>
-            <artifactId>CsvReader</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
         <!-- Test resource -->
         <dependency>
             <groupId>junit</groupId>
