@@ -54,6 +54,7 @@ public class AbkApplication extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(nl.tjonahen.abk.backend.AbkCrossOriginResourceSharingFilter.class);
         resources.add(nl.tjonahen.abk.backend.boundry.account.AccountsResource.class);
+        resources.add(nl.tjonahen.abk.backend.boundry.admin.AdminResource.class);
         resources.add(nl.tjonahen.abk.backend.boundry.costcenter.CostCentersResource.class);
         resources.add(nl.tjonahen.abk.backend.boundry.transaction.FinancialTransactionsResource.class);
     }
