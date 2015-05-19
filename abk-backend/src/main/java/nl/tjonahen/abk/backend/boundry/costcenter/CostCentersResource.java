@@ -16,6 +16,10 @@
  */
 package nl.tjonahen.abk.backend.boundry.costcenter;
 
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiResponse;
+import com.wordnik.swagger.annotations.ApiResponses;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -45,6 +49,7 @@ import nl.tjonahen.abk.backend.entity.Kostenplaats;
  *
  * @author Philippe Tjon - A - Hen, philippe@tjonahen.nl
  */
+@Api(value = "CostCenters resource")
 @Stateless
 @Path("/costcenters")
 public class CostCentersResource {
@@ -59,6 +64,7 @@ public class CostCentersResource {
      * @param expand -
      * @return -
      */
+    @ApiOperation(value = "Get list of all cost centers", response = CostCenters.class)
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public CostCenters get(@Context UriInfo uriInfo, @DefaultValue("0") @QueryParam("expand") int expand) {
@@ -73,10 +79,15 @@ public class CostCentersResource {
      * @param expand -
      * @return -
      */
+    @ApiOperation(value = "Get a CostCenter", response = CostCenter.class)
+    @ApiResponses(
+            @ApiResponse(code = 404, message = "CostCenter not found")
+    )
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response get(@Context UriInfo uriInfo, @PathParam("id") final Long id, @DefaultValue("0") @QueryParam("expand") int expand) {
+    public Response get(@Context UriInfo uriInfo, @PathParam("id") final Long id,
+            @DefaultValue("0") @QueryParam("expand") int expand) {
         Optional<CostCenter> optional = this.get(id, expand);
         if (optional.isPresent()) {
             return Response.ok(optional.get().updateHref(new HRef(uriInfo.getAbsolutePath().toString()).stripId()))
@@ -92,6 +103,7 @@ public class CostCentersResource {
      * @param costCenter -
      * @return -
      */
+    @ApiOperation(value = "Create new CostCenter", response = CostCenter.class)
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response post(@Context UriInfo uriInfo, CostCenter costCenter) {
@@ -100,6 +112,7 @@ public class CostCentersResource {
                 .build();
     }
 
+    @ApiOperation(value = "Update all CostCenters")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response post(List<CostCenter> costcenters) {
@@ -111,12 +124,12 @@ public class CostCentersResource {
     }
 
     private void nullIds(List<CostCenter> costcenters) {
-        for (CostCenter cc : costcenters) {
+        costcenters.stream().map((cc) -> {
             cc.setId(null);
-            if (cc.getList() != null) {
-                nullIds(cc.getList());
-            }
-        }
+            return cc;
+        }).filter((cc) -> (cc.getList() != null)).forEach((cc) -> {
+            nullIds(cc.getList());
+        });
     }
 
     /**
@@ -126,6 +139,10 @@ public class CostCentersResource {
      * @param costCenter -
      * @return -
      */
+    @ApiOperation(value = "Update a CostCenter")
+    @ApiResponses(
+            @ApiResponse(code = 304, message = "In case the CostCenter was not found")
+    )
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -142,6 +159,10 @@ public class CostCentersResource {
      * @param id -
      * @return -
      */
+    @ApiOperation(value = "Delete a CostCenter")
+    @ApiResponses(
+            @ApiResponse(code = 304, message = "In case the CostCenter was not found")
+    )
     @DELETE
     @Path("/{id}")
     public Response delete(@PathParam("id") final Long id) {
@@ -184,7 +205,7 @@ public class CostCentersResource {
     }
 
     private boolean update(Long id, CostCenter costCenter) {
-        Kostenplaats current = null;
+        final Kostenplaats current;
         if (id == null) {
             current = new Kostenplaats();
             entityManager.persist(current);
@@ -192,7 +213,7 @@ public class CostCentersResource {
         } else {
             current = entityManager.find(Kostenplaats.class, id);
         }
-        if (current == null) {
+        if (null == current) {
             return false;
         }
 
@@ -211,7 +232,7 @@ public class CostCentersResource {
 
     private boolean remove(Long id) {
         Kostenplaats current = entityManager.find(Kostenplaats.class, id);
-        if (current == null) {
+        if (null == current) {
             return false;
         }
         entityManager.remove(current);
@@ -223,9 +244,9 @@ public class CostCentersResource {
     }
 
     private void insertAll(List<CostCenter> costcenters) {
-        for (CostCenter cc : costcenters) {
+        costcenters.stream().forEach((cc) -> {
             insertNewRoot(cc);
-        }
+        });
     }
 
     private void insertNewRoot(CostCenter costCenter) {
@@ -234,11 +255,11 @@ public class CostCentersResource {
         current.setNaam(costCenter.getName());
         entityManager.persist(current);
         entityManager.flush();
-        
+
         if (costCenter.getList() != null) {
-            for (CostCenter cc : costCenter.getList()) {
+            costCenter.getList().stream().forEach((cc) -> {
                 insertNewSub(current, cc);
-            }
+            });
         }
     }
 
@@ -249,13 +270,12 @@ public class CostCentersResource {
         current.setParent(parent);
         entityManager.persist(current);
         entityManager.flush();
-        
+
         if (costCenter.getList() != null) {
-            for (CostCenter cc : costCenter.getList()) {
+            costCenter.getList().stream().forEach((cc) -> {
                 insertNewSub(current, cc);
-            }
+            });
         }
-        
-        
+
     }
 }

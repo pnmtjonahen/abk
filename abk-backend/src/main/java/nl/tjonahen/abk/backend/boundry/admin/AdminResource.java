@@ -16,6 +16,8 @@
  */
 package nl.tjonahen.abk.backend.boundry.admin;
 
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
 import java.util.stream.Collectors;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -31,6 +33,7 @@ import nl.tjonahen.abk.backend.model.CsvJsReader;
  *
  * @author Philippe Tjon - A - Hen, philippe@tjonahen.nl
  */
+@Api(value = "Admin resources")
 @Stateless
 @Path("/admin")
 public class AdminResource {
@@ -38,6 +41,7 @@ public class AdminResource {
     @PersistenceContext
     private EntityManager entityManager;
     
+    @ApiOperation(value="Get current configured JavaScript CSV reader", response = CsvJsReader.class)
     @GET
     @Path("/csvreader")
     @Produces(MediaType.APPLICATION_JSON)

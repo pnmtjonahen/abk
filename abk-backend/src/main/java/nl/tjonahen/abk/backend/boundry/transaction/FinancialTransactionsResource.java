@@ -16,6 +16,10 @@
  */
 package nl.tjonahen.abk.backend.boundry.transaction;
 
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiResponse;
+import com.wordnik.swagger.annotations.ApiResponses;
 import java.util.Arrays;
 import nl.tjonahen.abk.backend.model.OrderBy;
 import java.util.Optional;
@@ -46,6 +50,7 @@ import nl.tjonahen.abk.backend.entity.Fintransactie;
  *
  * @author Philippe Tjon - A - Hen, philippe@tjonahen.nl
  */
+@Api(value = "Transaction resources")
 @Stateless
 @Path(ResourcePaths.TRANSACTIONS_PATH)
 public class FinancialTransactionsResource {
@@ -65,6 +70,9 @@ public class FinancialTransactionsResource {
      * @param limit the max number of elements to return
      * @return list of financial transactions
      */
+    @ApiOperation(value = "Get all financial transactions", 
+            notes = "Get transaction, using selecting only specified fields, order the result with the order by, filtering using a query with paging using offset and limit", 
+            response = FinancialTransactions.class)
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public FinancialTransactions get(@Context UriInfo uriInfo,
@@ -87,6 +95,8 @@ public class FinancialTransactionsResource {
      * @param fields the field filter, a comma separated list of fields.
      * @return the requested financial transaction or not found.
      */
+    @ApiOperation(value = "Get a single transaction", response = FinancialTransaction.class)
+    @ApiResponses(@ApiResponse(code = 404, message = "In case of missing transaction"))
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -113,13 +123,13 @@ public class FinancialTransactionsResource {
                 .stream()
                 .skip(offset)
                 .limit(limit)
-                .map(fintransactie -> createFinTransaction(fields, fintransactie) )
+                .map(fintransactie -> createFinTransaction(fields, fintransactie))
                 .collect(Collectors.toList()), offset, limit, count(where));
     }
 
     private FinancialTransaction createFinTransaction(Fields fields, Fintransactie fintransactie) {
         final FinancialTransaction ft = new FinancialTransaction();
-        fields.getList().forEach(f -> FilterField.valueOf(f.toUpperCase()).consume(ft, fintransactie) );
+        fields.getList().forEach(f -> FilterField.valueOf(f.toUpperCase()).consume(ft, fintransactie));
         return ft;
     }
 
@@ -144,10 +154,9 @@ public class FinancialTransactionsResource {
         if (fields.getList().isEmpty()) {
             Arrays.asList(FilterField.values()).forEach(f -> f.consume(ft, fintransactie));
         } else {
-            fields.getList().forEach(f -> FilterField.valueOf(f.toUpperCase()).consume(ft, fintransactie) );
+            fields.getList().forEach(f -> FilterField.valueOf(f.toUpperCase()).consume(ft, fintransactie));
         }
         return ft;
     }
-
 
 }

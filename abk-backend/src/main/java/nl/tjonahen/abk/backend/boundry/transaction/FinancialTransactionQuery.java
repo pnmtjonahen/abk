@@ -79,10 +79,13 @@ class FinancialTransactionQuery {
         addWhereClause(cb, fintransactieRoot, cq);
         return cq;
     }
-    private void addWhereClause(final CriteriaBuilder cb, final Root<Fintransactie> fintransactieRoot, final CriteriaQuery cq) {
+    
+    private void addWhereClause(final CriteriaBuilder cb, final Root<Fintransactie> fintransactieRoot, 
+                        final CriteriaQuery cq) {
         final Optional<Predicate> reduce = where.getWhereClause()
                 .stream()
-                .map(kv -> PredicateField.valueOf(kv.getKey().toUpperCase()).predicate(cb, fintransactieRoot, kv.getValue()))
+                .map(kv -> PredicateField.valueOf(kv.getKey().toUpperCase())
+                                        .predicate(cb, fintransactieRoot, kv.getValue()))
                 .reduce((a, b) -> cb.and(a, b));
         if (reduce.isPresent()) {
             cq.where(reduce.get());
