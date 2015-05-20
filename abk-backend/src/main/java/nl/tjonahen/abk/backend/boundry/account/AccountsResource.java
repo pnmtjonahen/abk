@@ -43,10 +43,6 @@ public class AccountsResource {
     @PersistenceContext
     private EntityManager entityManager;
 
-    /**
-     * 
-     * @return list of accounts (wrapped) 
-     */
     @ApiOperation(value="Get all accounts", response = Accounts.class)
     @GET
     @Produces(MediaType.APPLICATION_JSON)

@@ -18,6 +18,7 @@ package nl.tjonahen.abk.backend.boundry.transaction;
 
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
 import com.wordnik.swagger.annotations.ApiResponse;
 import com.wordnik.swagger.annotations.ApiResponses;
 import java.util.Arrays;
@@ -50,7 +51,7 @@ import nl.tjonahen.abk.backend.entity.Fintransactie;
  *
  * @author Philippe Tjon - A - Hen, philippe@tjonahen.nl
  */
-@Api(value = "Transaction resources")
+@Api(value = "Transaction resources.")
 @Stateless
 @Path(ResourcePaths.TRANSACTIONS_PATH)
 public class FinancialTransactionsResource {
@@ -61,25 +62,21 @@ public class FinancialTransactionsResource {
     @Inject
     private FinancialTransactionQueryBuilder financialTransactionQueryBuilder;
 
-    /**
-     * @param uriInfo the uri info for getting the current url
-     * @param fields the field filter, a comma separated list of fields.
-     * @param orderBy sort ordering
-     * @param query the query string
-     * @param offset the offset into the result list
-     * @param limit the max number of elements to return
-     * @return list of financial transactions
-     */
     @ApiOperation(value = "Get all financial transactions", 
             notes = "Get transaction, using selecting only specified fields, order the result with the order by, filtering using a query with paging using offset and limit", 
             response = FinancialTransactions.class)
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public FinancialTransactions get(@Context UriInfo uriInfo,
+            @ApiParam(value = "Transaction fields that should be in the output", name = "fields")
             @DefaultValue("") @QueryParam("fields") String fields,
+            @ApiParam(value = "The order of the transactions in the resulting list", name = "orderBy")
             @DefaultValue("") @QueryParam("orderBy") String orderBy,
+            @ApiParam(value = "The query string", name = "q")
             @DefaultValue("") @QueryParam("q") String query,
+            @ApiParam(value = "The offset into the result list", name = "offset")
             @DefaultValue("0") @QueryParam("offset") int offset,
+            @ApiParam(value = "The max nnumber of transaction to return", name = "limit")
             @DefaultValue("25") @QueryParam("limit") int limit) {
         return this.get(new Fields(fields),
                 new Where(query),
@@ -101,7 +98,9 @@ public class FinancialTransactionsResource {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response get(@Context UriInfo uriInfo,
+            @ApiParam(value = "id of the transaction", name = "id")
             @PathParam("id") final Long id,
+            @ApiParam(value = "Transaction fields that should be in the output", name = "fields")
             @DefaultValue("") @QueryParam("fields") String fields) {
         final Optional<FinancialTransaction> optional = this.get(id, new Fields(fields));
         if (optional.isPresent()) {
