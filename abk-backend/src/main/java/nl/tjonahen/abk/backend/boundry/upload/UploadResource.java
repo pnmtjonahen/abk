@@ -150,7 +150,7 @@ public class UploadResource extends HttpServlet {
                                     | NumberFormatException 
                                     | NoSuchMethodException 
                                     | ScriptException ex) {
-                            LOGGER.log(Level.SEVERE, "{0} data->{1}", new Object[]{ex.getMessage(), s});
+                            LOGGER.log(Level.SEVERE, "{0} {1} data->{2}", new Object[]{ex, ex.getMessage(), s});
                         }
             });
         } catch (UnsupportedEncodingException ex) {
