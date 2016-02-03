@@ -117,6 +117,7 @@ angular.module('abkClientApp').controller("CostCalculationController", function 
         costcenters.list.forEach(processCostcenters);
 
         transactions.list.forEach(function (t) {
+            /* Update day column per costcenter */
             that.data.forEach(function (c) {
                 if (c.costcenter.filter &&
                         (c.costcenter.filter.test(t.description) || c.costcenter.filter.test(t.contraAccountName))) {
@@ -132,15 +133,24 @@ angular.module('abkClientApp').controller("CostCalculationController", function 
                     });
                 }
             });
+            /* update total per day */
             updateAmount(that.total, t);
         });
+        
+        /* sum totals per costcenter */
         that.data.forEach(function (c) {
             c.sum = {amount: sum(c.data)};
         });
+        
+        /* sum all day totals */
         that.totalAmount = sum(that.total);
+        
         var totalAccounted = that.data.reduce(function (t, c) {
-            return {sum: {amount: t.sum.amount + c.sum.amount}};
+            if (c.costcenter.parent === undefined) 
+                return {sum: {amount: t.sum.amount + c.sum.amount}};
+            return t;
         }, {sum: {amount: 0}}).sum.amount;
+        
         that.totalUnAccounted = that.totalAmount - totalAccounted;
     };
     

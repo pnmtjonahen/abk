@@ -15,14 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 'use strict';
-
+(function() {
 /**
  * @ngdoc overview
  * @name d3Graph 
  * @description
  * A module containing D3 graph directives.
  */
-angular.module('d3Graph', []);
+var d3Graph = angular.module('d3Graph', []);
 
 /**
  * @ngdoc directive
@@ -63,7 +63,7 @@ angular.module('d3Graph', []);
  *    
  *
  */
-angular.module('d3Graph').directive('lineGraph', ['$window',
+d3Graph.directive('lineGraph', ['$window',
     function ($window) {
         return {
             restrict: 'E',
@@ -184,5 +184,4 @@ angular.module('d3Graph').directive('lineGraph', ['$window',
         };
     }
 ]);
-
-
+})();

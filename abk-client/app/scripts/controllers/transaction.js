@@ -79,7 +79,10 @@ angular.module('abkClientApp').controller("TransactionController", function($q, 
                     if (c.filter && 
                             (c.filter.test(t.description) || c.filter.test(t.contraAccountName))) {
                         t.matched = true;
-                        t.costcenter = c.name;
+                        if (t.costcenter !== undefined)
+                            t.costcenter = t.costcenter + ' / ' + c.name;
+                        else
+                            t.costcenter = c.name;
 
                     }
                     if (c.list) {
@@ -87,7 +90,10 @@ angular.module('abkClientApp').controller("TransactionController", function($q, 
                             if (sc.filter && 
                                     (sc.filter.test(t.description) || sc.filter.test(t.contraAccountName))) {
                                 t.matched = true;
-                                t.costcenter = sc.name;
+                                if (t.costcenter !== undefined)
+                                    t.costcenter = t.costcenter + ' / ' + sc.name;
+                                else
+                                    t.costcenter = sc.name;
 
                             }
                         });

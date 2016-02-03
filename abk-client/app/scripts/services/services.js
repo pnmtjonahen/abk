@@ -51,10 +51,15 @@ angular.module('abkServices').factory('costCentersService', function($resource, 
     });
 });
 
+angular.module('abkServices').factory('csvReaderService', function($resource, backendConfig) {
+    return $resource(backendConfig.resourcePath + '/admin/csvreader', {}, {
+        get: {method: 'GET', params: {}, isArray: false},
+    });
+});
+
 angular.module('abkServices').factory('UsersApi', function($resource, backendConfig) {
     return $resource(backendConfig.resourcePath + '/login', {}, {
         login: {method: 'PUT', params: {}, isArray: true},
     });
 });
-
 
