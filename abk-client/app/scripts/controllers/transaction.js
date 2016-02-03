@@ -23,16 +23,16 @@
  * # TransactionController
  * Controller of the abkClientApp
  */
-angular.module('abkClientApp').controller("TransactionController", function($q, currentDate, transactionsService, costCentersService) {
+angular.module('abkClientApp').controller("TransactionController", function ($q, currentDate, transactionsService, costCentersService) {
     this.data = undefined;
     this.showall = false;
     this.range = currentDate.range();
 
     var that = this;
-    
+
     this.previous = function () {
+        that.range.end.setMonth(that.range.start.getMonth(), 0);
         that.range.start.setMonth(that.range.start.getMonth() - 1);
-        that.range.end.setMonth(that.range.end.getMonth() - 1);
         that.data = undefined;
 
         retrieveData();
@@ -40,7 +40,7 @@ angular.module('abkClientApp').controller("TransactionController", function($q, 
 
     this.next = function () {
         that.range.start.setMonth(that.range.start.getMonth() + 1);
-        that.range.end.setMonth(that.range.end.getMonth() + 1);
+        that.range.end.setMonth(that.range.start.getMonth() + 1, 0);
         that.data = undefined;
 
         retrieveData();
@@ -76,7 +76,7 @@ angular.module('abkClientApp').controller("TransactionController", function($q, 
                     t.amount = {amount: parseFloat(t.amount)};
                 }
                 costcenters.list.forEach(function (c) {
-                    if (c.filter && 
+                    if (c.filter &&
                             (c.filter.test(t.description) || c.filter.test(t.contraAccountName))) {
                         t.matched = true;
                         if (t.costcenter !== undefined)
@@ -87,7 +87,7 @@ angular.module('abkClientApp').controller("TransactionController", function($q, 
                     }
                     if (c.list) {
                         c.list.forEach(function (sc) {
-                            if (sc.filter && 
+                            if (sc.filter &&
                                     (sc.filter.test(t.description) || sc.filter.test(t.contraAccountName))) {
                                 t.matched = true;
                                 if (t.costcenter !== undefined)

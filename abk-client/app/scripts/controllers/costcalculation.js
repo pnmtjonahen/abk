@@ -75,8 +75,8 @@ angular.module('abkClientApp').controller("CostCalculationController", function 
     };
 
     this.previous = function () {
+        that.range.end.setMonth(that.range.start.getMonth(), 0);
         that.range.start.setMonth(that.range.start.getMonth() - 1);
-        that.range.end.setMonth(that.range.end.getMonth() - 1);
 
         init();
         retrieveData();
@@ -84,7 +84,7 @@ angular.module('abkClientApp').controller("CostCalculationController", function 
 
     this.next = function () {
         that.range.start.setMonth(that.range.start.getMonth() + 1);
-        that.range.end.setMonth(that.range.end.getMonth() + 1);
+        that.range.end.setMonth(that.range.start.getMonth() + 1, 0);
         init();
         retrieveData();
     };

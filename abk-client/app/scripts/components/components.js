@@ -133,8 +133,8 @@ angular.module('abkComponents').factory('currentDate', function () {
         },
         range: function () {
             var now = this.current();
-            var end = new Date(now.getFullYear(), now.getMonth() + 1, 1);
-            var start = new Date(now.getFullYear(), now.getMonth(), 1);
+            var end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 1, 0, 0);
+            var start = new Date(now.getFullYear(), now.getMonth(), 1, 1, 0, 0);
             return {'start': start, 'end': end};
         }
     };
