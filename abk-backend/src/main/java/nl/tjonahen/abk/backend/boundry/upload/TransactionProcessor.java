@@ -52,6 +52,11 @@ public class TransactionProcessor {
      * @param trans transaction to create
      */
     public void process(final Fintransactie trans) {
+        if (!entityManager.createNamedQuery("Fintransactie.findByHash")
+                .setParameter("hash", trans.getHash())
+                .getResultList().isEmpty()) {
+            return; // existing hash, skip transaction
+        }
 
         final Rekening rekening = bepaalRekening(trans);
 

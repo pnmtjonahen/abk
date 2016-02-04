@@ -44,7 +44,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Fintransactie.findAll", query = "SELECT f FROM Fintransactie f"),  
-    @NamedQuery(name = "Fintransactie.findById", query = "SELECT f FROM Fintransactie f WHERE f.id = :id")
+    @NamedQuery(name = "Fintransactie.findById", query = "SELECT f FROM Fintransactie f WHERE f.id = :id"),
+    @NamedQuery(name = "Fintransactie.findByHash", query = "SELECT f FROM Fintransactie f WHERE f.hash = :hash")
 })
 public class Fintransactie implements Serializable {
     private static final long serialVersionUID = 1L;

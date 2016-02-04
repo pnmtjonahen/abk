@@ -25,6 +25,7 @@ import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import nl.tjonahen.abk.backend.model.FinancialTransaction;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 
@@ -170,5 +171,23 @@ public class JavaScriptTest {
 
     }
 
+    @Test
+    public void testCSVtoArray() throws ScriptException, NoSuchMethodException {
+        final ScriptEngineManager engineManager
+                = new ScriptEngineManager();
+
+        final ScriptEngine engine
+                = engineManager.getEngineByName("nashorn");
+        engine.eval(new InputStreamReader(this.getClass().getResourceAsStream("/parse.js")));
+        final Invocable invocable = (Invocable) engine;
+        ScriptObjectMirror obj = (ScriptObjectMirror) invocable.invokeFunction("CSVtoArray", "\"20111222\",\"1350002 NS-TIEL 201>\\TIEL> \\N\",\"5521208\",\"425008215\",\"BA\",\"Af\",\"13,00\",\"Betaalautomaat\",\"PASVOLGNR 017     22-12-2011 06:03TRANSACTIENR 1100332       \"");
+        assertTrue(obj.isArray());
+        obj = (ScriptObjectMirror) invocable.invokeFunction("CSVtoArray", "\"20111103\",\"3006841 Xenos Tiel 0040>\\TIEL> \\\",\"5521208\",\"438323009\",\"BA\",\"Af\",\"5,95\",\"Betaalautomaat\",\"PASVOLGNR 017     03-11-2011 18:25TRANSACTIENR 0502404       \"");
+
+        assertNull(obj); // why???
+        
+    }
+    
+    
     
 }

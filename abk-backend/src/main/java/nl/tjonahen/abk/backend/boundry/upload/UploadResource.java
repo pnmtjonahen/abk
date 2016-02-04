@@ -149,7 +149,8 @@ public class UploadResource extends HttpServlet {
                         } catch (UnsupportedEncodingException 
                                     | NumberFormatException 
                                     | NoSuchMethodException 
-                                    | ScriptException ex) {
+                                    | ScriptException
+                                    | javax.persistence.PersistenceException ex) {
                             LOGGER.log(Level.SEVERE, "{0} {1} data->{2}", new Object[]{ex, ex.getMessage(), s});
                         }
             });
