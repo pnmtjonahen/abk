@@ -31,16 +31,14 @@ angular.module('abkClientApp').controller("TransactionController", function ($q,
     var that = this;
 
     this.previous = function () {
-        that.range.end.setMonth(that.range.start.getMonth(), 0);
-        that.range.start.setMonth(that.range.start.getMonth() - 1);
+        that.range.previous()
         that.data = undefined;
 
         retrieveData();
     };
 
     this.next = function () {
-        that.range.start.setMonth(that.range.start.getMonth() + 1);
-        that.range.end.setMonth(that.range.start.getMonth() + 1, 0);
+        that.range.next();
         that.data = undefined;
 
         retrieveData();

@@ -135,7 +135,19 @@ angular.module('abkComponents').factory('currentDate', function () {
             var now = this.current();
             var end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 1, 0, 0);
             var start = new Date(now.getFullYear(), now.getMonth(), 1, 1, 0, 0);
-            return {'start': start, 'end': end};
+            return {
+                'start': start, 
+                'end': end, 
+                'previous' : function () {
+                    end.setMonth(start.getMonth(), 0);
+                    start.setMonth(start.getMonth() - 1);
+                }, 
+                'next': function () {
+                    start.setMonth(start.getMonth() + 1);
+                    end.setMonth(start.getMonth() + 1, 0);
+                    end.setFullYear(start.getFullYear());
+                }
+            };
         }
     };
 });
