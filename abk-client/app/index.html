@@ -38,7 +38,8 @@
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
-                            <li ng-class="{ active: isActive('/costcalculation')}"><a ui-sref="costcalculation">Cost-Calculation</a></li>
+                            <li ng-class="{ active: isActive('/costcalculation')}"><a ui-sref="costcalculation">Cost-Calculation(Month)</a></li>
+                            <li ng-class="{ active: isActive('/costcalculationyear')}"><a ui-sref="costcalculationyear">Cost-Calculation(Year)</a></li>
                             <li ng-class="{ active: isActive('/transaction')}"><a ui-sref="transaction">Transaction</a></li>
                             <li ng-class="{ active: isActive('/costcenter')}"><a ui-sref="costcenter">Cost-Center</a></li>
                             <li ng-class="{ active: isActive('/upload')}"><a ui-sref="upload">Upload</a></li>
@@ -103,6 +104,7 @@
         <script src="scripts/controllers/header.js"></script>
         <script src="scripts/controllers/home.js"></script>
         <script src="scripts/controllers/costcalculation.js"></script>
+        <script src="scripts/controllers/costcalculation_year.js"></script>
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/controllers/contact.js"></script>
         <script src="scripts/controllers/reports.js"></script>

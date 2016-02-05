@@ -148,6 +148,24 @@ angular.module('abkComponents').factory('currentDate', function () {
                     end.setFullYear(start.getFullYear());
                 }
             };
+        },
+        rangeYear: function () {
+            var now = this.current();
+            var end = new Date(now.getFullYear(), 11, 31, 1, 0, 0);
+            var start = new Date(now.getFullYear(), 0, 1, 1, 0, 0);
+            return {
+                'start': start, 
+                'end': end, 
+                'previous' : function () {
+                    end.setFullYear(end.getFullYear() -1);
+                    start.setFullYear(start.getFullYear() -1);
+                }, 
+                'next': function () {
+                    start.setMonth(start.getMonth() + 1);
+                    end.setMonth(start.getMonth() + 1, 0);
+                    end.setFullYear(start.getFullYear());
+                }
+            };
         }
     };
 });

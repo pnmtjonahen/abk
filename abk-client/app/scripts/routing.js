@@ -40,6 +40,15 @@ angular.module('abkClientApp').config(function ($stateProvider, $urlRouterProvid
                     requireLogin: false
                 }
             })
+            .state('costcalculationyear', {
+                url: '/costcalculationyear',
+                templateUrl: 'views/costcalculation_year.html',
+                controller: 'CostCalculationYearController',
+                controllerAs: 'costcalculationYearCtrl',
+                data : {
+                    requireLogin: false
+                }
+            })
 
             .state('about', {
                 url: '/about',
