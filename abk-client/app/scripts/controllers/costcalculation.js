@@ -38,7 +38,7 @@ angular.module('abkClientApp').controller("CostCalculationController", function 
     this.current;
 
     var that = this;
-
+    
     var buildDataRow = function () {
         var data = [];
         for (var i = 0; i < that.lastDay; i++) {

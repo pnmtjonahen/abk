@@ -30,6 +30,16 @@ angular.module('abkClientApp').controller("CostCenterController", function(costC
     this.storing = false;
 
     var that = this;
+    
+    this.regexp = ".*test.*";
+    this.text = "dit is een test";
+    this.result = false;
+    
+    this.match = function () {
+        var filter = new RegExp(that.regexp, 'i');
+        that.result = filter.test(that.text) ? 'regex_green' : 'regex_red';
+    };
+    
     var processCostcenters = function (e) {
         that.data.push(e);
         if (e.list) {

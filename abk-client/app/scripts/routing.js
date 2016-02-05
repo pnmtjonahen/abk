@@ -112,14 +112,5 @@ angular.module('abkClientApp').config(function ($stateProvider, $urlRouterProvid
                 data : {
                     requireLogin: false
                 }
-            })
-            .state('match', {
-                url:'/match',
-                templateUrl: 'views/match.html', 
-                controller: 'MatchController',
-                controllerAs: 'matchCtrl',
-                data : {
-                    requireLogin: false
-                }
             });
 });

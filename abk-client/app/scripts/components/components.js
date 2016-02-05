@@ -161,9 +161,8 @@ angular.module('abkComponents').factory('currentDate', function () {
                     start.setFullYear(start.getFullYear() -1);
                 }, 
                 'next': function () {
-                    start.setMonth(start.getMonth() + 1);
-                    end.setMonth(start.getMonth() + 1, 0);
-                    end.setFullYear(start.getFullYear());
+                    end.setFullYear(end.getFullYear() +1);
+                    start.setFullYear(start.getFullYear() +1);
                 }
             };
         }

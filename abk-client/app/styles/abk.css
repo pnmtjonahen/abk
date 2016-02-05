@@ -25,3 +25,10 @@ td.unmatched {
     display:none;
   }
 }
+input.regex_green {
+    color:green;
+}
+
+input.regex_red {
+    color:red;
+}
