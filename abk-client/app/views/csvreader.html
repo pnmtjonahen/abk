@@ -1,1 +1,8 @@
-<pre>data={{csvReaderCtrl.csvReader | json}}</pre>
+<label>Headers :<input type="checkbox" ng-model="csvReaderCtrl.csvReader.headers"/></label><br/>
+<label>dryrun  :<input type="checkbox" ng-model="csvReaderCtrl.csvReader.dryrun"/></label><br/>
+<pre>{{csvReaderCtrl.csvReader.script}}</pre>
+<div ng-if="showDebug">
+    <hr/>
+    Debug View:
+    <pre>data={{csvReaderCtrl.csvReader | json}}</pre>
+</div>
