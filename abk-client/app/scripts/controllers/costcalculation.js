@@ -169,6 +169,10 @@ angular.module('abkClientApp').controller("CostCalculationController", function 
             if (data[day].amount === undefined) {
                 data[day].amount = 0;
             }
+            if (data[day].transactions === undefined) {
+                data[day].transactions = [];
+            }
+            data[day].transactions.push(t);
             if (t.debitCreditIndicator === 'debit') {
                 data[day].amount += -parseFloat(t.amount);
             } else {

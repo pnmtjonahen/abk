@@ -4,6 +4,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="OrdinaOpenWereld"/>
-        <group name="prive"/>
+        <group name="prive">
+            <file>file:/home/ordina/NetBeansProjects/abk/abk-client/app/scripts/controllers/costcalculation.js</file>
+            <file>file:/home/ordina/NetBeansProjects/abk/abk-client/Gruntfile.js</file>
+            <file>file:/home/ordina/NetBeansProjects/abk/abk-client/bower.json</file>
+            <file>file:/home/ordina/NetBeansProjects/abk/abk-client/package.json</file>
+            <file>file:/home/ordina/NetBeansProjects/abk/abk-client/app/views/costcalculation.html</file>
+        </group>
+        <group name="Bowling kata"/>
     </open-files>
 </project-private>
