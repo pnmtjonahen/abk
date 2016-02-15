@@ -38,7 +38,7 @@ public class OrderBy {
         
         this.fields = new Fields(sub[0]);
         if (sub.length > 1) {
-            this.desc = !"ASC".equals(sub[1]);
+            this.desc = !"ASC".equals(sub[1].trim());
         } else {
             this.desc = true;
         }

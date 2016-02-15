@@ -41,7 +41,7 @@ public class AbkApplication extends Application {
         beanConfig.setBasePath("abk-backend/" + ResourcePaths.APPLICATION_PATH);
         beanConfig.setContact("philippe@tjonahen.nl");
         beanConfig.setDescription("Rest api for the ABK frontend");
-        beanConfig.setHost("localhost:8181");
+        beanConfig.setHost("localhost:8080");
         beanConfig.setLicense("gpl");
         beanConfig.setLicenseUrl("/license.html");
         beanConfig.setPrettyPrint(true);
@@ -51,7 +51,7 @@ public class AbkApplication extends Application {
                 "nl.tjonahen.abk.backend.boundry.transaction,"+
                 "nl.tjonahen.abk.backend.boundry.upload");
         beanConfig.setScan(true);
-        beanConfig.setSchemes(new String[]{"https"});
+        beanConfig.setSchemes(new String[]{"http"});
         beanConfig.setTermsOfServiceUrl("");
         beanConfig.setTitle("ABK rest services");
         beanConfig.setVersion("2.0.0");

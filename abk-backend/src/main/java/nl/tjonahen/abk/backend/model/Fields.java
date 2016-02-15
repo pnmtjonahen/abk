@@ -35,7 +35,7 @@ public class Fields {
      * @param fields -
      */
     public Fields(String fields) {
-        this.list = Arrays.asList(fields.split(",")).stream().filter(f -> !f.isEmpty()).collect(Collectors.toList());
+        this.list = Arrays.asList(fields.split(",")).stream().map(f -> f.trim() ).filter(f -> !f.isEmpty()).collect(Collectors.toList());
     }
 
     public List<String> getList() {
