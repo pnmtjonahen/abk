@@ -54,14 +54,14 @@ public class ConvertCostCenter {
         } else {
             costCenter.setList(kostenplaats.getKostenplaatsCollection()
                     .stream()
-                    .map(this::convertReferenceOnly)
+                    .map(ConvertCostCenter::convertReferenceOnly)
                     .collect(Collectors.toList()));
         }
         currentExpand--;
         return costCenter;
     }
     
-    private CostCenter convertReferenceOnly(Kostenplaats kostenplaats) {
+    private static CostCenter convertReferenceOnly(Kostenplaats kostenplaats) {
         final CostCenter costCenter = new CostCenter();
         costCenter.setId(kostenplaats.getId());
         return costCenter;

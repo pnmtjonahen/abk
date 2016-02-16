@@ -16,6 +16,7 @@
  */
 package nl.tjonahen.abk.backend.boundry.transaction;
 
+import java.io.Serializable;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -26,7 +27,7 @@ import nl.tjonahen.abk.backend.entity.Fintransactie;
  * @author Philippe Tjon - A - Hen, philippe@tjonahen.nl
  */
 @FunctionalInterface
-public interface PredicateSupplier {
+public interface PredicateSupplier extends Serializable {
     
     /**
      * Supply a predicate for a query builder with a root element and a value

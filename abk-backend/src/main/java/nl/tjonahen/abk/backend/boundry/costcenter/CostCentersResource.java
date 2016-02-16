@@ -181,7 +181,7 @@ public class CostCentersResource {
         return new ConvertCostCenter(1).convert(newKostenplaats);
     }
 
-    private Kostenplaats newKostenplaats(CostCenter costCenter) {
+    private static Kostenplaats newKostenplaats(CostCenter costCenter) {
         final Kostenplaats kostenplaats = new Kostenplaats();
         kostenplaats.setFilter(costCenter.getFilter());
         kostenplaats.setNaam(costCenter.getName());
@@ -228,7 +228,7 @@ public class CostCentersResource {
     }
 
     private void insertAll(List<CostCenter> costcenters) {
-        costcenters.stream().forEach(cc -> insertNewRoot(cc));
+        costcenters.stream().forEach(this::insertNewRoot);
     }
 
     private void insertNewRoot(CostCenter costCenter) {

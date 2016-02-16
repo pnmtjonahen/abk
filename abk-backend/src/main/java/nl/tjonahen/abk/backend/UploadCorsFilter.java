@@ -36,7 +36,7 @@ public class UploadCorsFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
+        // no init is needed
     }
 
     @Override
@@ -51,6 +51,6 @@ public class UploadCorsFilter implements Filter {
 
     @Override
     public void destroy() {
-
+        // nothing to destroy
     }
 }

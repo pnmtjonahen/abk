@@ -50,11 +50,11 @@ public class AccountsResource {
                 .createNamedQuery("Rekening.findAll", Rekening.class)
                 .getResultList()
                 .stream()
-                .map(this::convert)
+                .map(AccountsResource::convert)
                 .collect(Collectors.toList()));
     }
 
-    private Account convert(final Rekening rekening) {
+    private static Account convert(final Rekening rekening) {
         final Account account = new Account();
         account.setNumber(rekening.getRekening());
         account.setDescription(rekening.getNaam());

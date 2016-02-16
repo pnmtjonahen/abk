@@ -130,31 +130,7 @@ public class UploadResource extends HttpServlet {
             new BufferedReader(new InputStreamReader(inputStream, UT_F8))
                     .lines()
                     .skip(headers ? 1 : 0)
-                    .forEach(s -> {
-                        try {
-                            FinancialTransaction ft = scripting.parse(s);
-                            Fintransactie trans = new Fintransactie();
-                            trans.setDatum(makeDate(ft.getDate()));
-                            trans.setTegenrekeningnaam(ft.getContraAccountName());
-                            trans.setRekening(ft.getAccountNumber());
-                            trans.setTegenrekeningrekening(ft.getContraAccountNumber());
-                            trans.setCode(ft.getCode());
-                            trans.setBijaf("debit".equals(ft.getDebitCreditIndicator()) ? "Af" : "Bij");
-                            trans.setBedrag(Double.valueOf(ft.getAmount().replace(',', '.')));
-                            trans.setMutatiesoort(ft.getMutatiesoort());
-                            trans.setMededeling(ft.getDescription());
-                            updateHash(trans);
-                            if (!dryRun) {
-                                transactionProcessor.process(trans);
-                            }
-                        } catch (UnsupportedEncodingException 
-                                    | NumberFormatException 
-                                    | NoSuchMethodException 
-                                    | ScriptException
-                                    | javax.persistence.PersistenceException ex) {
-                            LOGGER.log(Level.SEVERE, "{0} {1} data->{2}", new Object[]{ex, ex.getMessage(), s});
-                        }
-            });
+                    .forEach(this::processLine);
         } catch (UnsupportedEncodingException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
             return false;
@@ -163,8 +139,34 @@ public class UploadResource extends HttpServlet {
         return true;
     }
 
+    private void processLine(String s) {
+        try {
+            FinancialTransaction ft = scripting.parse(s);
+            Fintransactie trans = new Fintransactie();
+            trans.setDatum(makeDate(ft.getDate()));
+            trans.setTegenrekeningnaam(ft.getContraAccountName());
+            trans.setRekening(ft.getAccountNumber());
+            trans.setTegenrekeningrekening(ft.getContraAccountNumber());
+            trans.setCode(ft.getCode());
+            trans.setBijaf("debit".equals(ft.getDebitCreditIndicator()) ? "Af" : "Bij");
+            trans.setBedrag(Double.valueOf(ft.getAmount().replace(',', '.')));
+            trans.setMutatiesoort(ft.getMutatiesoort());
+            trans.setMededeling(ft.getDescription());
+            updateHash(trans);
+            if (!dryRun) {
+                transactionProcessor.process(trans);
+            }
+        } catch (UnsupportedEncodingException
+                | NumberFormatException
+                | NoSuchMethodException
+                | ScriptException
+                | javax.persistence.PersistenceException ex) {
+            LOGGER.log(Level.SEVERE, "{0} {1} data->{2}", new Object[]{ex, ex.getMessage(), s});
+        }
+    }
 
-    private void updateHash(Fintransactie ft) throws UnsupportedEncodingException {
+
+    private static void updateHash(Fintransactie ft) throws UnsupportedEncodingException {
         md.update(ft.getRekening().getBytes(UT_F8));
         md.update(ft.getBedrag().toString().getBytes(UT_F8));
         md.update(ft.getCode().getBytes(UT_F8));
@@ -209,7 +211,7 @@ public class UploadResource extends HttpServlet {
         return "Processes uploaded stransaction files";
     }
 
-    private Date makeDate(String incDate) {
+    private static Date makeDate(String incDate) {
         // 20070720 yyyymmdd
         Calendar cal = new GregorianCalendar();
 //CHECKSTYLE:OFF
