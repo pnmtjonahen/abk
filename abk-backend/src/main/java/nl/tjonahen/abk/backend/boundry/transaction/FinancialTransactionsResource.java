@@ -39,7 +39,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import nl.tjonahen.abk.backend.ResourcePaths;
 import nl.tjonahen.abk.backend.model.Fields;
 import nl.tjonahen.abk.backend.model.FinancialTransaction;
 import nl.tjonahen.abk.backend.model.FinancialTransactions;
@@ -53,7 +52,7 @@ import nl.tjonahen.abk.backend.entity.Fintransactie;
  */
 @Api(value = "Transaction resources.")
 @Stateless
-@Path(ResourcePaths.TRANSACTIONS_PATH)
+@Path("/transactions")
 public class FinancialTransactionsResource {
 
     @PersistenceContext

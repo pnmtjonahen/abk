@@ -30,7 +30,7 @@ import javax.ws.rs.core.Application;
  * 
  * @author Philippe Tjon - A - Hen, philippe@tjonahen.nl
  */
-@ApplicationPath(ResourcePaths.APPLICATION_PATH)
+@ApplicationPath("rest")
 public class AbkApplication extends Application {
 
     public AbkApplication() {
@@ -38,7 +38,7 @@ public class AbkApplication extends Application {
         
        
         
-        beanConfig.setBasePath("abk-backend/" + ResourcePaths.APPLICATION_PATH);
+        beanConfig.setBasePath("abk-backend/rest");
         beanConfig.setContact("philippe@tjonahen.nl");
         beanConfig.setDescription("Rest api for the ABK frontend");
         beanConfig.setHost("localhost:8080");

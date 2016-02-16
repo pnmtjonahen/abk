@@ -26,7 +26,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import nl.tjonahen.abk.backend.ResourcePaths;
 import nl.tjonahen.abk.backend.model.Account;
 import nl.tjonahen.abk.backend.model.Accounts;
 import nl.tjonahen.abk.backend.entity.Rekening;
@@ -37,7 +36,7 @@ import nl.tjonahen.abk.backend.entity.Rekening;
  */
 @Api(value = "Account resources")
 @Stateless
-@Path(ResourcePaths.ACCOUNTS_PATH)
+@Path("/accounts")
 public class AccountsResource {
 
     @PersistenceContext
