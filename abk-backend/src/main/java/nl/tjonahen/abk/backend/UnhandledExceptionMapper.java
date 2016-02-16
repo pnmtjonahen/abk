@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2014 Philippe Tjon - A - Hen, philippe@tjonahen.nl
+ * Copyright (C) 2016 Philippe Tjon - A - Hen, philippe@tjonahen.nl
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,23 +16,28 @@
  */
 package nl.tjonahen.abk.backend;
 
-import javax.ws.rs.container.ContainerRequestContext;
-import javax.ws.rs.container.ContainerResponseContext;
-import javax.ws.rs.container.ContainerResponseFilter;
+import java.util.logging.Logger;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
 /**
- *
+ * Last line of defense against unhandled exception. Maps throwable to a correct http response with the 
+ * exception error as the message body.
+ * 
  * @author Philippe Tjon - A - Hen, philippe@tjonahen.nl
  */
 @Provider
-public class AbkCrossOriginResourceSharingFilter implements ContainerResponseFilter {
+public class UnhandledExceptionMapper implements ExceptionMapper<Throwable> {
+    private static final Logger LOGGER = Logger.getLogger(UnhandledExceptionMapper.class.getName());
 
     @Override
-    public void filter(ContainerRequestContext requestContext, ContainerResponseContext response) {
-        response.getHeaders().putSingle("Access-Control-Allow-Origin", "*");
-        response.getHeaders().putSingle("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, DELETE");
-        response.getHeaders().putSingle("Access-Control-Allow-Headers", "Content-Type");
+    public Response toResponse(Throwable exception) {
+        LOGGER.severe(() -> "Unhandled exception : " + exception.getMessage());
+        return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(new Error(exception.getMessage()))
+                    .build();
     }
     
 }

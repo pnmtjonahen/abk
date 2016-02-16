@@ -117,12 +117,11 @@ public class CostCentersResource {
     }
 
     private void nullIds(List<CostCenter> costcenters) {
-        costcenters.stream().map((cc) -> {
+        costcenters.stream().map(cc -> {
             cc.setId(null);
             return cc;
-        }).filter((cc) -> (cc.getList() != null)).forEach((cc) -> {
-            nullIds(cc.getList());
-        });
+        }).filter(cc -> cc.getList() != null)
+                .forEach(cc -> nullIds(cc.getList()));
     }
 
     @ApiOperation(value = "replace cost center defined by id")
@@ -229,9 +228,7 @@ public class CostCentersResource {
     }
 
     private void insertAll(List<CostCenter> costcenters) {
-        costcenters.stream().forEach((cc) -> {
-            insertNewRoot(cc);
-        });
+        costcenters.stream().forEach(cc -> insertNewRoot(cc));
     }
 
     private void insertNewRoot(CostCenter costCenter) {
@@ -242,9 +239,7 @@ public class CostCentersResource {
         entityManager.flush();
 
         if (costCenter.getList() != null) {
-            costCenter.getList().stream().forEach((cc) -> {
-                insertNewSub(current, cc);
-            });
+            costCenter.getList().stream().forEach(cc -> insertNewSub(current, cc));
         }
     }
 
@@ -257,9 +252,7 @@ public class CostCentersResource {
         entityManager.flush();
 
         if (costCenter.getList() != null) {
-            costCenter.getList().stream().forEach((cc) -> {
-                insertNewSub(current, cc);
-            });
+            costCenter.getList().stream().forEach(cc -> insertNewSub(current, cc) );
         }
 
     }

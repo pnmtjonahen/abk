@@ -81,9 +81,9 @@ public class AbkApplication extends Application {
      * populate given list with all resources defined in the project.
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(nl.tjonahen.abk.backend.AbkCrossOriginResourceSharingFilter.class);
-        resources.add(nl.tjonahen.abk.backend.AbkExceptionMapper.class);
+        resources.add(nl.tjonahen.abk.backend.CrossOriginResourceSharingFilter.class);
         resources.add(nl.tjonahen.abk.backend.HttpHeaderLoggingFilter.class);
+        resources.add(nl.tjonahen.abk.backend.UnhandledExceptionMapper.class);
         resources.add(nl.tjonahen.abk.backend.boundry.account.AccountsResource.class);
         resources.add(nl.tjonahen.abk.backend.boundry.admin.AdminResource.class);
         resources.add(nl.tjonahen.abk.backend.boundry.costcenter.CostCentersResource.class);

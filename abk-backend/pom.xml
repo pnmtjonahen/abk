@@ -15,6 +15,10 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+    <scm>
+        <connection>https://github.com/pnmtjonahen/abk.git</connection>
+        <developerConnection>https://github.com/pnmtjonahen/abk.git</developerConnection>
+    </scm>
     
     <dependencies>
         <dependency>

@@ -60,19 +60,20 @@ public class UploadResource extends HttpServlet {
 
     private static final Logger LOGGER = Logger.getLogger(UploadResource.class.getName());
     private static final long serialVersionUID = 1L;
-
+    private static final String UT_F8 = "UTF-8";
+    
     @EJB
     private TransactionProcessor transactionProcessor;
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    private MessageDigest md;
+    private static MessageDigest md;
 
-    private CsvJSScripting scripting;
+    private static CsvJSScripting scripting;
 
-    private boolean headers;
-    private boolean dryRun;
+    private static boolean headers;
+    private static boolean dryRun;
 
     @Override
     public void init() throws ServletException {
@@ -80,11 +81,11 @@ public class UploadResource extends HttpServlet {
 
         final CsvReader reader = entityManager.createNamedQuery("CsvReader.findAll", 
                                         CsvReader.class).getResultList().get(0);
-        this.scripting = new CsvJSScripting(reader.getScript());
-        this.headers = reader.isHeaders();
-        this.dryRun = reader.isDryRun();
+        scripting = new CsvJSScripting(reader.getScript());
+        headers = reader.isHeaders();
+        dryRun = reader.isDryRun();
         try {
-            this.md = MessageDigest.getInstance("MD5");
+            md = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException ex) {
             throw new ServletException(ex);
         }
@@ -126,10 +127,10 @@ public class UploadResource extends HttpServlet {
 
     private boolean processPartJsParsing(InputStream inputStream) {
         try {
-            new BufferedReader(new InputStreamReader(inputStream, "UTF-8"))
+            new BufferedReader(new InputStreamReader(inputStream, UT_F8))
                     .lines()
                     .skip(headers ? 1 : 0)
-                    .forEach((String s) -> {
+                    .forEach(s -> {
                         try {
                             FinancialTransaction ft = scripting.parse(s);
                             Fintransactie trans = new Fintransactie();
@@ -138,7 +139,7 @@ public class UploadResource extends HttpServlet {
                             trans.setRekening(ft.getAccountNumber());
                             trans.setTegenrekeningrekening(ft.getContraAccountNumber());
                             trans.setCode(ft.getCode());
-                            trans.setBijaf(ft.getDebitCreditIndicator().equals("debit") ? "Af" : "Bij");
+                            trans.setBijaf("debit".equals(ft.getDebitCreditIndicator()) ? "Af" : "Bij");
                             trans.setBedrag(Double.valueOf(ft.getAmount().replace(',', '.')));
                             trans.setMutatiesoort(ft.getMutatiesoort());
                             trans.setMededeling(ft.getDescription());
@@ -162,21 +163,22 @@ public class UploadResource extends HttpServlet {
         return true;
     }
 
+
     private void updateHash(Fintransactie ft) throws UnsupportedEncodingException {
-        md.update(ft.getRekening().getBytes("UTF-8"));
-        md.update(ft.getBedrag().toString().getBytes("UTF-8"));
-        md.update(ft.getCode().getBytes("UTF-8"));
-        md.update(ft.getTegenrekeningnaam().getBytes("UTF-8"));
-        md.update(ft.getTegenrekeningrekening().getBytes("UTF-8"));
+        md.update(ft.getRekening().getBytes(UT_F8));
+        md.update(ft.getBedrag().toString().getBytes(UT_F8));
+        md.update(ft.getCode().getBytes(UT_F8));
+        md.update(ft.getTegenrekeningnaam().getBytes(UT_F8));
+        md.update(ft.getTegenrekeningrekening().getBytes(UT_F8));
         final Date datum = ft.getDatum();
 
         final LocalDateTime ldt = LocalDateTime.ofInstant(
                 Instant.ofEpochMilli(datum.getTime()), ZoneId.systemDefault());
 
-        md.update(ldt.format(DateTimeFormatter.ISO_DATE).getBytes("UTF-8"));
-        md.update(ft.getBijaf().getBytes("UTF-8"));
-        md.update(ft.getMededeling().getBytes("UTF-8"));
-        md.update(ft.getMutatiesoort().getBytes("UTF-8"));
+        md.update(ldt.format(DateTimeFormatter.ISO_DATE).getBytes(UT_F8));
+        md.update(ft.getBijaf().getBytes(UT_F8));
+        md.update(ft.getMededeling().getBytes(UT_F8));
+        md.update(ft.getMutatiesoort().getBytes(UT_F8));
 
         byte[] digest = md.digest();
         BigInteger bigInt = new BigInteger(1, digest);

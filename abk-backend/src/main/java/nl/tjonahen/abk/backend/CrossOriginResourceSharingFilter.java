@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Philippe Tjon - A - Hen, philippe@tjonahen.nl
+ * Copyright (C) 2014 Philippe Tjon - A - Hen, philippe@tjonahen.nl
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,9 @@
  */
 package nl.tjonahen.abk.backend;
 
-import java.util.logging.Logger;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerResponseContext;
+import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.ext.Provider;
 
 /**
@@ -26,16 +26,13 @@ import javax.ws.rs.ext.Provider;
  * @author Philippe Tjon - A - Hen, philippe@tjonahen.nl
  */
 @Provider
-public class AbkExceptionMapper implements ExceptionMapper<Throwable> {
-    private static final Logger LOGGER = Logger.getLogger(AbkExceptionMapper.class.getName());
+public class CrossOriginResourceSharingFilter implements ContainerResponseFilter {
 
     @Override
-    public Response toResponse(Throwable exception) {
-        LOGGER.severe("Unhandled exception : " + exception.getMessage());
-        return Response
-                    .status(Response.Status.BAD_REQUEST)
-                    .entity(new Error(exception.getMessage()))
-                    .build();
+    public void filter(ContainerRequestContext requestContext, ContainerResponseContext response) {
+        response.getHeaders().putSingle("Access-Control-Allow-Origin", "*");
+        response.getHeaders().putSingle("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, DELETE");
+        response.getHeaders().putSingle("Access-Control-Allow-Headers", "Content-Type");
     }
     
 }

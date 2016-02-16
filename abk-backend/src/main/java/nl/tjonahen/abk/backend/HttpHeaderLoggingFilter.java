@@ -17,7 +17,6 @@
 package nl.tjonahen.abk.backend;
 
 import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -34,22 +33,24 @@ public class HttpHeaderLoggingFilter implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-        
-        StringBuilder sb = new StringBuilder();
-        sb.append("Request headers\n");
-        sb.append(requestContext.getMethod());
-        sb.append(" ");
-        sb.append(requestContext.getUriInfo().getRequestUri().toASCIIString());
-        sb.append("\n");
-        requestContext.getHeaders().forEach((k, v) -> {
-            sb.append(k);
-            sb.append(" : ");
-            sb.append(v.stream().reduce("", (r, s) -> "".equals(r) ? r + s : r + "," + s));
-            sb.append("\n");
 
-        });
-        
-        LOGGER.log(Level.INFO, sb.toString());
+        LOGGER.info(() -> {
+                StringBuilder sb = new StringBuilder();
+                sb.append("Request headers\n");
+                sb.append(requestContext.getMethod());
+                sb.append(" ");
+                sb.append(requestContext.getUriInfo().getRequestUri().toASCIIString());
+                sb.append("\n");
+                requestContext.getHeaders().forEach((k, v) -> {
+                    sb.append(k);
+                    sb.append(" : ");
+                    sb.append(v.stream().reduce("", (r, s) -> "".equals(r) ? r + s : r + "," + s));
+                    sb.append("\n");
+
+                });
+                return sb.toString();
+            }
+        );
     }
 
 }
