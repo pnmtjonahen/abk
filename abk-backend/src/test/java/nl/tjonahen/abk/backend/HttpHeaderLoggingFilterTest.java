@@ -56,6 +56,8 @@ public class HttpHeaderLoggingFilterTest {
         Mockito.when(uriInfo.getRequestUri()).thenReturn(new URI("http://sample.nl/sample"));
         final MultivaluedHashMap<String, String> multivaluedHashMap = new MultivaluedHashMap<>();
         multivaluedHashMap.add("header", "sample");
+        multivaluedHashMap.add("header", "sample2");
+        
         Mockito.when(requestContext.getHeaders()).thenReturn(multivaluedHashMap);
 
         instance.filter(requestContext);
