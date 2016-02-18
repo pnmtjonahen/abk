@@ -56,6 +56,7 @@ public class FinancialTransactions {
      * Default constructor for unmarschalling.
      */
     public FinancialTransactions() {
+        // for unmarshalling puposes
     }
 
     

@@ -30,6 +30,7 @@ public class CostCenters {
     private List<CostCenter> list;
 
     public CostCenters() {
+        // for unmarschalling purposes
     }
 
     /**

@@ -92,6 +92,7 @@ public class Fintransactie implements Serializable {
      * 
      */
     public Fintransactie() {
+        // for unmarshalling purpose
     }
 
     /**

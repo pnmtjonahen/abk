@@ -72,6 +72,7 @@ public class Kostenplaats implements Serializable {
      * 
      */
     public Kostenplaats() {
+        // for unmarshalling purpose
     }
 
     /**

@@ -23,10 +23,6 @@ package nl.tjonahen.abk.backend.model;
 public class Meta {
     private String href;
 
-    public Meta() {
-    }
-
-    
     /**
      * 
      * @param href -

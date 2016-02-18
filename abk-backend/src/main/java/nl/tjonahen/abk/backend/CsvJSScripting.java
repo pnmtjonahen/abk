@@ -40,7 +40,7 @@ public class CsvJSScripting {
         try {
             scriptEngine.eval(script);
         } catch (ScriptException ex) {
-            throw new IllegalStateException("Cannot eval script");
+            throw new IllegalStateException("Cannot eval script", ex);
         }
         invocable  = (Invocable) scriptEngine;
     }

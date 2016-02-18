@@ -40,7 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Rekening.findAll", query = "SELECT r FROM Rekening r"),
-    @NamedQuery(name = "Rekening.findByRekening", query = "SELECT r FROM Rekening r WHERE r.rekening = :rekening"),
+    @NamedQuery(name = "Rekening.findByRekening", query = "SELECT r FROM Rekening r WHERE r.nummer = :rekening"),
     @NamedQuery(name = "Rekening.findByBeginsaldo", 
             query = "SELECT r FROM Rekening r WHERE r.beginsaldo = :beginsaldo"),
     @NamedQuery(name = "Rekening.findByNaam", query = "SELECT r FROM Rekening r WHERE r.naam = :naam")})
@@ -51,7 +51,7 @@ public class Rekening implements Serializable {
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "REKENING")
-    private String rekening;
+    private String nummer;
     @Column(name = "BEGINSALDO")
     private Double beginsaldo;
     @Size(max = 255)
@@ -64,6 +64,7 @@ public class Rekening implements Serializable {
      * 
      */
     public Rekening() {
+        // for unmarschalling purposes
     }
 
     /**
@@ -71,15 +72,15 @@ public class Rekening implements Serializable {
      * @param rekening  -
      */
     public Rekening(String rekening) {
-        this.rekening = rekening;
+        this.nummer = rekening;
     }
 
     public String getRekening() {
-        return rekening;
+        return nummer;
     }
 
     public void setRekening(String rekening) {
-        this.rekening = rekening;
+        this.nummer = rekening;
     }
 
     public Double getBeginsaldo() {
@@ -110,7 +111,7 @@ public class Rekening implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (rekening != null ? rekening.hashCode() : 0);
+        hash += (nummer != null ? nummer.hashCode() : 0);
         return hash;
     }
 
@@ -120,8 +121,8 @@ public class Rekening implements Serializable {
             return false;
         }
         Rekening other = (Rekening) object;
-        if ((this.rekening == null && other.rekening != null) 
-                || (this.rekening != null && !this.rekening.equals(other.rekening))) {
+        if ((this.nummer == null && other.nummer != null) 
+                || (this.nummer != null && !this.nummer.equals(other.nummer))) {
             return false;
         }
         return true;
@@ -129,7 +130,7 @@ public class Rekening implements Serializable {
 
     @Override
     public String toString() {
-        return "nl.tjonahen.abk.backend.entity.Rekening[ rekening=" + rekening + " ]";
+        return "nl.tjonahen.abk.backend.entity.Rekening[ rekening=" + nummer + " ]";
     }
     
 }

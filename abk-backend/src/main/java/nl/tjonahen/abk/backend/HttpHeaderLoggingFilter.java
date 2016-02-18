@@ -39,7 +39,10 @@ public class HttpHeaderLoggingFilter implements ContainerRequestFilter {
                 sb.append("Request headers\n");
                 sb.append(requestContext.getMethod());
                 sb.append(" ");
-                sb.append(requestContext.getUriInfo().getRequestUri().toASCIIString());
+                sb.append(requestContext
+                            .getUriInfo()
+                            .getRequestUri()
+                            .toASCIIString());
                 sb.append("\n");
                 requestContext.getHeaders().forEach((k, v) -> {
                     sb.append(k);

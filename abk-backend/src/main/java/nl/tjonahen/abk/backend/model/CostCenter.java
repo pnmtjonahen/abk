@@ -44,8 +44,6 @@ public class CostCenter {
     @XmlElement(name = "list", required = false)
     private List<CostCenter> list;
     
-    public CostCenter() {
-    }
     
     public List<CostCenter> getList() {
         return list;
