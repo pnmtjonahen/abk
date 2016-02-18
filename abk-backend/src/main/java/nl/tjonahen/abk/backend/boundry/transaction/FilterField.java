@@ -21,8 +21,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.function.BiConsumer;
 import nl.tjonahen.abk.backend.entity.Fintransactie;
+import nl.tjonahen.abk.backend.lambda.SerializableBiConsumer;
 import nl.tjonahen.abk.backend.model.FinancialTransaction;
 
 /**
@@ -47,8 +47,8 @@ public enum FilterField {
     MUTATIESOORT((ft, t) -> ft.setMutatiesoort(t.getMutatiesoort())),
     CONTRAACCOUNTNUMBER((ft, t) -> ft.setContraAccountNumber(t.getTegenrekeningrekening()));
 
-    private final BiConsumer<FinancialTransaction, Fintransactie> consumer;
-    private FilterField(BiConsumer<FinancialTransaction, Fintransactie> consumer) {
+    private final SerializableBiConsumer<FinancialTransaction, Fintransactie> consumer;
+    private FilterField(SerializableBiConsumer<FinancialTransaction, Fintransactie> consumer) {
         this.consumer = consumer;
     }
     
