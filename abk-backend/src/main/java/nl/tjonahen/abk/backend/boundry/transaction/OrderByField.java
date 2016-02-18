@@ -40,9 +40,9 @@ public enum OrderByField {
     CONTRAACCOUNTNAME(Fintransactie_.tegenrekeningnaam);
 
 
-    private final SingularAttribute singularAttribute;
+    private final transient SingularAttribute<Fintransactie, ? extends Object> singularAttribute;
 
-    private OrderByField(final SingularAttribute singularAttribute) {
+    private OrderByField(final SingularAttribute<Fintransactie, ? extends Object> singularAttribute) {
         this.singularAttribute = singularAttribute;
     }
 

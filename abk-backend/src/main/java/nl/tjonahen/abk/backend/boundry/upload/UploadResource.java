@@ -61,7 +61,7 @@ public class UploadResource extends HttpServlet {
     private static final Logger LOGGER = Logger.getLogger(UploadResource.class.getName());
     private static final long serialVersionUID = 1L;
     private static final String UT_F8 = "UTF-8";
-    
+
     @EJB
     private TransactionProcessor transactionProcessor;
 
@@ -79,8 +79,8 @@ public class UploadResource extends HttpServlet {
     public void init() throws ServletException {
         super.init();
 
-        final CsvReader reader = entityManager.createNamedQuery("CsvReader.findAll", 
-                                        CsvReader.class).getResultList().get(0);
+        final CsvReader reader = entityManager.createNamedQuery("CsvReader.findAll",
+                CsvReader.class).getResultList().get(0);
         scripting = new CsvJSScripting(reader.getScript());
         headers = reader.isHeaders();
         dryRun = reader.isDryRun();
@@ -156,15 +156,10 @@ public class UploadResource extends HttpServlet {
             if (!dryRun) {
                 transactionProcessor.process(trans);
             }
-        } catch (UnsupportedEncodingException
-                | NumberFormatException
-                | NoSuchMethodException
-                | ScriptException
-                | javax.persistence.PersistenceException ex) {
+        } catch (UnsupportedEncodingException | NumberFormatException | NoSuchMethodException | ScriptException | javax.persistence.PersistenceException ex) {
             LOGGER.log(Level.SEVERE, "{0} {1} data->{2}", new Object[]{ex, ex.getMessage(), s});
         }
     }
-
 
     private static void updateHash(Fintransactie ft) throws UnsupportedEncodingException {
         md.update(ft.getRekening().getBytes(UT_F8));
@@ -198,7 +193,12 @@ public class UploadResource extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (IOException | ServletException ex) {
+            LOGGER.log(Level.SEVERE, "{0} {1}", new Object[]{ex, ex.getMessage()});
+
+        }
     }
 
     /**
