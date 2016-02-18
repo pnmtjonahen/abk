@@ -19,11 +19,14 @@ package nl.tjonahen.abk.backend.boundry.transaction;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import nl.tjonahen.abk.backend.entity.Fintransactie;
+import nl.tjonahen.abk.backend.model.FinancialTransaction;
 import nl.tjonahen.abk.backend.model.FinancialTransactions;
 import nl.tjonahen.abk.backend.model.OrderBy;
 import nl.tjonahen.abk.backend.model.Where;
@@ -49,16 +52,16 @@ public class FinancialTransactionsResourceTest {
 
     @Mock
     private UriInfo uriInfo;
-    
+
     @Mock
     private FinancialTransactionQueryBuilder financialTransactionQueryBuilder;
-    
+
     @Mock
     private FinancialTransactionQuery financialTransactionQuery;
-    
+
     @Mock
     private CriteriaQuery<Fintransactie> cb;
-            
+
     @Mock
     private CriteriaQuery<Long> cbCount;
 
@@ -86,21 +89,26 @@ public class FinancialTransactionsResourceTest {
         when(financialTransactionQuery.where(any(Where.class))).thenReturn(financialTransactionQuery);
         when(financialTransactionQuery.orderBy(any(OrderBy.class))).thenReturn(financialTransactionQuery);
         when(financialTransactionQuery.createSelect()).thenReturn(cb);
-        
+
         when(entityManager.createQuery(cb)).thenReturn(typedQuery);
-        when(typedQuery.getResultList()).thenReturn(new ArrayList());
-        
+        final ArrayList<Fintransactie> arrayList = new ArrayList<Fintransactie>();
+        final Fintransactie fintransactie = new Fintransactie(1L);
+        fintransactie.setDatum(new Date());
+        fintransactie.setMededeling("Message");
+        arrayList.add(fintransactie);
+
+        when(typedQuery.getResultList()).thenReturn(arrayList);
+
         when(financialTransactionQueryBuilder.start()).thenReturn(financialTransactionQuery);
         when(financialTransactionQuery.where(any(Where.class))).thenReturn(financialTransactionQuery);
         when(financialTransactionQuery.createCount()).thenReturn(cbCount);
         when(entityManager.createQuery(cbCount)).thenReturn(typedQuery);
         when(typedQuery.getSingleResult()).thenReturn(new Long(0));
-        
-        
+
         when(uriInfo.getAbsolutePath()).thenReturn(new URI("transactions"));
 
-        final FinancialTransactions get = systemUnderTest.get(uriInfo, "", "", "",  0, 1);
-        
+        final FinancialTransactions get = systemUnderTest.get(uriInfo, "", "", "", 0, 1);
+
         assertNotNull(get.getList());
         assertNotNull(get.getFirst());
         assertNotNull(get.getLast());
@@ -109,5 +117,68 @@ public class FinancialTransactionsResourceTest {
         assertEquals(1, get.getLimit());
         assertEquals(0, get.getOffset());
         assertEquals(0, get.getSize());
+    }
+
+    @Test
+    public void testGetByIdOnlyDesciption() throws URISyntaxException {
+
+        when(entityManager.createNamedQuery("Fintransactie.findById", Fintransactie.class)).thenReturn(typedQuery);
+        when(typedQuery.setParameter("id", 1L)).thenReturn(typedQuery);
+        final ArrayList<Fintransactie> arrayList = new ArrayList<Fintransactie>();
+        final Fintransactie fintransactie = new Fintransactie(1L);
+        fintransactie.setDatum(new Date());
+        fintransactie.setMededeling("Message");
+        arrayList.add(fintransactie);
+        when(typedQuery.getResultList()).thenReturn(arrayList);
+
+        when(uriInfo.getAbsolutePath()).thenReturn(new URI("transactions/1"));
+
+        Response response = systemUnderTest.get(uriInfo, 1L, "DESCRIPTION,DATE");
+
+        assertEquals(200, response.getStatus());
+        FinancialTransaction ft = (FinancialTransaction) response.getEntity();
+
+        assertNull(ft.getAmount());
+        assertNotNull(ft.getDate());
+        assertNotNull(ft.getDescription());
+    }
+
+    @Test
+    public void testGetByIdNoFiltering() throws URISyntaxException {
+
+        when(entityManager.createNamedQuery("Fintransactie.findById", Fintransactie.class)).thenReturn(typedQuery);
+        when(typedQuery.setParameter("id", 1L)).thenReturn(typedQuery);
+        final ArrayList<Fintransactie> arrayList = new ArrayList<Fintransactie>();
+        final Fintransactie fintransactie = new Fintransactie(1L);
+        fintransactie.setBedrag(200.0);
+        fintransactie.setDatum(new Date());
+        arrayList.add(fintransactie);
+        when(typedQuery.getResultList()).thenReturn(arrayList);
+
+        when(uriInfo.getAbsolutePath()).thenReturn(new URI("transactions/1"));
+
+        Response response = systemUnderTest.get(uriInfo, 1L, "");
+
+        assertEquals(200, response.getStatus());
+        FinancialTransaction ft = (FinancialTransaction) response.getEntity();
+
+        assertNotNull(ft.getAmount());
+        assertNotNull(ft.getDate());
+        assertNull(ft.getDescription());
+    }
+
+    @Test
+    public void testGetByIdNotFound() throws URISyntaxException {
+
+        when(entityManager.createNamedQuery("Fintransactie.findById", Fintransactie.class)).thenReturn(typedQuery);
+        when(typedQuery.setParameter("id", 1L)).thenReturn(typedQuery);
+        final ArrayList<Fintransactie> arrayList = new ArrayList<Fintransactie>();
+        when(typedQuery.getResultList()).thenReturn(arrayList);
+
+        when(uriInfo.getAbsolutePath()).thenReturn(new URI("transactions/1"));
+
+        Response response = systemUnderTest.get(uriInfo, 1L, "");
+
+        assertEquals(404, response.getStatus());
     }
 }
