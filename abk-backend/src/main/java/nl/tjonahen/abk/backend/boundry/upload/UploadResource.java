@@ -68,39 +68,16 @@ public class UploadResource extends HttpServlet {
     @PersistenceContext
     private EntityManager entityManager;
 
-    private static MessageDigest md;
-
-    private static CsvJSScripting scripting;
-
-    private static boolean headers;
-    private static boolean dryRun;
-
-    @Override
-    public void init() throws ServletException {
-        super.init();
-
-        final CsvReader reader = entityManager.createNamedQuery("CsvReader.findAll",
-                CsvReader.class).getResultList().get(0);
-        scripting = new CsvJSScripting(reader.getScript());
-        headers = reader.isHeaders();
-        dryRun = reader.isDryRun();
-        try {
-            md = MessageDigest.getInstance("MD5");
-        } catch (NoSuchAlgorithmException ex) {
-            throw new ServletException(ex);
-        }
-
-    }
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
      * @param request servlet request
      * @param response servlet response
+     * @param reader CsvReader
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, CsvReader reader)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
@@ -114,7 +91,7 @@ public class UploadResource extends HttpServlet {
             out.println("Received " + request.getParts().size() + " parts ...<br>");
             for (Part part : request.getParts()) {
                 final String fileName = part.getSubmittedFileName();
-                if (processPartJsParsing(part.getInputStream())) {
+                if (processPartJsParsing(part.getInputStream(), reader)) {
                     out.println("... process sucess... " + fileName + " part<br>");
                 } else {
                     out.println("... process error... " + fileName + " part<br>");
@@ -125,12 +102,14 @@ public class UploadResource extends HttpServlet {
         }
     }
 
-    private boolean processPartJsParsing(InputStream inputStream) {
+    private boolean processPartJsParsing(InputStream inputStream, CsvReader reader) {
         try {
             new BufferedReader(new InputStreamReader(inputStream, UT_F8))
                     .lines()
-                    .skip(headers ? 1 : 0)
-                    .forEach(this::processLine);
+                    .skip(reader.isHeaders() ? 1 : 0)
+                    .forEach(s -> {
+                            processLine(reader, s);
+                    });
         } catch (UnsupportedEncodingException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
             return false;
@@ -139,9 +118,9 @@ public class UploadResource extends HttpServlet {
         return true;
     }
 
-    private void processLine(String s) {
+    private void processLine(CsvReader reader, String s) {
         try {
-            FinancialTransaction ft = scripting.parse(s);
+            FinancialTransaction ft =  new CsvJSScripting(reader.getScript()).parse(s);
             Fintransactie trans = new Fintransactie();
             trans.setDatum(makeDate(ft.getDate()));
             trans.setTegenrekeningnaam(ft.getContraAccountName());
@@ -153,15 +132,19 @@ public class UploadResource extends HttpServlet {
             trans.setMutatiesoort(ft.getMutatiesoort());
             trans.setMededeling(ft.getDescription());
             updateHash(trans);
-            if (!dryRun) {
+            if (!reader.isDryRun()) {
                 transactionProcessor.process(trans);
             }
-        } catch (UnsupportedEncodingException | NumberFormatException | NoSuchMethodException | ScriptException | javax.persistence.PersistenceException ex) {
+        } catch (UnsupportedEncodingException | NumberFormatException | NoSuchMethodException
+                | ScriptException | javax.persistence.PersistenceException
+                | NoSuchAlgorithmException ex)
+        {
             LOGGER.log(Level.SEVERE, "{0} {1} data->{2}", new Object[]{ex, ex.getMessage(), s});
         }
     }
 
-    private static void updateHash(Fintransactie ft) throws UnsupportedEncodingException {
+    private static void updateHash(Fintransactie ft) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("MD5");
         md.update(ft.getRekening().getBytes(UT_F8));
         md.update(ft.getBedrag().toString().getBytes(UT_F8));
         md.update(ft.getCode().getBytes(UT_F8));
@@ -194,7 +177,10 @@ public class UploadResource extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            processRequest(request, response);
+            final CsvReader reader = entityManager.createNamedQuery("CsvReader.findAll",
+                    CsvReader.class).getResultList().get(0);
+
+            processRequest(request, response, reader);
         } catch (IOException | ServletException ex) {
             LOGGER.log(Level.SEVERE, "{0} {1}", new Object[]{ex, ex.getMessage()});
 
