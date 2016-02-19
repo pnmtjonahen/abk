@@ -16,6 +16,7 @@
  */
 package nl.tjonahen.abk.backend.entity;
 
+import java.util.ArrayList;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -41,9 +42,8 @@ public class RekeningTest {
      */
     @Test
     public void testEquals() {
-        Rekening instance = new Rekening();
-        instance.setRekening("5521208");
-        assertFalse(instance.equals("5521208"));
+        Rekening instance = new Rekening("5521208");
+        assertFalse(instance.equals("a string"));
         final Rekening other = new Rekening();
         assertFalse(instance.equals(other));
         other.setRekening("NL31 INGB 0005521208");
@@ -64,4 +64,12 @@ public class RekeningTest {
         assertEquals(expResult, result);
     }
     
+    @Test
+    public void testTransactionCollection() {
+        Rekening rekening = new Rekening();
+        
+        rekening.setFintransactieCollection(new ArrayList<>());
+        assertNotNull(rekening.getFintransactieCollection());
+        
+    }
 }
