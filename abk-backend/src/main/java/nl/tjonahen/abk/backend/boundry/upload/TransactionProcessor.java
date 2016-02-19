@@ -32,7 +32,6 @@ public class TransactionProcessor {
     @PersistenceContext
     private EntityManager entityManager;
 
-
     private Rekening findRekening(final String rekening) {
         return entityManager.find(Rekening.class, rekening);
     }
@@ -52,19 +51,18 @@ public class TransactionProcessor {
      * @param trans transaction to create
      */
     public void process(final Fintransactie trans) {
-        if (!entityManager.createNamedQuery("Fintransactie.findByHash")
+        if (isExisting(trans)) {
+            final Rekening rekening = bepaalRekening(trans);
+            entityManager.persist(trans);
+            trans.setAccountRekening(rekening);
+            entityManager.persist(rekening);
+        }
+    }
+
+    private boolean isExisting(final Fintransactie trans) {
+        return entityManager.createNamedQuery("Fintransactie.findByHash")
                 .setParameter("hash", trans.getHash())
                 .getResultList()
-                .isEmpty()) {
-            return; // existing hash, skip transaction
-        }
-
-        final Rekening rekening = bepaalRekening(trans);
-
-        entityManager.persist(trans);
-
-        trans.setAccountRekening(rekening);
-
-        entityManager.persist(rekening);
+                .isEmpty();
     }
 }
