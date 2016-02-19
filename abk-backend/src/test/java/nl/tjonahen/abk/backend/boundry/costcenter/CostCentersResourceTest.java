@@ -39,8 +39,6 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 /**
  *
@@ -55,10 +53,10 @@ public class CostCentersResourceTest {
     private UriInfo uriInfo;
 
     @Mock
-    private TypedQuery kostenPLaatsQuery;
+    private TypedQuery<Kostenplaats> kostenPLaatsQuery;
 
     @Mock
-    private TypedQuery kostenPLaatsQuery2;
+    private TypedQuery<Kostenplaats> kostenPLaatsQuery2;
 
     @InjectMocks
     private CostCentersResource systemUnderTest;
@@ -129,7 +127,7 @@ public class CostCentersResourceTest {
         when(entityManager.createNamedQuery("Kostenplaats.findById", Kostenplaats.class)).thenReturn(kostenPLaatsQuery);
         final ArrayList<Kostenplaats> arrayList = new ArrayList<>();
         final Kostenplaats kostenplaats = new Kostenplaats();
-        kostenplaats.setKostenplaatsCollection(new ArrayList());
+        kostenplaats.setKostenplaatsCollection(new ArrayList<>());
         arrayList.add(kostenplaats);
         when(kostenPLaatsQuery.setParameter("id", 1L)).thenReturn(kostenPLaatsQuery2);
         when(kostenPLaatsQuery2.getResultList()).thenReturn(arrayList);
@@ -152,14 +150,11 @@ public class CostCentersResourceTest {
 
         when(uriInfo.getAbsolutePath()).thenReturn(new URI("costcenters"));
 
-        doAnswer(new Answer<Object>() {
-            @Override
-            public Object answer(InvocationOnMock invocation) throws Throwable {
-                Kostenplaats theobject = (Kostenplaats) invocation.getArguments()[0];
-                theobject.setKostenplaatsCollection(new ArrayList<>());
-                theobject.setId(1L);
-                return null;
-            }
+        doAnswer(invocation -> {
+            Kostenplaats theobject = (Kostenplaats) invocation.getArguments()[0];
+            theobject.setKostenplaatsCollection(new ArrayList<>());
+            theobject.setId(1L);
+            return null;
         }).when(entityManager).refresh(any(Kostenplaats.class));
 
         Response response = systemUnderTest.post(uriInfo, costCenter);

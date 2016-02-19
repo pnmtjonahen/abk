@@ -26,6 +26,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import nl.tjonahen.abk.backend.entity.Fintransactie;
+import nl.tjonahen.abk.backend.entity.Kostenplaats;
 import nl.tjonahen.abk.backend.model.FinancialTransaction;
 import nl.tjonahen.abk.backend.model.FinancialTransactions;
 import nl.tjonahen.abk.backend.model.OrderBy;
@@ -66,10 +67,13 @@ public class FinancialTransactionsResourceTest {
     private CriteriaQuery<Long> cbCount;
 
     @Mock
-    private TypedQuery typedQuery;
+    private TypedQuery<Fintransactie> typedQuery;
 
     @Mock
-    private TypedQuery kostenPLaatsQuery2;
+    private TypedQuery<Long> typedCountQuery;
+
+    @Mock
+    private TypedQuery<Kostenplaats> kostenPLaatsQuery2;
 
     @InjectMocks
     private FinancialTransactionsResource systemUnderTest;
@@ -91,7 +95,7 @@ public class FinancialTransactionsResourceTest {
         when(financialTransactionQuery.createSelect()).thenReturn(cb);
 
         when(entityManager.createQuery(cb)).thenReturn(typedQuery);
-        final ArrayList<Fintransactie> arrayList = new ArrayList<Fintransactie>();
+        final ArrayList<Fintransactie> arrayList = new ArrayList<>();
         final Fintransactie fintransactie = new Fintransactie(1L);
         fintransactie.setDatum(new Date());
         fintransactie.setMededeling("Message");
@@ -102,8 +106,8 @@ public class FinancialTransactionsResourceTest {
         when(financialTransactionQueryBuilder.start()).thenReturn(financialTransactionQuery);
         when(financialTransactionQuery.where(any(Where.class))).thenReturn(financialTransactionQuery);
         when(financialTransactionQuery.createCount()).thenReturn(cbCount);
-        when(entityManager.createQuery(cbCount)).thenReturn(typedQuery);
-        when(typedQuery.getSingleResult()).thenReturn(new Long(0));
+        when(entityManager.createQuery(cbCount)).thenReturn(typedCountQuery);
+        when(typedCountQuery.getSingleResult()).thenReturn(new Long(0));
 
         when(uriInfo.getAbsolutePath()).thenReturn(new URI("transactions"));
 
@@ -124,7 +128,7 @@ public class FinancialTransactionsResourceTest {
 
         when(entityManager.createNamedQuery("Fintransactie.findById", Fintransactie.class)).thenReturn(typedQuery);
         when(typedQuery.setParameter("id", 1L)).thenReturn(typedQuery);
-        final ArrayList<Fintransactie> arrayList = new ArrayList<Fintransactie>();
+        final ArrayList<Fintransactie> arrayList = new ArrayList<>();
         final Fintransactie fintransactie = new Fintransactie(1L);
         fintransactie.setDatum(new Date());
         fintransactie.setMededeling("Message");
@@ -148,7 +152,7 @@ public class FinancialTransactionsResourceTest {
 
         when(entityManager.createNamedQuery("Fintransactie.findById", Fintransactie.class)).thenReturn(typedQuery);
         when(typedQuery.setParameter("id", 1L)).thenReturn(typedQuery);
-        final ArrayList<Fintransactie> arrayList = new ArrayList<Fintransactie>();
+        final ArrayList<Fintransactie> arrayList = new ArrayList<>();
         final Fintransactie fintransactie = new Fintransactie(1L);
         fintransactie.setBedrag(200.0);
         fintransactie.setDatum(new Date());
@@ -172,7 +176,7 @@ public class FinancialTransactionsResourceTest {
 
         when(entityManager.createNamedQuery("Fintransactie.findById", Fintransactie.class)).thenReturn(typedQuery);
         when(typedQuery.setParameter("id", 1L)).thenReturn(typedQuery);
-        final ArrayList<Fintransactie> arrayList = new ArrayList<Fintransactie>();
+        final ArrayList<Fintransactie> arrayList = new ArrayList<>();
         when(typedQuery.getResultList()).thenReturn(arrayList);
 
         when(uriInfo.getAbsolutePath()).thenReturn(new URI("transactions/1"));
