@@ -107,9 +107,7 @@ public class UploadResource extends HttpServlet {
             new BufferedReader(new InputStreamReader(inputStream, UT_F8))
                     .lines()
                     .skip(reader.isHeaders() ? 1 : 0)
-                    .forEach(s -> {
-                            processLine(reader, s);
-                    });
+                    .forEach(s -> processLine(reader, s));
         } catch (UnsupportedEncodingException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
             return false;
