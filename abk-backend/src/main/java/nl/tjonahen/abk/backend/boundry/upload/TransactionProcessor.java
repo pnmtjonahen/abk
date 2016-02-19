@@ -54,7 +54,8 @@ public class TransactionProcessor {
     public void process(final Fintransactie trans) {
         if (!entityManager.createNamedQuery("Fintransactie.findByHash")
                 .setParameter("hash", trans.getHash())
-                .getResultList().isEmpty()) {
+                .getResultList()
+                .isEmpty()) {
             return; // existing hash, skip transaction
         }
 

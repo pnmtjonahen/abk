@@ -31,9 +31,9 @@ public class RekeningTest {
     @Test
     public void testHashCode() {
         Rekening instance = new Rekening();
-        int expResult = 0;
-        int result = instance.hashCode();
-        assertEquals(expResult, result);
+        assertEquals(0, instance.hashCode());
+        instance.setRekening("5521208");
+        assertEquals("5521208".hashCode(), instance.hashCode());
     }
 
     /**
