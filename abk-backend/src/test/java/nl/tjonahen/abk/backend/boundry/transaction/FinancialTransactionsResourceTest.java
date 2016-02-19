@@ -132,12 +132,13 @@ public class FinancialTransactionsResourceTest {
         final Fintransactie fintransactie = new Fintransactie(1L);
         fintransactie.setDatum(new Date());
         fintransactie.setMededeling("Message");
+        fintransactie.setBijaf("Bij");
         arrayList.add(fintransactie);
         when(typedQuery.getResultList()).thenReturn(arrayList);
 
         when(uriInfo.getAbsolutePath()).thenReturn(new URI("transactions/1"));
 
-        Response response = systemUnderTest.get(uriInfo, 1L, "DESCRIPTION,DATE");
+        Response response = systemUnderTest.get(uriInfo, 1L, "DESCRIPTION,DATE,DEBITCREDITINDICATOR");
 
         assertEquals(200, response.getStatus());
         FinancialTransaction ft = (FinancialTransaction) response.getEntity();
@@ -145,6 +146,7 @@ public class FinancialTransactionsResourceTest {
         assertNull(ft.getAmount());
         assertNotNull(ft.getDate());
         assertNotNull(ft.getDescription());
+        assertEquals("credit", ft.getDebitCreditIndicator());
     }
 
     @Test
@@ -156,6 +158,7 @@ public class FinancialTransactionsResourceTest {
         final Fintransactie fintransactie = new Fintransactie(1L);
         fintransactie.setBedrag(200.0);
         fintransactie.setDatum(new Date());
+        fintransactie.setBijaf("Af");
         arrayList.add(fintransactie);
         when(typedQuery.getResultList()).thenReturn(arrayList);
 
@@ -169,6 +172,7 @@ public class FinancialTransactionsResourceTest {
         assertNotNull(ft.getAmount());
         assertNotNull(ft.getDate());
         assertNull(ft.getDescription());
+        assertEquals("debit", ft.getDebitCreditIndicator());
     }
 
     @Test
