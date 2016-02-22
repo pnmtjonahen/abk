@@ -16,7 +16,6 @@
  */
 package nl.tjonahen.abk.backend.entity;
 
-import java.util.Date;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -64,6 +63,22 @@ public class FintransactieTest {
         String expResult = "nl.tjonahen.abk.backend.entity.Fintransactie[ id=null ]";
         String result = instance.toString();
         assertEquals(expResult, result);
+    }
+    
+    @Test
+    public void testGetterSetter() {
+        Fintransactie instance = new Fintransactie();
+        
+        instance.setCode(null);
+        instance.setAccountRekening(null);
+        assertNull(instance.getAccountRekening());
+        instance.setMutatiesoort(null);
+        instance.setMededeling(null);
+        instance.setRekening(null);
+        instance.setTegenrekeningnaam(null);
+        instance.setTegenrekeningrekening(null);
+        
+        
     }
 
 }
