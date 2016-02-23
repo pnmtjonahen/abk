@@ -113,6 +113,7 @@ public class UploadResourceTest {
             br = new BufferedReader(new InputStreamReader(is));
             while ((line = br.readLine()) != null) {
                 sb.append(line);
+                sb.append("\n");
             }
 
         } catch (IOException e) {

@@ -108,7 +108,7 @@ public class UploadResource extends HttpServlet {
                     .lines()
                     .skip(reader.isHeaders() ? 1 : 0)
                     .forEach(s -> processLine(reader, s));
-        } catch (UnsupportedEncodingException ex) {
+        } catch (UnsupportedEncodingException | ProcessingException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
             return false;
         }
@@ -138,6 +138,7 @@ public class UploadResource extends HttpServlet {
                 | NoSuchAlgorithmException ex)
         {
             LOGGER.log(Level.SEVERE, "{0} {1} data->{2}", new Object[]{ex, ex.getMessage(), s});
+            throw new ProcessingException(ex);
         }
     }
 
@@ -213,6 +214,13 @@ public class UploadResource extends HttpServlet {
         cal.set(Calendar.DATE, day);
 
         return cal.getTime();
+    }
+
+    private static class ProcessingException extends RuntimeException {
+
+        public ProcessingException(Throwable ex) {
+            super(ex);
+        }
     }
 
 }
