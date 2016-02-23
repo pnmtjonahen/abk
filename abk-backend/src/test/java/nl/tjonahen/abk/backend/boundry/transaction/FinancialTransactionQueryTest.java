@@ -60,7 +60,7 @@ public class FinancialTransactionQueryTest {
 
     
     @Mock
-    private Path<?> expression;
+    private Path expression;
     
     @InjectMocks
     private FinancialTransactionQuery systemUnderTest;
