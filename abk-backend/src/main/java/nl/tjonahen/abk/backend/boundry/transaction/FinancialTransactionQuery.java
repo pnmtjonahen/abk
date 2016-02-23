@@ -81,7 +81,7 @@ class FinancialTransactionQuery {
     }
     
     private void addWhereClause(final CriteriaBuilder cb, final Root<Fintransactie> fintransactieRoot, 
-                        final CriteriaQuery cq) {
+                        final CriteriaQuery<?> cq) {
         final Optional<Predicate> reduce = where.getWhereClause()
                 .stream()
                 .map(kv -> PredicateField.valueOf(kv.getKey().toUpperCase())

@@ -60,7 +60,7 @@ public class FinancialTransactionQueryTest {
 
     
     @Mock
-    private Path expression;
+    private Path<?> expression;
     
     @InjectMocks
     private FinancialTransactionQuery systemUnderTest;
@@ -98,6 +98,7 @@ public class FinancialTransactionQueryTest {
         assertNotNull(createSelect);
     }
     @Test
+    @SuppressWarnings("unchecked")
     public void testCountBuilder() {
         when(entityManager.getCriteriaBuilder()).thenReturn(cb);
         when(cb.createQuery(Long.class)).thenReturn(cqCount);
@@ -115,6 +116,7 @@ public class FinancialTransactionQueryTest {
         assertNotNull(createSelect);
     }
     @Test
+    @SuppressWarnings("unchecked")
     public void testCountBuilderDateRange() {
         when(entityManager.getCriteriaBuilder()).thenReturn(cb);
         when(cb.createQuery(Long.class)).thenReturn(cqCount);
@@ -137,9 +139,6 @@ public class FinancialTransactionQueryTest {
         when(entityManager.getCriteriaBuilder()).thenReturn(cb);
         when(cb.createQuery(Long.class)).thenReturn(cqCount);
         when(cqCount.from(Fintransactie.class)).thenReturn(fintransactieRoot);
-        
-//        when(fintransactieRoot.get(Fintransactie_.mededeling)).thenReturn(expression);
-//        when(cb.like(any(Expression.class), any(String.class))).thenReturn(predicate);
         
         final CriteriaQuery<Long> createSelect = systemUnderTest.where(
                 new Where("fiets=*KEM*"))

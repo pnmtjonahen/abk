@@ -68,6 +68,7 @@ public class OrderByFieldTest {
     }
     
     @Test
+    @SuppressWarnings("unchecked")
     public void testDesc() {
         when(root.get(any(SingularAttribute.class))).thenReturn(expression);
         OrderByField.valueOf("ID").order(true, cb, root);
@@ -75,6 +76,7 @@ public class OrderByFieldTest {
         verify(cb).desc(expression);
     }
     @Test
+    @SuppressWarnings("unchecked")
     public void testAsc() {
         when(root.get(any(SingularAttribute.class))).thenReturn(expression);
         OrderByField.valueOf("ID").order(false, cb, root);
