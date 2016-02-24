@@ -33,7 +33,7 @@ public class CsvJSScriptingTest {
         FinancialTransaction parsed = script.parse("");
         
     }
-    @Test(expected = NoSuchMethodException.class)
+    @Test(expected = CsvJSScripting.CsvJSScriptingException.class)
     public void testParseError() throws Exception {
         CsvJSScripting script = new CsvJSScripting("");
         FinancialTransaction parsed = script.parse("");

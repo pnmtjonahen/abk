@@ -39,6 +39,8 @@ public class CsvJsReaderTest {
         instance.setHeaders("dummy");
         assertEquals("dummy",instance.getHeaders());
         assertEquals("dummy", instance.getScript());
+        instance.setScript("");
+        assertEquals("", instance.getScript());
     }
 
     
