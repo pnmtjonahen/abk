@@ -34,9 +34,6 @@ public class CsvJSScripting {
     public CsvJSScripting(final String script) {
         final ScriptEngineManager engineManager = new ScriptEngineManager();
         final ScriptEngine scriptEngine = engineManager.getEngineByName(ENGINE_NAME);
-//        if (scriptEngine == null) {
-//            throw new IllegalStateException("Cannot create ScriptEngine: " + ENGINE_NAME);
-//        }
         try {
             scriptEngine.eval(script);
         } catch (ScriptException ex) {
@@ -45,8 +42,19 @@ public class CsvJSScripting {
         invocable  = (Invocable) scriptEngine;
     }
 
-    public FinancialTransaction parse(String s) throws ScriptException, NoSuchMethodException {
-        return (FinancialTransaction) invocable.invokeFunction("parse", s);
+    public FinancialTransaction parse(String s) throws CsvJSScriptingException {
+        try {
+            return (FinancialTransaction) invocable.invokeFunction("parse", s);
+        } catch(ScriptException | NoSuchMethodException ex) {
+            throw new CsvJSScriptingException(ex);
+        }
+    }
+
+    public static class CsvJSScriptingException extends Exception {
+
+        public CsvJSScriptingException(java.lang.Exception ex) {
+            super(ex);
+        }
     }
     
     

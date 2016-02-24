@@ -135,7 +135,7 @@ public class UploadResource extends HttpServlet {
             if (!reader.isDryRun()) {
                 transactionProcessor.process(trans);
             }
-        } catch (NumberFormatException | NoSuchMethodException | ScriptException | javax.persistence.PersistenceException  ex) {
+        } catch (NumberFormatException | CsvJSScripting.CsvJSScriptingException | javax.persistence.PersistenceException  ex) {
             LOGGER.log(Level.SEVERE, "{0} {1} data->{2}", new Object[]{ex, ex.getMessage(), s});
             throw new ProcessingException(ex);
         }
