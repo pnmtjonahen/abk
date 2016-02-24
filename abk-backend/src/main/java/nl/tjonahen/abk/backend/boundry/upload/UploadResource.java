@@ -108,8 +108,10 @@ public class UploadResource extends HttpServlet {
                     .lines()
                     .skip(reader.isHeaders() ? 1 : 0)
                     .forEach(s -> processLine(reader, s));
-        } catch (UnsupportedEncodingException | ProcessingException ex) {
+        } catch (UnsupportedEncodingException ex) {
             LOGGER.log(Level.SEVERE, null, ex);
+            return false;
+        } catch (ProcessingException ex) {
             return false;
         }
 
@@ -118,7 +120,7 @@ public class UploadResource extends HttpServlet {
 
     private void processLine(CsvReader reader, String s) {
         try {
-            FinancialTransaction ft =  new CsvJSScripting(reader.getScript()).parse(s);
+            FinancialTransaction ft = new CsvJSScripting(reader.getScript()).parse(s);
             Fintransactie trans = new Fintransactie();
             trans.setDatum(makeDate(ft.getDate()));
             trans.setTegenrekeningnaam(ft.getContraAccountName());
@@ -133,35 +135,37 @@ public class UploadResource extends HttpServlet {
             if (!reader.isDryRun()) {
                 transactionProcessor.process(trans);
             }
-        } catch (UnsupportedEncodingException | NumberFormatException | NoSuchMethodException
-                | ScriptException | javax.persistence.PersistenceException
-                | NoSuchAlgorithmException ex)
-        {
+        } catch (NumberFormatException | NoSuchMethodException | ScriptException | javax.persistence.PersistenceException  ex) {
             LOGGER.log(Level.SEVERE, "{0} {1} data->{2}", new Object[]{ex, ex.getMessage(), s});
             throw new ProcessingException(ex);
         }
     }
 
-    private static void updateHash(Fintransactie ft) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(ft.getRekening().getBytes(UT_F8));
-        md.update(ft.getBedrag().toString().getBytes(UT_F8));
-        md.update(ft.getCode().getBytes(UT_F8));
-        md.update(ft.getTegenrekeningnaam().getBytes(UT_F8));
-        md.update(ft.getTegenrekeningrekening().getBytes(UT_F8));
-        final Date datum = ft.getDatum();
+    private static void updateHash(Fintransactie ft) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(ft.getRekening().getBytes(UT_F8));
+            md.update(ft.getBedrag().toString().getBytes(UT_F8));
+            md.update(ft.getCode().getBytes(UT_F8));
+            md.update(ft.getTegenrekeningnaam().getBytes(UT_F8));
+            md.update(ft.getTegenrekeningrekening().getBytes(UT_F8));
+            final Date datum = ft.getDatum();
 
-        final LocalDateTime ldt = LocalDateTime.ofInstant(
-                Instant.ofEpochMilli(datum.getTime()), ZoneId.systemDefault());
+            final LocalDateTime ldt = LocalDateTime.ofInstant(
+                    Instant.ofEpochMilli(datum.getTime()), ZoneId.systemDefault());
 
-        md.update(ldt.format(DateTimeFormatter.ISO_DATE).getBytes(UT_F8));
-        md.update(ft.getBijaf().getBytes(UT_F8));
-        md.update(ft.getMededeling().getBytes(UT_F8));
-        md.update(ft.getMutatiesoort().getBytes(UT_F8));
+            md.update(ldt.format(DateTimeFormatter.ISO_DATE).getBytes(UT_F8));
+            md.update(ft.getBijaf().getBytes(UT_F8));
+            md.update(ft.getMededeling().getBytes(UT_F8));
+            md.update(ft.getMutatiesoort().getBytes(UT_F8));
 
-        byte[] digest = md.digest();
-        BigInteger bigInt = new BigInteger(1, digest);
-        ft.setHash(bigInt.toString(16));
+            byte[] digest = md.digest();
+            BigInteger bigInt = new BigInteger(1, digest);
+            ft.setHash(bigInt.toString(16));
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
+            LOGGER.log(Level.SEVERE, "{0} {1}", new Object[]{ex, ex.getMessage()});
+            throw new ProcessingException(ex);
+        }
     }
 
     /**

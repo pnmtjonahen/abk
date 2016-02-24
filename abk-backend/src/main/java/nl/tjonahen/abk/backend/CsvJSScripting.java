@@ -34,9 +34,9 @@ public class CsvJSScripting {
     public CsvJSScripting(final String script) {
         final ScriptEngineManager engineManager = new ScriptEngineManager();
         final ScriptEngine scriptEngine = engineManager.getEngineByName(ENGINE_NAME);
-        if (scriptEngine == null) {
-            throw new IllegalStateException("Cannot create ScriptEngine: " + ENGINE_NAME);
-        }
+//        if (scriptEngine == null) {
+//            throw new IllegalStateException("Cannot create ScriptEngine: " + ENGINE_NAME);
+//        }
         try {
             scriptEngine.eval(script);
         } catch (ScriptException ex) {
