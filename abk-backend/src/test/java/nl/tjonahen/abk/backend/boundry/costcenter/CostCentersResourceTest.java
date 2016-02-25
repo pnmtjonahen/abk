@@ -216,10 +216,17 @@ public class CostCentersResourceTest {
         subCostCenter.setParent(costCenter);
         subCostCenter.setName("Child");
         subCostCenter.setFilter("ch*");
+        final ArrayList<CostCenter> subSubCostCenter = new ArrayList<>();
+        subSubCostCenter.add(new CostCenter());
+        subCostCenter.setList(subSubCostCenter);
         subCostCenters.add(subCostCenter);
+        subCostCenters.add(new CostCenter());
+        
         
         costCenter.setList(subCostCenters);
         costCenters.add(costCenter);
+        costCenters.add(new CostCenter());
+        
         Response response = systemUnderTest.post(costCenters);
         assertEquals(202, response.getStatus());
         

@@ -189,14 +189,7 @@ public class CostCentersResource {
     }
 
     private boolean update(Long id, CostCenter costCenter) {
-        final Kostenplaats current;
-        if (id == null) {
-            current = new Kostenplaats();
-            entityManager.persist(current);
-            entityManager.flush();
-        } else {
-            current = entityManager.find(Kostenplaats.class, id);
-        }
+        final Kostenplaats current = entityManager.find(Kostenplaats.class, id);
         if (null == current) {
             return false;
         }
