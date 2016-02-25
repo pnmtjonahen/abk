@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class CostCenters {
 
-    @XmlElement(name = "costCenter", required = false)
+    @XmlElement(name = "list", required = false)
     private List<CostCenter> list;
 
     public CostCenters() {
