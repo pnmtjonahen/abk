@@ -17,6 +17,7 @@
 package nl.tjonahen.abk.backend.model;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -31,17 +32,25 @@ public class CostCentersTest {
 
     @Test
     public void testWriteXML() throws JAXBException, IOException {
-        JAXBContext jaxbContext = JAXBContext.newInstance(new Class[] {CostCenters.class, CostCenter.class});
+        JAXBContext jaxbContext = JAXBContext.newInstance(new Class<?>[] {CostCenters.class, CostCenter.class});
         Marshaller m = jaxbContext.createMarshaller();
 
+        
         CostCenter cc = new CostCenter();
         cc.setName("name");
         cc.setFilter("filter");
-        m.marshal(cc, System.out);
+        final ArrayList<CostCenter> arrayList = new ArrayList<>();
+        arrayList.add(cc);
+        arrayList.add(cc);
+        arrayList.add(cc);
+        
+        CostCenters centers = new CostCenters(arrayList);
+        
+        m.marshal(centers, System.out);
     }
     @Test
     public void testReadXML() throws JAXBException, IOException {
-        JAXBContext jaxbContext = JAXBContext.newInstance(new Class[] {CostCenters.class, CostCenter.class});
+        JAXBContext jaxbContext = JAXBContext.newInstance(new Class<?>[] {CostCenters.class, CostCenter.class});
         Unmarshaller m = jaxbContext.createUnmarshaller();
 
         m.unmarshal(this.getClass().getResourceAsStream("/costcenters.xml"));
