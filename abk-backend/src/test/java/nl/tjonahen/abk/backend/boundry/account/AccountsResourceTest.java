@@ -48,7 +48,7 @@ public class AccountsResourceTest {
     private UriInfo uriInfo;
 
     @Mock
-    private TypedQuery typedQuery;
+    private TypedQuery<Rekening> typedQuery;
 
     @InjectMocks
     private AccountsResource systemUnderTest;

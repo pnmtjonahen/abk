@@ -200,4 +200,28 @@ public class CostCentersResourceTest {
         
         verify(entityManager).remove(any(Kostenplaats.class));
     }
+    
+    @Test
+    public void testPostAll() {
+        when(entityManager.createNamedQuery("Kostenplaats.deleteAll")).thenReturn(kostenPLaatsQuery);
+        
+        final ArrayList<CostCenter> costCenters = new ArrayList<>();
+        
+        final CostCenter costCenter = new CostCenter();
+        costCenter.setName("Root");
+        costCenter.setFilter("*");
+        
+        final ArrayList<CostCenter> subCostCenters = new ArrayList<>();
+        final CostCenter subCostCenter = new CostCenter();
+        subCostCenter.setParent(costCenter);
+        subCostCenter.setName("Child");
+        subCostCenter.setFilter("ch*");
+        subCostCenters.add(subCostCenter);
+        
+        costCenter.setList(subCostCenters);
+        costCenters.add(costCenter);
+        Response response = systemUnderTest.post(costCenters);
+        assertEquals(202, response.getStatus());
+        
+    }
 }
