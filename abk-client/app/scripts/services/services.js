@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Philippe Tjon-A-Hen philippe@tjonahen.nl
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,13 +20,13 @@
  * @ngdoc overview
  * @name abkServices
  * @description
- * 
+ *
  * Module defines the services the application uses.
  */
 angular.module('abkServices', ['ngResource', 'abkConfig']);
 
 /**
- * @ngdoc service 
+ * @ngdoc service
  * @name abkServices.transactionService
  * @requires $resource
  * @requires abkConfig.backendConfig
@@ -38,7 +38,7 @@ angular.module('abkServices').factory('transactionsService', function($resource,
 });
 
 /**
- * @ngdoc service 
+ * @ngdoc service
  * @name abkServices.costCentersService
  * @requires $resource
  * @requires abkConfig.backendConfig
@@ -53,13 +53,13 @@ angular.module('abkServices').factory('costCentersService', function($resource, 
 
 angular.module('abkServices').factory('csvReaderService', function($resource, backendConfig) {
     return $resource(backendConfig.resourcePath + '/admin/csvreader', {}, {
-        get: {method: 'GET', params: {}, isArray: false},
+        get: {method: 'GET', params: {}, isArray: false}
     });
 });
 
 angular.module('abkServices').factory('UsersApi', function($resource, backendConfig) {
     return $resource(backendConfig.resourcePath + '/login', {}, {
-        login: {method: 'PUT', params: {}, isArray: true},
+        login: {method: 'PUT', params: {}, isArray: true}
     });
 });
 

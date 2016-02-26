@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Philippe Tjon-A-Hen philippe@tjonahen.nl
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,32 +17,32 @@
 'use strict';
 /**
  * @ngdoc overview
- * @name abkConfig 
+ * @name abkConfig
  * @description
  * A module containing configuration for the application.
  */
 angular.module('abkConfig', []);
 
 /**
- * @ngdoc service  
+ * @ngdoc service
  * @name abkConfig.backendConfig
- * @description 
+ * @description
  * holds the backend configuration items
  */
 angular.module('abkConfig').constant('backendConfig', {
     /**
-     * @ngdoc property  
+     * @ngdoc property
      * @name abkConfig.backendConfig#resourcePath
      * @propertyOf abkConfig.backendConfig
-     * @returns {string} the server url 
+     * @returns {string} the server url
      */
     resourcePath: 'http://localhost:8080/abk-backend/rest',
-    
+
     /**
-     * @ngdoc property  
+     * @ngdoc property
      * @name abkConfig.backendConfig#uploadPath
      * @propertyOf abkConfig.backendConfig
-     * @returns {string} the server url where uploads should be posted 
+     * @returns {string} the server url where uploads should be posted
      */
     uploadPath: 'http://localhost:8080/abk-backend/upload'
 });

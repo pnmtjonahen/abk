@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Philippe Tjon-A-Hen philippe@tjonahen.nl
  *
  * This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
 'use strict';
 /**
  * @ngdoc overview
- * @name abkComponents 
+ * @name abkComponents
  * @description
  * A module containing components used by the application.
  */
@@ -28,26 +28,24 @@ angular.module('abkComponents', []);
  * @name abkComponents.directive:amount
  * @restrict E
  * @description
- * Formats an double as an amount. 
- * 
+ * Formats an double as an amount.
+ *
  * Uses the following angular formatter {{data | number:2}}.
- * 
+ *
  * Negative numbers are displayed without the sign.
- *  
+ *
  * <pre>
 //be sure to include debit/credit css style to style the amount
 p.debit {
     font-style: italic;
     color: red;
-    
 }
 p.credit {
     font-style: bold;
     color: blue;
-    
 }
  * </pre>
- *  
+ *
  * @example
     <doc:example module="abkComponents">
         <doc:source>
@@ -96,9 +94,9 @@ p.credit {
                 </table>
             </div>
         </doc:source>
-    </doc:example> 
+    </doc:example>
  *
- * @param {Object} data an object with an amount property. 
+ * @param {Object} data an object with an amount property.
  */
 angular.module('abkComponents').directive('amount', [
     function () {
@@ -108,8 +106,8 @@ angular.module('abkComponents').directive('amount', [
             scope: {
                 data: '='
             },
-            template:  "<div><p ng-if='data.amount < 0'  class='debit  text-right'>{{(data.amount*-1) | number:2}}</p>\
-                        <p ng-if='data.amount >= 0' class='credit text-right'>{{data.amount | number:2}}</p></div>"
+            template:  "<div><p ng-if='data.amount < 0'  class='debit  text-right'>{{(data.amount*-1) | number:2}}</p>" +
+                        "<p ng-if='data.amount >= 0' class='credit text-right'>{{data.amount | number:2}}</p></div>"
         };
     }
 ]);
@@ -119,7 +117,7 @@ angular.module('abkComponents').directive('amount', [
  * @name abkComponents.service:currentDate
  * @description
  * factory to get the current date or the current date range (start of month to end of month)
- * @example 
+ * @example
  <pre>
     var now = currentDate.current();
 
@@ -136,12 +134,12 @@ angular.module('abkComponents').factory('currentDate', function () {
             var end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 1, 0, 0);
             var start = new Date(now.getFullYear(), now.getMonth(), 1, 1, 0, 0);
             return {
-                'start': start, 
-                'end': end, 
+                'start': start,
+                'end': end,
                 'previous' : function () {
                     end.setMonth(start.getMonth(), 0);
                     start.setMonth(start.getMonth() - 1);
-                }, 
+                },
                 'next': function () {
                     start.setMonth(start.getMonth() + 1);
                     end.setMonth(start.getMonth() + 1, 0);
@@ -154,12 +152,12 @@ angular.module('abkComponents').factory('currentDate', function () {
             var end = new Date(now.getFullYear(), 11, 31, 1, 0, 0);
             var start = new Date(now.getFullYear(), 0, 1, 1, 0, 0);
             return {
-                'start': start, 
-                'end': end, 
+                'start': start,
+                'end': end,
                 'previous' : function () {
                     end.setFullYear(end.getFullYear() -1);
                     start.setFullYear(start.getFullYear() -1);
-                }, 
+                },
                 'next': function () {
                     end.setFullYear(end.getFullYear() +1);
                     start.setFullYear(start.getFullYear() +1);
@@ -172,10 +170,10 @@ angular.module('abkComponents').factory('currentDate', function () {
 /**
  * @ngdoc directive
  * @name abkComponents.directive:contenteditable
- * 
+ *
  * @description
  * http://gaboesquivel.com/blog/2014/in-place-editing-with-contenteditable-and-angularjs/
- * 
+ *
  * @example
     <doc:example module="abkComponents">
         <doc:source>
@@ -189,9 +187,9 @@ angular.module('abkComponents').factory('currentDate', function () {
             </div>
 
         </doc:source>
-    </doc:example> 
+    </doc:example>
  *
- * @param {Object} ngModel the model object. 
+ * @param {Object} ngModel the model object.
  */
 angular.module('abkComponents').directive("contenteditable", function() {
   return {

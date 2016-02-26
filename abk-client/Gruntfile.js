@@ -337,7 +337,7 @@ module.exports = function (grunt) {
         // document
         ngdocs: {
             options: {
-               scripts: [
+                scripts: [
                     'bower_components/jquery/dist/jquery.js',
                     'bower_components/angular/angular.js',
                     'bower_components/bootstrap/dist/js/bootstrap.js',
@@ -346,17 +346,37 @@ module.exports = function (grunt) {
                     'app/scripts/d3graph/d3graph.js',
                     'app/scripts/components/components.js'
                 ],
-                html5mode:true
+                html5mode: true
             },
             api: {
                 src: ['<%= yeoman.app %>/scripts/**/*.js'],
-                title:'API Documentation'
+                title: 'API Documentation'
+            }
+        },
+        sonarRunner: {
+            analysis: {
+                options: {
+                    debug: true,
+                    separator: '\n',
+                    sonar: {
+                        host: {
+                            url: 'http://localhost:9000'
+                        },
+                        projectKey: 'nl.tjonahen:abk-client:2.0.1-SNAPSHOT',
+                        projectName: 'Analytisch Boekhouden en Kostencalculatie - Client',
+                        projectVersion: '2.0.1-SNAPSHOT',
+                        sources: ['app/scripts'].join(','),
+                        language: 'js',
+                        sourceEncoding: 'UTF-8'
+                    }
+                }
             }
         }
     });
 
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-ngdocs');
+    grunt.loadNpmTasks('grunt-sonar-runner');
     grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
         if (target === 'dist') {
             return grunt.task.run(['build', 'connect:dist:keepalive']);

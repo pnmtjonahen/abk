@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Philippe Tjon-A-Hen philippe@tjonahen.nl
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
 (function() {
 /**
  * @ngdoc overview
- * @name d3Graph 
+ * @name d3Graph
  * @description
  * A module containing D3 graph directives.
  */
@@ -36,10 +36,10 @@ var d3Graph = angular.module('d3Graph', []);
  <doc:source>
  <div class="container-fluid">
  <div ng-controller="Ctrl">
- <line-graph xdomain='xdomain' 
- ydomain='ydomain' 
- linecolors='colornames' 
- data='report' 
+ <line-graph xdomain='xdomain'
+ ydomain='ydomain'
+ linecolors='colornames'
+ data='report'
  yaxislabel="Y-Axis" />
  </div>
  </div>
@@ -53,14 +53,14 @@ var d3Graph = angular.module('d3Graph', []);
  }]);
  </script>
  </doc:source>
- </doc:example> 
+ </doc:example>
  *
  *  @param {Array} xdomain an Array of a minimum and maximum scale of the x axis. Be aware that screen coordinates start with 0,0 in the upper left corner
  *  @param {Array} ydomain an Array of a minimum and maximum scale of the y axis. Be aware that screen coordinates start with 0,0 in the upper left corner
  *  @param {Array} colornames an Array of css color names. index of the array is the line color of the same index in the data.
  *  @param {Array} data an Array of {id:id, data:[]}. each entry is a single line. The data points are in the form of {key:key, value:value}.
- *  @param {string} yaxislabel y axis label. 
- *    
+ *  @param {string} yaxislabel y axis label.
+ *
  *
  */
 d3Graph.directive('lineGraph', ['$window',

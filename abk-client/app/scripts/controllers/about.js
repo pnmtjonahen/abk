@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Philippe Tjon-A-Hen philippe@tjonahen.nl
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,14 +23,13 @@
  * # AboutController
  * Controller of the About page
  */
-angular.module('abkClientApp').controller("AboutController", AboutController);
+angular.module('abkClientApp').controller("AboutController", aboutController);
 
-function AboutController($rootScope) {
+function aboutController($rootScope) {
     $rootScope.showDebug = false;
-    
+
     this.debug = function () {
         $rootScope.showDebug = !$rootScope.showDebug;
     };
-   
-};
 
+};

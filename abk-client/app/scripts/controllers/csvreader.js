@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Philippe Tjon-A-Hen philippe@tjonahen.nl
  *
  * This program is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@
  */
 angular.module('abkClientApp').controller("CsvReaderController", function(csvReaderService) {
     this.csvReader = undefined;
-    
+
     var that = this;
     csvReaderService.get({}, function(data) {
         that.csvReader = data;

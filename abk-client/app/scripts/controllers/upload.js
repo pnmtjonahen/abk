@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2013 Philippe Tjon-A-Hen philippe@tjonahen.nl
  *
  * This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@ angular.module('abkClientApp').controller("UploadController", function($scope, F
 
     uploader.filters.push({
         name: 'customFilter',
-        fn: function (item /*{File|FileLikeObject}*/, options) {
+        fn: function (item, options) {
             return this.queue.length < 10;
         }
     });

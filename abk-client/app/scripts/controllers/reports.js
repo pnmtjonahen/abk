@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Philippe Tjon-A-Hen philippe@tjonahen.nl
  *
  * This program is free software: you can redistribute it and/or modify
@@ -72,9 +72,9 @@ angular.module('abkClientApp').controller("ReportsController", function(currentD
             }
         });
 
-        for (var m = 0; m < 13; ++m) {
-            for (var index = 1; index < 32; ++index) {
-                that.month[m].data[index].value += that.month[m].data[index - 1].value;
+        for (var mo = 0; mo < 13; ++mo) {
+            for (var ix = 1; ix < 32; ++ix) {
+                that.month[mo].data[ix].value += that.month[mo].data[ix - 1].value;
             }
         }
 

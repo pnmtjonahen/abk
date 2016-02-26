@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Philippe Tjon-A-Hen philippe@tjonahen.nl
  *
  * This program is free software: you can redistribute it and/or modify
@@ -71,8 +71,8 @@ angular.module('abkClientApp').config(function ($stateProvider, $urlRouterProvid
             })
             .state('transaction', {
                 url:'/transaction',
-                templateUrl: 'views/transaction.html', 
-                controller: 'TransactionController', 
+                templateUrl: 'views/transaction.html',
+                controller: 'TransactionController',
                 controllerAs: 'transactionCtrl',
                 data : {
                     requireLogin: false
@@ -80,8 +80,8 @@ angular.module('abkClientApp').config(function ($stateProvider, $urlRouterProvid
             })
             .state('reports', {
                 url:'/reports',
-                templateUrl: 'views/reports.html', 
-                controller: 'ReportsController', 
+                templateUrl: 'views/reports.html',
+                controller: 'ReportsController',
                 controllerAs: 'reportCtrl',
                 data : {
                     requireLogin: false
@@ -89,8 +89,8 @@ angular.module('abkClientApp').config(function ($stateProvider, $urlRouterProvid
             })
             .state('costcenter', {
                 url:'/costcenter',
-                templateUrl: 'views/costcenter.html', 
-                controller: 'CostCenterController', 
+                templateUrl: 'views/costcenter.html',
+                controller: 'CostCenterController',
                 controllerAs: 'costCenterCtrl',
                 data : {
                     requireLogin: false
@@ -98,7 +98,7 @@ angular.module('abkClientApp').config(function ($stateProvider, $urlRouterProvid
             })
             .state('upload', {
                 url:'/upload',
-                templateUrl: 'views/upload.html', 
+                templateUrl: 'views/upload.html',
                 controller: 'UploadController',
                 data : {
                     requireLogin: false
@@ -106,7 +106,7 @@ angular.module('abkClientApp').config(function ($stateProvider, $urlRouterProvid
             })
             .state('csvreader', {
                 url:'/csvreader',
-                templateUrl: 'views/csvreader.html', 
+                templateUrl: 'views/csvreader.html',
                 controller: 'CsvReaderController',
                 controllerAs: 'csvReaderCtrl',
                 data : {

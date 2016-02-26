@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Philippe Tjon-A-Hen philippe@tjonahen.nl
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,92 +14,102 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-'use strict';
+(function () {
+    'use strict';
 
-/**
- * @ngdoc function
- * @name abkClientApp.controller:TransactionController
- * @description
- * # TransactionController
- * Controller of the abkClientApp
- */
-angular.module('abkClientApp').controller("TransactionController", function ($q, currentDate, transactionsService, costCentersService) {
-    this.data = undefined;
-    this.showall = false;
-    this.range = currentDate.range();
+    /**
+     * @ngdoc function
+     * @name abkClientApp.controller:TransactionController
+     * @description
+     * # TransactionController
+     * Controller of the abkClientApp
+     */
+    angular.module('abkClientApp').controller("TransactionController", transactionController);
 
-    var that = this;
-
-    this.previous = function () {
-        that.range.previous()
-        that.data = undefined;
-
-        retrieveData();
-    };
-
-    this.next = function () {
-        that.range.next();
-        that.data = undefined;
-
-        retrieveData();
-    };
-
-
-    var processCostcenters = function (e) {
+    var updateCostcenterFilter = function (e) {
         if (e.filter) {
             e.filter = new RegExp(e.filter.trim(), 'i');
         }
         if (e.list) {
-            e.list.forEach(processCostcenters);
+            e.list.forEach(updateCostcenterFilter);
         }
     };
 
-    var retrieveData = function () {
-        $q.all([transactionsService.get({q: 'date=[' + that.range.start.toJSON() + ' ' + that.range.end.toJSON() + ']', limit: 9999,
-                fields: 'date,debitCreditIndicator,amount,description,contraAccountName', orderby: 'date desc'}).$promise,
-            costCentersService.get({expand: 3}).$promise]).then(function (result) {
+    var matchCostCenter = function (t, c) {
+        t.matched = true;
+        if (t.costcenter !== undefined)
+            t.costcenter = t.costcenter + ' / ' + c.name;
+        else
+            t.costcenter = c.name;
+
+    };
+
+    var matchSubCostCenters = function (t, sc) {
+        if (sc.filter &&
+                (sc.filter.test(t.description) || sc.filter.test(t.contraAccountName))) {
+            matchCostCenter(t, sc);
+        }
+    };
+    var matchTransaction = function (t, c) {
+        if (c.filter &&
+                (c.filter.test(t.description) || c.filter.test(t.contraAccountName))) {
+            matchCostCenter(t, c);
+        }
+        if (c.list) {
+            c.list.forEach(matchSubCostCenters.bind(null, t));
+        }
+    };
+
+    var processTransaction = function (costcenters, t) {
+        t.matched = false;
+        if (t.debitCreditIndicator === 'debit') {
+            t.amount = {amount: -parseFloat(t.amount)};
+        } else {
+            t.amount = {amount: parseFloat(t.amount)};
+        }
+
+        costcenters.list.forEach(matchTransaction.bind(null, t));
+    };
+
+    function transactionController($q, currentDate, transactionsService, costCentersService) {
+        this.data = undefined;
+        this.showall = false;
+        this.range = currentDate.range();
+
+        var that = this;
+
+        var processTransactionsAndCosteCenters = function (result) {
 
             that.data = result[0];
             var costcenters = result[1];
 
-            costcenters.list.forEach(processCostcenters);
+            costcenters.list.forEach(updateCostcenterFilter);
 
+            that.data.list.forEach(processTransaction.bind(null, costcenters));
+        };
 
+        var retrieveData = function () {
+            $q.all([transactionsService.get({q: 'date=[' + that.range.start.toJSON() + ' ' + that.range.end.toJSON() + ']', limit: 9999,
+                    fields: 'date,debitCreditIndicator,amount,description,contraAccountName', orderby: 'date desc'}).$promise,
+                costCentersService.get({expand: 3}).$promise]).then(processTransactionsAndCosteCenters);
+        };
 
-            that.data.list.forEach(function (t) {
-                t.matched = false;
-                if (t.debitCreditIndicator === 'debit') {
-                    t.amount = {amount: -parseFloat(t.amount)};
-                } else {
-                    t.amount = {amount: parseFloat(t.amount)};
-                }
-                costcenters.list.forEach(function (c) {
-                    if (c.filter &&
-                            (c.filter.test(t.description) || c.filter.test(t.contraAccountName))) {
-                        t.matched = true;
-                        if (t.costcenter !== undefined)
-                            t.costcenter = t.costcenter + ' / ' + c.name;
-                        else
-                            t.costcenter = c.name;
+        retrieveData();
 
-                    }
-                    if (c.list) {
-                        c.list.forEach(function (sc) {
-                            if (sc.filter &&
-                                    (sc.filter.test(t.description) || sc.filter.test(t.contraAccountName))) {
-                                t.matched = true;
-                                if (t.costcenter !== undefined)
-                                    t.costcenter = t.costcenter + ' / ' + sc.name;
-                                else
-                                    t.costcenter = sc.name;
+        this.previous = function () {
+            that.range.previous();
+            that.data = undefined;
 
-                            }
-                        });
-                    }
-                });
-            });
-        });
-    };
+            retrieveData();
+        };
 
-    retrieveData();
-});
+        this.next = function () {
+            that.range.next();
+            that.data = undefined;
+
+            retrieveData();
+        };
+
+    }
+    ;
+})();

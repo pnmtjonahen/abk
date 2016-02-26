@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright (C) 2014 Philippe Tjon-A-Hen philippe@tjonahen.nl
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  */
 'use strict';
 
-angular.module('abkClientApp').service('loginModal', function (ngDialog, $rootScope) {
+angular.module('abkClientApp').service('loginModal', function (ngDialog) {
 
 
     return function () {
