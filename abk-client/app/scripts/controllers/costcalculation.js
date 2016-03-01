@@ -153,43 +153,38 @@
         that.totalUnAccounted = undefined;
 
     };
-
+    function retrieveData($q, that, transactionsService, costCentersService) {
+        $q.all([transactionsService.get({q: 'date=[' + that.range.start.toJSON() + ' ' + that.range.end.toJSON() + ']', limit: 9999,
+                fields: 'date,debitCreditIndicator,amount,description,contraAccountName'}).$promise,
+            costCentersService.get({expand: 3}).$promise]).then(processResult.bind(null, that));
+    }
+    ;
     function costCalculationController($q, currentDate, transactionsService, costCentersService) {
-
         this.range = currentDate.range();
         this.lastDay = undefined;
         this.data = undefined;
         this.dayheader = [];
         this.header = [];
-
         this.total = [];
         this.totalAmount = undefined;
         this.totalUnAccounted = undefined;
-
         this.current;
 
         var that = this;
 
         init(that);
-
-
-        function retrieveData() {
-            $q.all([transactionsService.get({q: 'date=[' + that.range.start.toJSON() + ' ' + that.range.end.toJSON() + ']', limit: 9999,
-                    fields: 'date,debitCreditIndicator,amount,description,contraAccountName'}).$promise,
-                costCentersService.get({expand: 3}).$promise]).then(processResult.bind(null, that));
-        };
-        retrieveData();
+        retrieveData($q, that, transactionsService, costCentersService);
 
         this.previous = function () {
             that.range.previous();
             init(that);
-            retrieveData();
+            retrieveData($q, that, transactionsService, costCentersService);
         };
 
         this.next = function () {
             that.range.next();
             init(that);
-            retrieveData();
+            retrieveData($q, that, transactionsService, costCentersService);
         };
 
         this.showRow = function (row) {
@@ -213,5 +208,6 @@
         this.weekday = function (index) {
             return that.dayheader[index].day !== 's';
         };
-    };
+    }
+    ;
 })();

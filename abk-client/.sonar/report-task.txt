@@ -1,0 +1,5 @@
+projectKey=nl.tjonahen:abk-client:2.0.1-SNAPSHOT
+serverUrl=http://localhost:9000
+dashboardUrl=http://localhost:9000/dashboard/index/nl.tjonahen:abk-client:2.0.1-SNAPSHOT
+ceTaskId=AVMfDg9r1N4WS7gLZ2Fp
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AVMfDg9r1N4WS7gLZ2Fp
