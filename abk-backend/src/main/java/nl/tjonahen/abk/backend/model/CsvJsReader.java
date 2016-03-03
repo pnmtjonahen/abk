@@ -32,13 +32,19 @@ public class CsvJsReader {
     private String dryrun;
     private String script;
 
+
+    public CsvJsReader() {
+        // for JAXB purposes
+    }
+
+
     public CsvJsReader(Boolean headers, Boolean dryrun, String script) {
         this.headers = headers.toString();
         this.dryrun = dryrun.toString();
         this.script = script;
     }
 
-    
+
     public String getHeaders() {
         return headers;
     }
@@ -63,6 +69,6 @@ public class CsvJsReader {
     public void setScript(String script) {
         this.script = script;
     }
-    
-    
+
+
 }

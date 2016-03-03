@@ -23,8 +23,13 @@ package nl.tjonahen.abk.backend.model;
 public class Meta {
     private String href;
 
+
+    public Meta() {
+        // for JAXB only
+    }
+
     /**
-     * 
+     *
      * @param href -
      */
     public Meta(String href) {
@@ -34,5 +39,5 @@ public class Meta {
     public String getHref() {
         return href;
     }
-    
+
 }
