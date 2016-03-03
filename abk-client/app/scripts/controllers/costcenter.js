@@ -69,7 +69,7 @@
         };
 
         this.revert = function () {
-            retrieveCostCenters();
+            retrieveCostCenters(costCentersService, that);
         };
 
         this.showRow = function (row) {
@@ -94,10 +94,10 @@
             that.storing = true;
             costCentersService.post(that.costcenters, function () {
                 that.storing = false;
-                retrieveCostCenters();
+                retrieveCostCenters(costCentersService, that);
             }, function () {
                 that.storing = false;
-                retrieveCostCenters();
+                retrieveCostCenters(costCentersService, that);
             });
         };
 
