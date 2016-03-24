@@ -54,7 +54,7 @@ public class AccountsResource {
                 .collect(Collectors.toList()));
     }
 
-    @SuppressWarnings("squid:UnusedPrivateMethod")
+    @SuppressWarnings("squid:UnusedPrivateMethod") // Sonar false positive as the method is used as a lambda
     private static Account convert(final Rekening rekening) {
         final Account account = new Account();
         account.setNumber(rekening.getRekening());

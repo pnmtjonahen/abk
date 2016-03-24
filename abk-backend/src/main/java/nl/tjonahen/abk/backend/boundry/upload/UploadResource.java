@@ -101,6 +101,7 @@ public class UploadResource extends HttpServlet {
         }
     }
 
+    @SuppressWarnings("squid:S1166") // Log or rethrow exception, ProcessingException handling is as designed. Exception is thrown from a lambda where it is also logged.
     private boolean processPartJsParsing(InputStream inputStream, CsvReader reader) {
         try {
             new BufferedReader(new InputStreamReader(inputStream, UT_F8))
