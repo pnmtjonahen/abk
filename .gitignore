@@ -6,3 +6,7 @@
 /abk-client/node_modules/
 /abk-client/coverage/
 /abk-client/nbproject/
+/abk-client/target/
+/abk-client/dist/
+/abk-client/.sonar/
+/abk-client/.tmp/
