@@ -4,3 +4,5 @@
 /abk-client/bower_components/
 /abk-client/docs/
 /abk-client/node_modules/
+/abk-client/coverage/
+/abk-client/nbproject/
