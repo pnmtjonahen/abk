@@ -54,6 +54,7 @@ public class AccountsResource {
                 .collect(Collectors.toList()));
     }
 
+    @SuppressWarnings("squid:UnusedPrivateMethod")
     private static Account convert(final Rekening rekening) {
         final Account account = new Account();
         account.setNumber(rekening.getRekening());
