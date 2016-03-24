@@ -224,6 +224,7 @@ public class CostCentersResource {
         costcenters.stream().forEach(this::insertNewRoot);
     }
 
+    @SuppressWarnings("squid:UnusedPrivateMethod") // Sonar false positive as the method is used as a lambda
     private void insertNewRoot(CostCenter costCenter) {
         Kostenplaats current = new Kostenplaats();
         current.setFilter(costCenter.getFilter());
