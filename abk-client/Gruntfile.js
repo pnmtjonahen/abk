@@ -361,7 +361,7 @@ module.exports = function (grunt) {
                     projectHome:"target/",
                     sonar: {
                         host: {
-                            url: 'http://sonar.tjonahen.nl:9000'
+                            url: 'http://sonarqube.tjonahen.nl:9000'
                         },
                         projectKey: 'nl.tjonahen:abk-client:2.0.1-SNAPSHOT',
                         projectName: 'Analytisch Boekhouden en Kostencalculatie - Client',
