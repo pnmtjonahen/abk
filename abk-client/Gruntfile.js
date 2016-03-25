@@ -358,6 +358,7 @@ module.exports = function (grunt) {
                 options: {
                     debug: true,
                     separator: '\n',
+                    projectHome:"target/",
                     sonar: {
                         host: {
                             url: 'http://localhost:9000'
