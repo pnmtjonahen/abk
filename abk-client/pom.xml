@@ -30,8 +30,8 @@
                         https://repo1.maven.org/maven2/com/github/eirslett/frontend-maven-plugin/ -->
                         <version>0.0.29</version>
                         <configuration>
-                            <nodeVersion>v0.10.24</nodeVersion>
-                            <npmVersion>2.11.0</npmVersion>
+                            <nodeVersion>v5.9.1</nodeVersion>
+                            <npmVersion>3.8.3</npmVersion>
                             <installDirectory>target</installDirectory>
                         </configuration>
                         <executions>
