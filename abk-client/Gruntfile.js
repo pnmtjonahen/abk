@@ -361,11 +361,11 @@ module.exports = function (grunt) {
                     projectHome:"target/",
                     sonar: {
                         host: {
-                            url: 'http://sonarqube.tjonahen.nl:9000'
+                            url: grunt.option('sonar.host.url')
                         },
-                        projectKey: 'nl.tjonahen:abk-client:2.0.1-SNAPSHOT',
-                        projectName: 'Analytisch Boekhouden en Kostencalculatie - Client',
-                        projectVersion: '2.0.1-SNAPSHOT',
+                        projectKey: grunt.option('projectKey'),
+                        projectName: grunt.option('projectName'),
+                        projectVersion: grunt.option('projectVersion'),
                         sources: ['app/scripts'].join(','),
                         language: 'js',
                         sourceEncoding: 'UTF-8'
