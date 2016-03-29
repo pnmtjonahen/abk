@@ -18,6 +18,59 @@
         <sonar.exclusions>**/api-docs/**/*.js</sonar.exclusions>
     </properties>
 
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.github.eirslett</groupId>
+                    <artifactId>frontend-maven-plugin</artifactId>
+                    <!-- Use the latest released version:
+                    https://repo1.maven.org/maven2/com/github/eirslett/frontend-maven-plugin/ -->
+                    <version>0.0.29</version>
+                    <configuration>
+                        <nodeVersion>v5.9.1</nodeVersion>
+                        <npmVersion>3.8.3</npmVersion>
+                        <installDirectory>target</installDirectory>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <!-- optional: you don't really need execution ids,
+                        but it looks nice in your build log. -->
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>bower install</id>
+                        <goals>
+                            <goal>bower</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>grunt build</id>
+                        <goals>
+                            <goal>grunt</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
     <profiles>
         <profile>
             <id>sonar</id>
@@ -26,40 +79,15 @@
                     <plugin>
                         <groupId>com.github.eirslett</groupId>
                         <artifactId>frontend-maven-plugin</artifactId>
-                        <!-- Use the latest released version:
-                        https://repo1.maven.org/maven2/com/github/eirslett/frontend-maven-plugin/ -->
-                        <version>0.0.29</version>
-                        <configuration>
-                            <nodeVersion>v5.9.1</nodeVersion>
-                            <npmVersion>3.8.3</npmVersion>
-                            <installDirectory>target</installDirectory>
-                        </configuration>
                         <executions>
-                            <execution>
-                                <!-- optional: you don't really need execution ids,
-                                but it looks nice in your build log. -->
-                                <id>install node and npm</id>
-                                <goals>
-                                    <goal>install-node-and-npm</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>npm install</id>
-                                <goals>
-                                    <goal>npm</goal>
-                                </goals>
-                            </execution>
-                            <execution>
-                                <id>bower install</id>
-                                <goals>
-                                    <goal>bower</goal>
-                                </goals>
-                            </execution>
                             <execution>
                                 <id>grunt build</id>
                                 <goals>
                                     <goal>grunt</goal>
                                 </goals>
+                                <configuration>
+                                    <arguments>sonar</arguments>
+                                </configuration>
                             </execution>
                         </executions>
                     </plugin>

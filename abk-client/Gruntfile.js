@@ -423,10 +423,11 @@ module.exports = function (grunt) {
         'htmlmin',
         'ngdocs'
     ]);
-
+    grunt.registerTask('sonar', [
+        'sonarRunner'
+    ]);
     grunt.registerTask('default', [
 //        'test',
-        'build',
-        'sonarRunner'
+        'build'
     ]);
 };
