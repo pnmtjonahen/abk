@@ -358,7 +358,7 @@ module.exports = function (grunt) {
                 options: {
                     debug: true,
                     separator: '\n',
-                    projectHome:"target/",
+                    projectHome:"./",
                     sonar: {
                         host: {
                             url: grunt.option('sonar.host.url')
@@ -367,7 +367,6 @@ module.exports = function (grunt) {
                         projectName: grunt.option('projectName'),
                         projectVersion: grunt.option('projectVersion'),
                         sources: ['app/scripts'].join(','),
-                        language: 'js',
                         sourceEncoding: 'UTF-8',
                         scm : {
                             provider :"git"

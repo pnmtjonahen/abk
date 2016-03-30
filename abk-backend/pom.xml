@@ -10,7 +10,7 @@
     <artifactId>abk-backend</artifactId>
     <packaging>war</packaging>
 
-    <name>Analytisch_Boekhouden_en_Kostencalculatie_-_Backend</name>
+    <name>Analytisch Boekhouden en Kostencalculatie - Backend</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
