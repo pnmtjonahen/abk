@@ -368,7 +368,10 @@ module.exports = function (grunt) {
                         projectVersion: grunt.option('projectVersion'),
                         sources: ['app/scripts'].join(','),
                         language: 'js',
-                        sourceEncoding: 'UTF-8'
+                        sourceEncoding: 'UTF-8',
+                        scm : {
+                            provider :"git"
+                        }
                     }
                 }
             }
