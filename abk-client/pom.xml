@@ -86,7 +86,7 @@
                                     <goal>grunt</goal>
                                 </goals>
                                 <configuration>
-                                    <arguments>sonar --projectKey=${project.groupId}:${project.artifactId} --projectVersion=${project.version} --projectName='${project.name}' --sonar.host.url=${sonar.host.url}</arguments>
+                                    <arguments>sonar --projectKey=${project.groupId}:${project.artifactId} --projectVersion=${project.version} --projectName="${project.name}" --sonar.host.url=${sonar.host.url}</arguments>
                                 </configuration>
                             </execution>
                         </executions>
