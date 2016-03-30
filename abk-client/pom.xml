@@ -15,7 +15,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <netbeans.hint.license>gpl30</netbeans.hint.license>
-        <sonar.exclusions>**/vendor/**/*.js, **/bower_components/**/*.js</sonar.exclusions>
     </properties>
 
     <build>
