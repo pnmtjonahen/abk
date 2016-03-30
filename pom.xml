@@ -7,15 +7,26 @@
     <version>2.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Analytisch Boekhouden en Kostencalculatie</name>
+    <name>Analytisch_Boekhouden_en_Kostencalculatie</name>
 
     <scm>
         <connection>scm:git:https://github.com/pnmtjonahen/abk.git</connection>
         <developerConnection>scm:git:https://github.com/pnmtjonahen/abk.git</developerConnection>
     </scm>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.sonarsource.scanner.maven</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>3.0.1</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
     <modules>
-      <module>abk-backend</module>
-      <module>abk-client</module>
+        <module>abk-backend</module>
+        <module>abk-client</module>
     </modules>
 
- </project>
+</project>

@@ -10,7 +10,7 @@
     <artifactId>abk-backend</artifactId>
     <packaging>war</packaging>
 
-    <name>Analytisch Boekhouden en Kostencalculatie - Backend</name>
+    <name>Analytisch_Boekhouden_en_Kostencalculatie_-_Backend</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -72,15 +72,6 @@
     </dependencies>
 
     <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.sonarsource.scanner.maven</groupId>
-                    <artifactId>sonar-maven-plugin</artifactId>
-                    <version>3.0.1</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.jacoco</groupId>
