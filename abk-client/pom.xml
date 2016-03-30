@@ -10,12 +10,12 @@
     <artifactId>abk-client</artifactId>
     <packaging>jar</packaging>
 
-    <name>Analytisch Boekhouden en Kostencalculatie - Client</name>
+    <name>Analytisch_Boekhouden_en_Kostencalculatie_-_Client</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <netbeans.hint.license>gpl30</netbeans.hint.license>
-        <sonar.exclusions>**/api-docs/**/*.js</sonar.exclusions>
+        <sonar.exclusions>**/vendor/**/*.js, **/bower_components/**/*.js</sonar.exclusions>
     </properties>
 
     <build>
@@ -36,6 +36,13 @@
             </plugins>
         </pluginManagement>
         <plugins>
+            <plugin>
+                <groupId>org.sonarsource.scanner.maven</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
+                <configuration>
+                     <skip>true</skip>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
