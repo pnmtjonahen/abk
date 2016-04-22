@@ -16,6 +16,7 @@
  */
 package nl.tjonahen.abk.backend;
 
+
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
@@ -25,5 +26,4 @@ import javax.ws.rs.core.Application;
  */
 @ApplicationPath("/")
 public class AccountsApplication extends Application {
-
 }

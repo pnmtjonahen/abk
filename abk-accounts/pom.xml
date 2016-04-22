@@ -34,11 +34,6 @@
             <groupId>com.kumuluz.ee</groupId>
             <artifactId>kumuluzee-json-p</artifactId>
         </dependency>
-<!--        <dependency>
-            <groupId>com.wordnik</groupId>
-            <artifactId>swagger-jersey2-jaxrs</artifactId>
-            <scope>compile</scope>
-        </dependency>-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
