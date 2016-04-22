@@ -13,10 +13,6 @@
     <name>Analytisch Boekhouden en Kostencalculatie - Backend</name>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <netbeans.hint.license>gpl30</netbeans.hint.license>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
         <sonar.exclusions>**/api-docs/**/*.js</sonar.exclusions>
     </properties>
 
@@ -30,7 +26,6 @@
         <dependency>
             <groupId>com.wordnik</groupId>
             <artifactId>swagger-jersey2-jaxrs</artifactId>
-            <version>1.5.3-M1</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -48,7 +43,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.10</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -76,19 +70,11 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.5.201505241946</version>
                 <executions>
                     <execution>
                         <id>default-prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>default-report</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>report</goal>
                         </goals>
                     </execution>
                 </executions>

@@ -13,6 +13,67 @@
         <connection>scm:git:https://github.com/pnmtjonahen/abk.git</connection>
         <developerConnection>scm:git:https://github.com/pnmtjonahen/abk.git</developerConnection>
     </scm>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <netbeans.hint.license>gpl30</netbeans.hint.license>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <kumuluzee.version>1.0.0</kumuluzee.version>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-core</artifactId>
+                <version>${kumuluzee.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-servlet-jetty</artifactId>
+                <version>${kumuluzee.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-jax-rs</artifactId>
+                <version>${kumuluzee.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-cdi</artifactId>
+                <version>${kumuluzee.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-jpa</artifactId>
+                <version>${kumuluzee.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee</groupId>
+                <artifactId>kumuluzee-json-p</artifactId>
+                <version>${kumuluzee.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wordnik</groupId>
+                <artifactId>swagger-jersey2-jaxrs</artifactId>
+                <version>1.5.3-M1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.derby</groupId>
+                <artifactId>derbyclient</artifactId>
+                <version>10.12.1.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.10</version>
+                <scope>test</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
     <build>
         <pluginManagement>
             <plugins>
@@ -21,12 +82,20 @@
                     <artifactId>sonar-maven-plugin</artifactId>
                     <version>3.0.1</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.7.5.201505241946</version>
+                </plugin>
+
             </plugins>
         </pluginManagement>
+
     </build>
     <modules>
         <module>abk-backend</module>
         <module>abk-client</module>
+        <module>abk-accounts</module>
     </modules>
 
 </project>
