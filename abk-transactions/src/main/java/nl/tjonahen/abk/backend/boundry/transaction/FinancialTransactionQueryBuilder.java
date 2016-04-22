@@ -24,7 +24,7 @@ import javax.persistence.PersistenceContext;
  * @author Philippe Tjon - A - Hen, philippe@tjonahen.nl
  */
 public class FinancialTransactionQueryBuilder {
-    @PersistenceContext
+    @PersistenceContext(unitName = "abk")
     private EntityManager entityManager;
 
     FinancialTransactionQuery start() {
