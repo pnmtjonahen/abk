@@ -69,6 +69,12 @@
                 <artifactId>derbyclient</artifactId>
                 <version>10.12.1.1</version>
             </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-all</artifactId>
+                <version>1.9.5</version>
+                <scope>test</scope>
+            </dependency>
 
             <dependency>
                 <groupId>junit</groupId>
@@ -101,6 +107,9 @@
         <module>abk-backend</module>
         <module>abk-client</module>
         <module>abk-accounts</module>
-    </modules>
+        <module>abk-admin</module>
+    <module>abk-costcenters</module>
+    <module>abk-common</module>
+  </modules>
 
 </project>

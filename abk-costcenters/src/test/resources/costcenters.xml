@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<costCenters>
+    <costCenter>
+        <filter>filter</filter>
+        <name>name</name>
+    </costCenter>
+    <costCenter>
+        <filter>filter</filter>
+        <name>name</name>
+    </costCenter>
+    <costCenter>
+        <filter>filter</filter>
+        <name>name</name>
+    </costCenter>
+</costCenters>

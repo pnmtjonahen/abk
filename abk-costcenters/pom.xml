@@ -7,9 +7,14 @@
         <artifactId>abk</artifactId>
         <version>2.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>abk-accounts</artifactId>
-    <name>Analytisch Boekhouden en Kostencalculatie - Accounts</name>
+    <artifactId>abk-costcenters</artifactId>
+    <name>Analytisch Boekhouden en Kostencalculatie - CostCenters</name>
     <dependencies>
+        <dependency>
+        <groupId>nl.tjonahen</groupId>
+        <artifactId>abk-common</artifactId>
+        <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.kumuluz.ee</groupId>
             <artifactId>kumuluzee-core</artifactId>

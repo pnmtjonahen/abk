@@ -12,3 +12,6 @@
 /abk-client/.tmp/
 /target/
 /abk-accounts/target/
+/abk-common/target/
+/abk-costcenters/target/
+/abk-admin/target/
