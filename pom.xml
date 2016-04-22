@@ -110,6 +110,7 @@
         <module>abk-admin</module>
     <module>abk-costcenters</module>
     <module>abk-common</module>
+    <module>abk-transactions</module>
   </modules>
 
 </project>
