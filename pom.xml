@@ -111,6 +111,7 @@
     <module>abk-costcenters</module>
     <module>abk-common</module>
     <module>abk-transactions</module>
+    <module>abk-upload</module>
   </modules>
 
 </project>
