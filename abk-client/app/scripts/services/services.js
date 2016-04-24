@@ -32,7 +32,7 @@ angular.module('abkServices', ['ngResource', 'abkConfig']);
  * @requires abkConfig.backendConfig
 **/
 angular.module('abkServices').factory('transactionsService', function($resource, backendConfig) {
-    return $resource(backendConfig.resourcePath + '/transactions', {}, {
+    return $resource(backendConfig.transactionsPath + '/transactions', {}, {
         get:  {method:'GET', params:{}, isArray:false}
     });
 });
@@ -44,7 +44,7 @@ angular.module('abkServices').factory('transactionsService', function($resource,
  * @requires abkConfig.backendConfig
 **/
 angular.module('abkServices').factory('costCentersService', function($resource, backendConfig) {
-    return $resource(backendConfig.resourcePath + '/costcenters/:id', {id:'@id'}, {
+    return $resource(backendConfig.costCentersPath + '/costcenters/:id', {id:'@id'}, {
         get:  {method:'GET', params:{}, isArray:false},
         post: {method: 'PUT', params: {}, isArray: true},
         delete: {method: 'DELETE', params: {}, isArray:false}
@@ -52,7 +52,7 @@ angular.module('abkServices').factory('costCentersService', function($resource, 
 });
 
 angular.module('abkServices').factory('csvReaderService', function($resource, backendConfig) {
-    return $resource(backendConfig.resourcePath + '/admin/csvreader', {}, {
+    return $resource(backendConfig.adminPath + '/admin/csvreader', {}, {
         get: {method: 'GET', params: {}, isArray: false}
     });
 });

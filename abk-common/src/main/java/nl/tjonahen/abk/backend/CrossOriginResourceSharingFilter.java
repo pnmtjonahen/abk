@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Philippe Tjon - A - Hen, philippe@tjonahen.nl
+ * Copyright (C) 2014 Philippe Tjon - A - Hen, philippe@tjonahen.nl
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,19 +16,23 @@
  */
 package nl.tjonahen.abk.backend;
 
-
-import java.util.Set;
-import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.container.ContainerRequestContext;
+import javax.ws.rs.container.ContainerResponseContext;
+import javax.ws.rs.container.ContainerResponseFilter;
+import javax.ws.rs.ext.Provider;
 
 /**
  *
  * @author Philippe Tjon - A - Hen, philippe@tjonahen.nl
  */
-@ApplicationPath("/")
-public class CostCentersApplication extends AbstractAbkApplication {
+@Provider
+public class CrossOriginResourceSharingFilter implements ContainerResponseFilter {
 
     @Override
-    protected void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(nl.tjonahen.abk.backend.boundry.costcenter.CostCentersResource.class);
+    public void filter(ContainerRequestContext requestContext, ContainerResponseContext response) {
+        response.getHeaders().putSingle("Access-Control-Allow-Origin", "*");
+        response.getHeaders().putSingle("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, DELETE");
+        response.getHeaders().putSingle("Access-Control-Allow-Headers", "Content-Type");
     }
+    
 }

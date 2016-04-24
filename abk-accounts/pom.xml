@@ -11,6 +11,11 @@
     <name>Analytisch Boekhouden en Kostencalculatie - Accounts</name>
     <dependencies>
         <dependency>
+        <groupId>nl.tjonahen</groupId>
+        <artifactId>abk-common</artifactId>
+        <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.kumuluz.ee</groupId>
             <artifactId>kumuluzee-core</artifactId>
         </dependency>

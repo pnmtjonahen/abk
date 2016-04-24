@@ -17,13 +17,18 @@
 package nl.tjonahen.abk.backend;
 
 
+import java.util.Set;
 import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
 
 /**
  *
  * @author Philippe Tjon - A - Hen, philippe@tjonahen.nl
  */
 @ApplicationPath("/")
-public class AdminApplication extends Application {
+public class AdminApplication extends AbstractAbkApplication {
+
+    @Override
+    protected void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(nl.tjonahen.abk.backend.boundry.admin.AdminResource.class);
+    }
 }

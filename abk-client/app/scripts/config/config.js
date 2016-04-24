@@ -37,7 +37,27 @@ angular.module('abkConfig').constant('backendConfig', {
      * @returns {string} the server url
      */
     resourcePath: 'http://localhost:8080/abk-backend/rest',
-
+    /**
+     * @ngdoc property
+     * @name abkConfig.backendConfig#costCentersPath
+     * @propertyOf abkConfig.backendConfig
+     * @returns {string} the cost-centers server url
+     */
+    costCentersPath: 'http://localhost:3000',
+    /**
+     * @ngdoc property
+     * @name abkConfig.backendConfig#transactionsPath
+     * @propertyOf abkConfig.backendConfig
+     * @returns {string} the transaction server url
+     */
+    transactionsPath: 'http://localhost:8080/abk-backend/rest',
+    /**
+     * @ngdoc property
+     * @name abkConfig.backendConfig#adminPath
+     * @propertyOf abkConfig.backendConfig
+     * @returns {string} the admin server url
+     */
+    adminPath:'http://localhost:8080/abk-backend/rest',
     /**
      * @ngdoc property
      * @name abkConfig.backendConfig#uploadPath

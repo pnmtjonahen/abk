@@ -16,19 +16,28 @@
  */
 package nl.tjonahen.abk.backend;
 
-
-import java.util.Set;
-import javax.ws.rs.ApplicationPath;
+import java.util.logging.Logger;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
 
 /**
- *
+ * Last line of defense against unhandled exception. Maps throwable to a correct http response with the 
+ * exception error as the message body.
+ * 
  * @author Philippe Tjon - A - Hen, philippe@tjonahen.nl
  */
-@ApplicationPath("/")
-public class CostCentersApplication extends AbstractAbkApplication {
+@Provider
+public class UnhandledExceptionMapper implements ExceptionMapper<Throwable> {
+    private static final Logger LOGGER = Logger.getLogger(UnhandledExceptionMapper.class.getName());
 
     @Override
-    protected void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(nl.tjonahen.abk.backend.boundry.costcenter.CostCentersResource.class);
+    public Response toResponse(Throwable exception) {
+        LOGGER.severe(() -> "Unhandled exception : " + exception.getMessage());
+        return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(new Error(exception.getMessage()))
+                    .build();
     }
+    
 }

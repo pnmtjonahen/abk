@@ -16,19 +16,21 @@
  */
 package nl.tjonahen.abk.backend;
 
-
-import java.util.Set;
-import javax.ws.rs.ApplicationPath;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Philippe Tjon - A - Hen, philippe@tjonahen.nl
  */
-@ApplicationPath("/")
-public class CostCentersApplication extends AbstractAbkApplication {
+@XmlRootElement
+public class Error {
+    private final String message;
 
-    @Override
-    protected void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(nl.tjonahen.abk.backend.boundry.costcenter.CostCentersResource.class);
+    public Error(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }
