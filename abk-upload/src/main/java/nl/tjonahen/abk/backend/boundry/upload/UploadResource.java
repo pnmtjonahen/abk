@@ -64,7 +64,7 @@ public class UploadResource extends HttpServlet {
     @Inject
     private TransactionProcessor transactionProcessor;
 
-    @PersistenceContext
+    @PersistenceContext(unitName = "abk")
     private EntityManager entityManager;
 
     /**

@@ -24,7 +24,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class Error {
-    private final String message;
+    private String message;
+
+    /**
+     * Constructor needed for XML marshalling/unmarshalling
+     */
+    public Error() {
+    }
+
 
     public Error(String message) {
         this.message = message;
@@ -33,4 +40,9 @@ public class Error {
     public String getMessage() {
         return message;
     }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
 }
