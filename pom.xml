@@ -105,13 +105,13 @@
     </build>
     <modules>
         <module>abk-backend</module>
-        <module>abk-client</module>
         <module>abk-accounts</module>
         <module>abk-admin</module>
-    <module>abk-costcenters</module>
-    <module>abk-common</module>
-    <module>abk-transactions</module>
-    <module>abk-upload</module>
-  </modules>
+        <module>abk-costcenters</module>
+        <module>abk-common</module>
+        <module>abk-transactions</module>
+        <module>abk-upload</module>
+        <module>abk-client</module>
+    </modules>
 
 </project>
