@@ -19,7 +19,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <kumuluzee.version>1.0.0</kumuluzee.version>
+        <kumuluzee.version>2.0.0</kumuluzee.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -36,22 +36,22 @@
 
             <dependency>
                 <groupId>com.kumuluz.ee</groupId>
-                <artifactId>kumuluzee-jax-rs</artifactId>
+                <artifactId>kumuluzee-jax-rs-jersey</artifactId>
                 <version>${kumuluzee.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.kumuluz.ee</groupId>
-                <artifactId>kumuluzee-cdi</artifactId>
+                <artifactId>kumuluzee-cdi-weld</artifactId>
                 <version>${kumuluzee.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.kumuluz.ee</groupId>
-                <artifactId>kumuluzee-jpa</artifactId>
+                <artifactId>kumuluzee-jpa-eclipselink</artifactId>
                 <version>${kumuluzee.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.kumuluz.ee</groupId>
-                <artifactId>kumuluzee-json-p</artifactId>
+                <artifactId>kumuluzee-json-p-jsonp</artifactId>
                 <version>${kumuluzee.version}</version>
             </dependency>
             <dependency>

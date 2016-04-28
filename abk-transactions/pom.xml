@@ -32,19 +32,19 @@
         </dependency>
         <dependency>
             <groupId>com.kumuluz.ee</groupId>
-            <artifactId>kumuluzee-jax-rs</artifactId>
+            <artifactId>kumuluzee-jax-rs-jersey</artifactId>
         </dependency>
         <dependency>
             <groupId>com.kumuluz.ee</groupId>
-            <artifactId>kumuluzee-cdi</artifactId>
+            <artifactId>kumuluzee-cdi-weld</artifactId>
         </dependency>
         <dependency>
             <groupId>com.kumuluz.ee</groupId>
-            <artifactId>kumuluzee-jpa</artifactId>
+            <artifactId>kumuluzee-jpa-eclipselink</artifactId>
         </dependency>
         <dependency>
             <groupId>com.kumuluz.ee</groupId>
-            <artifactId>kumuluzee-json-p</artifactId>
+            <artifactId>kumuluzee-json-p-jsonp</artifactId>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
