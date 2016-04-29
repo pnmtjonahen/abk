@@ -98,6 +98,51 @@
                 </plugins>
             </build>
         </profile>
+
+        <profile>
+            <id>docker</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+
+                        <configuration>
+                            <images>
+                                <image>
+                                    <name>tjonahen/${project.artifactId}</name>
+
+                                    <build>
+                                        <dockerFile>Dockerfile</dockerFile>
+                                        <assembly>
+                                            <inline>
+                                                <fileSets>
+                                                    <fileSet>
+                                                        <directory>${project.basedir}/dist</directory>
+                                                        <outputDirectory>dist/</outputDirectory>
+                                                        <filtered>false</filtered>
+                                                        <fileMode>755</fileMode>
+                                                    </fileSet>
+                                                </fileSets>
+                                            </inline>
+                                        </assembly>
+                                    </build>
+                                </image>
+                            </images>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>docker-build</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
 </project>
