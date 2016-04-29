@@ -1,8 +1,8 @@
 FROM java:alpine
 MAINTAINER Philippe Tjon-A-Hen (philippe@tjonahen.nl)
 
-COPY target/classes /app/classes
-COPY target/dependency /app/dependency
+COPY maven/classes /app/classes
+COPY maven/dependency /app/dependency
 
 ENV PORT 80
 EXPOSE 80
