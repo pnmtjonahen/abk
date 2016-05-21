@@ -16,6 +16,11 @@
  */
 package nl.tjonahen.abk.backend.boundry.costcenter;
 
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
+import com.wordnik.swagger.annotations.ApiResponse;
+import com.wordnik.swagger.annotations.ApiResponses;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -45,7 +50,7 @@ import nl.tjonahen.abk.backend.entity.Kostenplaats;
  *
  * @author Philippe Tjon - A - Hen, philippe@tjonahen.nl
  */
-//@Api(value = "Cost centers resource.")
+@Api(value = "Cost centers resource.")
 @RequestScoped
 @Path("/costcenters")
 public class CostCentersResource {
@@ -53,28 +58,28 @@ public class CostCentersResource {
     @PersistenceContext(unitName = "abk")
     private EntityManager entityManager;
 
-//    @ApiOperation(value = "Get list of all cost centers", response = CostCenters.class)
+    @ApiOperation(value = "Get list of all cost centers", response = CostCenters.class)
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public CostCenters get(@Context UriInfo uriInfo,
-//            @ApiParam(value = "Level (integer) to expand the result", name = "expand")
+            @ApiParam(value = "Level (integer) to expand the result", name = "expand")
             @DefaultValue("0")
             @QueryParam("expand") int expand) {
         return this.get(expand).updateHref(uriInfo.getAbsolutePath().toString());
     }
 
-//    @ApiOperation(value = "Get a cost center by id", response = CostCenter.class)
-//    @ApiResponses(
-//            @ApiResponse(code = 404, message = "cost center not found")
-//    )
+    @ApiOperation(value = "Get a cost center by id", response = CostCenter.class)
+    @ApiResponses(
+            @ApiResponse(code = 404, message = "cost center not found")
+    )
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response get(@Context UriInfo uriInfo,
-//            @ApiParam(value = "id of the cost center", name = "id")
+            @ApiParam(value = "id of the cost center", name = "id")
             @PathParam("id")
             final Long id,
-//            @ApiParam(value = "Level (integer) to expand the result", name = "expand")
+            @ApiParam(value = "Level (integer) to expand the result", name = "expand")
             @DefaultValue("0") @QueryParam("expand") int expand) {
         Optional<CostCenter> optional = this.get(id, expand);
         if (optional.isPresent()) {
@@ -91,7 +96,7 @@ public class CostCentersResource {
      * @param costCenter -
      * @return -
      */
-//    @ApiOperation(value = "Add new cost center to the collection of cost centers", response = CostCenter.class)
+    @ApiOperation(value = "Add new cost center to the collection of cost centers", response = CostCenter.class)
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response post(@Context UriInfo uriInfo, CostCenter costCenter) {
@@ -100,7 +105,7 @@ public class CostCentersResource {
                 .build();
     }
 
-//    @ApiOperation(value = "Replace the collection of cost centers")
+    @ApiOperation(value = "Replace the collection of cost centers")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response post(List<CostCenter> costcenters) {
@@ -119,15 +124,15 @@ public class CostCentersResource {
                 .forEach(cc -> nullIds(cc.getList()));
     }
 
-//    @ApiOperation(value = "replace cost center defined by id")
-//    @ApiResponses(
-//            @ApiResponse(code = 304, message = "In case the cost center was not found")
-//    )
+    @ApiOperation(value = "replace cost center defined by id")
+    @ApiResponses(
+            @ApiResponse(code = 304, message = "In case the cost center was not found")
+    )
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response put(
-//            @ApiParam(value = "id of the cost center", name = "id")
+            @ApiParam(value = "id of the cost center", name = "id")
             @PathParam("id")
             final Long id, CostCenter costCenter) {
         if (this.update(id, costCenter)) {
@@ -136,14 +141,14 @@ public class CostCentersResource {
         return Response.status(Response.Status.NOT_MODIFIED).build();
     }
 
-//    @ApiOperation(value = "Delete cost center by id")
-//    @ApiResponses(
-//            @ApiResponse(code = 304, message = "In case the cost center was not found")
-//    )
+    @ApiOperation(value = "Delete cost center by id")
+    @ApiResponses(
+            @ApiResponse(code = 304, message = "In case the cost center was not found")
+    )
     @DELETE
     @Path("/{id}")
     public Response delete(
-//            @ApiParam(value = "id of the cost center", name = "id")
+            @ApiParam(value = "id of the cost center", name = "id")
             @PathParam("id") final Long id) {
         if (this.remove(id)) {
             return Response.status(Response.Status.ACCEPTED).build();

@@ -65,6 +65,12 @@
                 <version>1.5.0</version>
             </dependency>
             <dependency>
+                <groupId>com.wordnik</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>1.5.3-M1</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.apache.derby</groupId>
                 <artifactId>derbyclient</artifactId>
                 <version>10.12.1.1</version>
@@ -149,9 +155,49 @@
                         </execution>
                     </executions>
                 </plugin>
+                <plugin>
+                    <groupId>com.github.kongchen</groupId>
+                    <artifactId>swagger-maven-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <configuration>
+                        <apiSources>
+                            <apiSource>
+                                <springmvc>false</springmvc>
+                                <schemes>http</schemes>
+                                <!--<host>localhost:9080</host>-->
+                                <basePath>/</basePath>
+                                <info>
+                                    <title>ABK Api (${project.name})</title>
+                                    <version>${project.version}</version>
+                                    <!-- use markdown here because I'm using markdown for output,
+                                   if you need to use html or other markup language, you need to use your target language,
+                                    and note escape your description for xml -->
+                                    <description>
+                                        ${project.name} API
+                                    </description>
+                                </info>
+                                <!-- Support classpath or file absolute path here.
+                            1) classpath e.g: "classpath:/markdown.hbs", "classpath:/templates/hello.html"
+                            2) file e.g: "${basedir}/src/main/resources/markdown.hbs",
+                                "${basedir}/src/main/resources/template/hello.html" -->
+                                <!--templatePath>${basedir}/src/test/resources/strapdown.html.hbs</templatePath-->
+                                <!--<outputPath>${basedir}/generated/document.html</outputPath>-->
+                                <!--outputPath>${basedir}/src/main/webapp/document.html</outputPath-->
+                                <swaggerDirectory>${basedir}/src/main/resources/webapp</swaggerDirectory>
+                            </apiSource>
+                        </apiSources>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
-
     </build>
     <modules>
         <module>abk-backend</module>

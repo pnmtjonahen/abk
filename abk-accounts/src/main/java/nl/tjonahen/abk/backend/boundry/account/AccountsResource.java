@@ -16,6 +16,8 @@
  */
 package nl.tjonahen.abk.backend.boundry.account;
 
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
 import java.util.stream.Collectors;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
@@ -32,7 +34,7 @@ import nl.tjonahen.abk.backend.entity.Rekening;
  *
  * @author Philippe Tjon - A - Hen, philippe@tjonahen.nl
  */
-//@Api(value = "Account resources")
+@Api(value = "Account resources")
 @Path("/accounts")
 @RequestScoped
 public class AccountsResource {
@@ -40,7 +42,7 @@ public class AccountsResource {
     @PersistenceContext(unitName = "abk")
     private EntityManager entityManager;
 
-//    @ApiOperation(value="Get all accounts", response = Accounts.class)
+    @ApiOperation(value="Get all accounts", response = Accounts.class)
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Accounts get() {

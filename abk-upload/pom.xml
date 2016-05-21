@@ -54,6 +54,10 @@
             <groupId>org.apache.derby</groupId>
             <artifactId>derbyclient</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.wordnik</groupId>
+            <artifactId>swagger-annotations</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -64,6 +68,17 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.github.kongchen</groupId>
+                <artifactId>swagger-maven-plugin</artifactId>
+                <configuration>
+                    <apiSources>
+                        <apiSource>
+                            <locations>nl.tjonahen.abk.backend.boundry.upload</locations>
+                        </apiSource>
+                    </apiSources>
+                </configuration>
             </plugin>
         </plugins>
     </build>

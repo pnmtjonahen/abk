@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<testsuite name="PhantomJS 2.1.1 (Linux 0.0.0)" package="" timestamp="2016-05-21T13:10:52" id="0" hostname="eb8740w" tests="8" errors="0" failures="0" time="0.083">
+  <properties>
+    <property name="browser.fullName" value="Mozilla/5.0 (Unknown; Linux x86_64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.1.1 Safari/538.1"/>
+  </properties>
+  <testcase name="Controller: AboutController should have be able to create controller" time="0.013" classname="PhantomJS_2_1_1_(Linux_0_0_0).Controller: AboutController"/>
+  <testcase name="Controller: ContactController should have be able to create controller" time="0.007" classname="PhantomJS_2_1_1_(Linux_0_0_0).Controller: ContactController"/>
+  <testcase name="Controller: CostCenterController should have a non empty data collection" time="0.011" classname="PhantomJS_2_1_1_(Linux_0_0_0).Controller: CostCenterController"/>
+  <testcase name="Controller: CostCenterController should have a costcenter collection" time="0.01" classname="PhantomJS_2_1_1_(Linux_0_0_0).Controller: CostCenterController"/>
+  <testcase name="Controller: HomeController should have a non empty data collection" time="0.007" classname="PhantomJS_2_1_1_(Linux_0_0_0).Controller: HomeController"/>
+  <testcase name="Controller: HomeController should have a header collection" time="0.007" classname="PhantomJS_2_1_1_(Linux_0_0_0).Controller: HomeController"/>
+  <testcase name="Controller: ReportsController should have a report with data" time="0.015" classname="PhantomJS_2_1_1_(Linux_0_0_0).Controller: ReportsController"/>
+  <testcase name="Controller: TransactionController should have a non empty data collection" time="0.013" classname="PhantomJS_2_1_1_(Linux_0_0_0).Controller: TransactionController"/>
+  <system-out>
+    <![CDATA[
+]]>
+  </system-out>
+  <system-err/>
+</testsuite>

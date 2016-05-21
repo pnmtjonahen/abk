@@ -1,0 +1,191 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Analytisch Boekhouden en Kostencalculatie - CostCenters API",
+    "version" : "2.0.1-SNAPSHOT",
+    "title" : "ABK Api (Analytisch Boekhouden en Kostencalculatie - CostCenters)"
+  },
+  "basePath" : "/",
+  "tags" : [ {
+    "name" : "Cost centers resource."
+  } ],
+  "schemes" : [ "http" ],
+  "paths" : {
+    "/costcenters" : {
+      "get" : {
+        "tags" : [ "Cost centers resource." ],
+        "summary" : "Get list of all cost centers",
+        "description" : "",
+        "operationId" : "get",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "expand",
+          "in" : "query",
+          "description" : "Level (integer) to expand the result",
+          "required" : false,
+          "type" : "integer",
+          "default" : "0",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CostCenters"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Cost centers resource." ],
+        "summary" : "Add new cost center to the collection of cost centers",
+        "description" : "",
+        "operationId" : "post",
+        "consumes" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CostCenter"
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Cost centers resource." ],
+        "summary" : "Replace the collection of cost centers",
+        "description" : "",
+        "operationId" : "post",
+        "consumes" : [ "application/json" ],
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      }
+    },
+    "/costcenters/{id}" : {
+      "get" : {
+        "tags" : [ "Cost centers resource." ],
+        "summary" : "Get a cost center by id",
+        "description" : "",
+        "operationId" : "get",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of the cost center",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "expand",
+          "in" : "query",
+          "description" : "Level (integer) to expand the result",
+          "required" : false,
+          "type" : "integer",
+          "default" : "0",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CostCenter"
+            }
+          },
+          "404" : {
+            "description" : "cost center not found"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Cost centers resource." ],
+        "summary" : "replace cost center defined by id",
+        "description" : "",
+        "operationId" : "put",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of the cost center",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "304" : {
+            "description" : "In case the cost center was not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Cost centers resource." ],
+        "summary" : "Delete cost center by id",
+        "description" : "",
+        "operationId" : "delete",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of the cost center",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "304" : {
+            "description" : "In case the cost center was not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "CostCenter" : {
+      "required" : [ "id", "meta" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "meta" : {
+          "$ref" : "#/definitions/Meta"
+        },
+        "filter" : {
+          "type" : "string"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "list" : {
+          "$ref" : "#/definitions/List"
+        }
+      }
+    },
+    "CostCenters" : {
+      "properties" : {
+        "list" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/CostCenter"
+          }
+        }
+      }
+    },
+    "List" : {
+      "properties" : {
+        "empty" : {
+          "type" : "boolean",
+          "default" : false
+        }
+      }
+    },
+    "Meta" : {
+      "properties" : {
+        "href" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}

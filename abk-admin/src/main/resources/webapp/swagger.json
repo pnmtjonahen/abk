@@ -1,0 +1,50 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Analytisch Boekhouden en Kostencalculatie - Admin API",
+    "version" : "2.0.1-SNAPSHOT",
+    "title" : "ABK Api (Analytisch Boekhouden en Kostencalculatie - Admin)"
+  },
+  "basePath" : "/",
+  "tags" : [ {
+    "name" : "Admin resources"
+  } ],
+  "schemes" : [ "http" ],
+  "paths" : {
+    "/admin/csvreader" : {
+      "get" : {
+        "tags" : [ "Admin resources" ],
+        "summary" : "Get current configured JavaScript CSV reader",
+        "description" : "",
+        "operationId" : "getCsvReader",
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/CsvJsReader"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "CsvJsReader" : {
+      "properties" : {
+        "headers" : {
+          "type" : "string"
+        },
+        "dryrun" : {
+          "type" : "string"
+        },
+        "script" : {
+          "type" : "string"
+        }
+      },
+      "xml" : {
+        "name" : "CsvReader"
+      }
+    }
+  }
+}

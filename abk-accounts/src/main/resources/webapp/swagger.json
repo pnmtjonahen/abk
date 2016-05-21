@@ -1,0 +1,57 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Analytisch Boekhouden en Kostencalculatie - Accounts API",
+    "version" : "2.0.1-SNAPSHOT",
+    "title" : "ABK Api (Analytisch Boekhouden en Kostencalculatie - Accounts)"
+  },
+  "basePath" : "/",
+  "tags" : [ {
+    "name" : "Account resources"
+  } ],
+  "schemes" : [ "http" ],
+  "paths" : {
+    "/accounts" : {
+      "get" : {
+        "tags" : [ "Account resources" ],
+        "summary" : "Get all accounts",
+        "description" : "",
+        "operationId" : "get",
+        "produces" : [ "application/json" ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Accounts"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Account" : {
+      "properties" : {
+        "number" : {
+          "type" : "string"
+        },
+        "startsaldi" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Accounts" : {
+      "properties" : {
+        "list" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Account"
+          }
+        }
+      }
+    }
+  }
+}

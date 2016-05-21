@@ -16,6 +16,11 @@
  */
 package nl.tjonahen.abk.backend.boundry.transaction;
 
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
+import com.wordnik.swagger.annotations.ApiResponse;
+import com.wordnik.swagger.annotations.ApiResponses;
 import java.util.Arrays;
 import nl.tjonahen.abk.backend.model.OrderBy;
 import java.util.Optional;
@@ -45,7 +50,7 @@ import nl.tjonahen.abk.backend.entity.Fintransactie;
  *
  * @author Philippe Tjon - A - Hen, philippe@tjonahen.nl
  */
-//@Api(value = "Transaction resources.")
+@Api(value = "Transaction resources.")
 @RequestScoped
 @Path("/transactions")
 public class FinancialTransactionsResource {
@@ -56,21 +61,21 @@ public class FinancialTransactionsResource {
     @Inject
     private FinancialTransactionQueryBuilder financialTransactionQueryBuilder;
 
-//    @ApiOperation(value = "Get all financial transactions",
-//            notes = "Get transaction, using selecting only specified fields, order the result with the order by, filtering using a query with paging using offset and limit",
-//            response = FinancialTransactions.class)
+    @ApiOperation(value = "Get all financial transactions",
+            notes = "Get transaction, using selecting only specified fields, order the result with the order by, filtering using a query with paging using offset and limit",
+            response = FinancialTransactions.class)
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public FinancialTransactions get(@Context UriInfo uriInfo,
-//            @ApiParam(value = "Transaction fields that should be in the output", name = "fields")
+            @ApiParam(value = "Transaction fields that should be in the output", name = "fields")
             @DefaultValue("") @QueryParam("fields") String fields,
-//            @ApiParam(value = "The order of the transactions in the resulting list", name = "orderBy")
+            @ApiParam(value = "The order of the transactions in the resulting list", name = "orderBy")
             @DefaultValue("") @QueryParam("orderBy") String orderBy,
-//            @ApiParam(value = "The query string", name = "q")
+            @ApiParam(value = "The query string", name = "q")
             @DefaultValue("") @QueryParam("q") String query,
-//            @ApiParam(value = "The offset into the result list", name = "offset")
+            @ApiParam(value = "The offset into the result list", name = "offset")
             @DefaultValue("0") @QueryParam("offset") int offset,
-//            @ApiParam(value = "The max nnumber of transaction to return", name = "limit")
+            @ApiParam(value = "The max nnumber of transaction to return", name = "limit")
             @DefaultValue("25") @QueryParam("limit") int limit) {
         return this.get(new Fields(fields),
                 new Where(query),
@@ -86,15 +91,15 @@ public class FinancialTransactionsResource {
      * @param fields the field filter, a comma separated list of fields.
      * @return the requested financial transaction or not found.
      */
-//    @ApiOperation(value = "Get a single transaction", response = FinancialTransaction.class)
-//    @ApiResponses(@ApiResponse(code = 404, message = "In case of missing transaction"))
+    @ApiOperation(value = "Get a single transaction", response = FinancialTransaction.class)
+    @ApiResponses(@ApiResponse(code = 404, message = "In case of missing transaction"))
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response get(@Context UriInfo uriInfo,
-//            @ApiParam(value = "id of the transaction", name = "id")
+            @ApiParam(value = "id of the transaction", name = "id")
             @PathParam("id") final Long id,
-//            @ApiParam(value = "Transaction fields that should be in the output", name = "fields")
+            @ApiParam(value = "Transaction fields that should be in the output", name = "fields")
             @DefaultValue("") @QueryParam("fields") String fields) {
         final Optional<FinancialTransaction> optional = this.get(id, new Fields(fields));
         if (optional.isPresent()) {
