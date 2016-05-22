@@ -404,7 +404,7 @@ module.exports = function (grunt) {
         'clean:server',
         'concurrent:test',
         'autoprefixer',
-        'connect:test',
+//        'connect:test',
         'karma'
     ]);
 
@@ -429,7 +429,7 @@ module.exports = function (grunt) {
         'sonarRunner'
     ]);
     grunt.registerTask('default', [
-//        'test',
+        'test',
         'build'
     ]);
 };

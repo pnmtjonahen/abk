@@ -1,0 +1,6 @@
+.sonar
+.tmp
+nbproject
+dist
+reports
+target
