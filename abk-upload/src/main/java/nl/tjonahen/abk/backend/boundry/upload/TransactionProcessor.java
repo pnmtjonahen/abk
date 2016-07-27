@@ -16,6 +16,8 @@
  */
 package nl.tjonahen.abk.backend.boundry.upload;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import nl.tjonahen.abk.backend.entity.Fintransactie;
@@ -26,6 +28,7 @@ import nl.tjonahen.abk.backend.entity.Rekening;
  * @author Philippe Tjon - A - Hen, philippe@tjonahen.nl
  */
 public class TransactionProcessor {
+    private static final Logger LOGGER = Logger.getLogger(TransactionProcessor.class.getName());
 
     @PersistenceContext(unitName = "abk")
     private EntityManager entityManager;
@@ -50,10 +53,13 @@ public class TransactionProcessor {
      */
     public void process(final Fintransactie trans) {
         if (isExisting(trans)) {
+            LOGGER.log(Level.INFO, "Transaction added {0} {1} {2}", new Object[]{trans.getDatum(), trans.getBijaf(), trans.getBedrag()});
             final Rekening rekening = bepaalRekening(trans);
             entityManager.persist(trans);
             trans.setAccountRekening(rekening);
             entityManager.persist(rekening);
+        } else {
+            LOGGER.log(Level.INFO, "Transaction exists {0} {1} {2}", new Object[]{trans.getDatum(), trans.getBijaf(), trans.getBedrag()});
         }
     }
 

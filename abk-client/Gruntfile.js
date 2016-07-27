@@ -292,6 +292,7 @@ module.exports = function (grunt) {
                             '*.html',
                             'views/{,*/}*.html',
                             'images/{,*/}*.{webp}',
+                            'styles/abk.css',
                             'fonts/*'
                         ]
                     }, {
