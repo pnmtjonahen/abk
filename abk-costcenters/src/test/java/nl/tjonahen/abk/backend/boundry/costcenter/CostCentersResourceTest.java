@@ -20,6 +20,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
@@ -48,6 +49,10 @@ public class CostCentersResourceTest {
 
     @Mock
     private EntityManager entityManager;
+
+    @Mock
+    private EntityTransaction entityTransaction;
+
 
     @Mock
     private UriInfo uriInfo;
@@ -98,14 +103,14 @@ public class CostCentersResourceTest {
         final CostCenters get = systemUnderTest.get(uriInfo, 1);
         assertNotNull(get);
         assertFalse(get.getList().isEmpty());
-        
+
         CostCenter costcenter = get.getList().get(0);
-        
+
         assertNotNull(costcenter.getParent());
         assertEquals("costcenters/1", costcenter.getMeta().getHref());
         assertNotNull(costcenter.getList());
 
-        
+
     }
 
     @Test
@@ -156,7 +161,7 @@ public class CostCentersResourceTest {
             theobject.setId(1L);
             return null;
         }).when(entityManager).refresh(any(Kostenplaats.class));
-
+        when(entityManager.getTransaction()).thenReturn(entityTransaction);
         Response response = systemUnderTest.post(uriInfo, costCenter);
         assertEquals(201, response.getStatus());
     }
@@ -171,6 +176,7 @@ public class CostCentersResourceTest {
     @Test
     public void testPutFound() {
         when(entityManager.find(Kostenplaats.class, 1L)).thenReturn(new Kostenplaats());
+        when(entityManager.getTransaction()).thenReturn(entityTransaction);
         final CostCenter costCenter = new CostCenter();
         Response response = systemUnderTest.put(1L, costCenter);
         assertEquals(200, response.getStatus());
@@ -179,14 +185,15 @@ public class CostCentersResourceTest {
     public void testPutWithParent() {
         when(entityManager.find(Kostenplaats.class, 1L)).thenReturn(new Kostenplaats());
         when(entityManager.find(Kostenplaats.class, 2L)).thenReturn(new Kostenplaats());
+        when(entityManager.getTransaction()).thenReturn(entityTransaction);
         final CostCenter costCenter = new CostCenter();
         costCenter.setParent(new CostCenter());
         costCenter.getParent().setId(2L);
         Response response = systemUnderTest.put(1L, costCenter);
         assertEquals(200, response.getStatus());
-        
+
     }
-    
+
     @Test
     public void testDeleteNotFound() {
         Response response = systemUnderTest.delete(1L);
@@ -195,22 +202,24 @@ public class CostCentersResourceTest {
     @Test
     public void testDeleteFound() {
         when(entityManager.find(Kostenplaats.class, 1L)).thenReturn(new Kostenplaats());
+        when(entityManager.getTransaction()).thenReturn(entityTransaction);
         Response response = systemUnderTest.delete(1L);
         assertEquals(202, response.getStatus());
-        
+
         verify(entityManager).remove(any(Kostenplaats.class));
     }
-    
+
     @Test
     public void testPostAll() {
+        when(entityManager.getTransaction()).thenReturn(entityTransaction);
         when(entityManager.createNamedQuery("Kostenplaats.deleteAll")).thenReturn(kostenPLaatsQuery);
-        
+
         final ArrayList<CostCenter> costCenters = new ArrayList<>();
-        
+
         final CostCenter costCenter = new CostCenter();
         costCenter.setName("Root");
         costCenter.setFilter("*");
-        
+
         final ArrayList<CostCenter> subCostCenters = new ArrayList<>();
         final CostCenter subCostCenter = new CostCenter();
         subCostCenter.setParent(costCenter);
@@ -221,14 +230,14 @@ public class CostCentersResourceTest {
         subCostCenter.setList(subSubCostCenter);
         subCostCenters.add(subCostCenter);
         subCostCenters.add(new CostCenter());
-        
-        
+
+
         costCenter.setList(subCostCenters);
         costCenters.add(costCenter);
         costCenters.add(new CostCenter());
-        
+
         Response response = systemUnderTest.post(costCenters);
         assertEquals(202, response.getStatus());
-        
+
     }
 }

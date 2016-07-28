@@ -109,9 +109,11 @@ public class CostCentersResource {
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     public Response post(List<CostCenter> costcenters) {
+        entityManager.getTransaction().begin();
         nullIds(costcenters);
         removeAll();
         insertAll(costcenters);
+        entityManager.getTransaction().commit();
 
         return Response.status(Response.Status.ACCEPTED).build();
     }
@@ -135,6 +137,7 @@ public class CostCentersResource {
             @ApiParam(value = "id of the cost center", name = "id")
             @PathParam("id")
             final Long id, CostCenter costCenter) {
+
         if (this.update(id, costCenter)) {
             return Response.ok().build();
         }
@@ -175,9 +178,11 @@ public class CostCentersResource {
 
     private CostCenter create(CostCenter costCenter) {
         final Kostenplaats newKostenplaats = newKostenplaats(costCenter);
+        entityManager.getTransaction().begin();
         entityManager.persist(newKostenplaats);
         entityManager.flush();
         entityManager.refresh(newKostenplaats);
+        entityManager.getTransaction().commit();
         return new ConvertCostCenter(1).convert(newKostenplaats);
     }
 
@@ -201,9 +206,10 @@ public class CostCentersResource {
         }
         current.setFilter(costCenter.getFilter());
         current.setNaam(costCenter.getName());
-
+        entityManager.getTransaction().begin();
         entityManager.merge(current);
         entityManager.flush();
+        entityManager.getTransaction().commit();
         return true;
     }
 
@@ -212,7 +218,9 @@ public class CostCentersResource {
         if (null == current) {
             return false;
         }
+        entityManager.getTransaction().begin();
         entityManager.remove(current);
+        entityManager.getTransaction().commit();
         return true;
     }
 
