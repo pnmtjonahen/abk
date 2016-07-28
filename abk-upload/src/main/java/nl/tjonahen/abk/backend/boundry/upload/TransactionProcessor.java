@@ -20,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import nl.tjonahen.abk.backend.entity.CsvReader;
 import nl.tjonahen.abk.backend.entity.Fintransactie;
 import nl.tjonahen.abk.backend.entity.Rekening;
 
@@ -68,5 +69,9 @@ public class TransactionProcessor {
                 .setParameter("hash", trans.getHash())
                 .getResultList()
                 .isEmpty();
+    }
+
+    public CsvReader getCsvReader() {
+        return entityManager.createNamedQuery("CsvReader.findAll", CsvReader.class).getSingleResult();
     }
 }

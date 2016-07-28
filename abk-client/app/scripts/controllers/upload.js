@@ -15,21 +15,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-angular.module('abkClientApp').controller("UploadController", function($scope, FileUploader, backendConfig) {
-    var uploader = $scope.uploader = new FileUploader({
-        url: backendConfig.uploadPath
-    });
+angular.module('abkClientApp').controller("UploadController", function ($scope, FileUploader, backendConfig, uploadService) {
 
-    // FILTERS
+   uploadService.get({}, function(data) {
+      console.info(data);
+   });
 
-    uploader.filters.push({
-        name: 'customFilter',
-        fn: function (item, options) {
-            return this.queue.length < 10;
-        }
-    });
+   var uploader = $scope.uploader = new FileUploader({
+      url: backendConfig.uploadPath
+   });
 
-    uploader.onErrorItem = function (fileItem, response, status, headers) {
-        console.info('onErrorItem', fileItem, response, status, headers);
-    };
+   // FILTERS
+
+   uploader.filters.push({
+      name: 'customFilter',
+      fn: function (item, options) {
+         return this.queue.length < 10;
+      }
+   });
+
+   uploader.onErrorItem = function (fileItem, response, status, headers) {
+      console.info('onErrorItem', fileItem, response, status, headers);
+   };
 });

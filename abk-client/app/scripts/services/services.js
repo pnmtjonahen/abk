@@ -63,3 +63,14 @@ angular.module('abkServices').factory('UsersApi', function($resource, backendCon
     });
 });
 
+/**
+ * @ngdoc service
+ * @name abkServices.uploadService
+ * @requires $resource
+ * @requires abkConfig.backendConfig
+**/
+angular.module('abkServices').factory('uploadService', function($resource, backendConfig) {
+    return $resource(backendConfig.uploadPath, {}, {
+        get:  {method:'GET', params:{}, isArray:false}
+    });
+});

@@ -61,7 +61,7 @@ public class UploadResourceTest {
     private HttpServletResponse response;
 
     @InjectMocks
-    private UploadResource SystemUnderTest;
+    private UploadServlet SystemUnderTest;
 
     @Before
     public void setup() {
@@ -69,24 +69,21 @@ public class UploadResourceTest {
     }
 
     /**
-     * Test of getServletInfo method, of class UploadResource.
+     * Test of getServletInfo method, of class UploadServlet.
      */
     @Test
     public void testGetServletInfo() {
-        UploadResource instance = new UploadResource();
+        UploadServlet instance = new UploadServlet();
         assertEquals("Processes uploaded stransaction files", instance.getServletInfo());
     }
 
     @Test
     public void testDoPost() throws ServletException, IOException {
-        when(entityManager.createNamedQuery("CsvReader.findAll", CsvReader.class)).thenReturn(csvReaderQuery);
-        final ArrayList<CsvReader> csvReaderList = new ArrayList<CsvReader>();
         final CsvReader csvReader = new CsvReader();
         csvReader.setScript(loadScript());
-        csvReaderList.add(csvReader);
-        when(csvReaderQuery.getResultList()).thenReturn(csvReaderList);
+        when(transactionProcessor.getCsvReader()).thenReturn(csvReader);
         when(response.getWriter()).thenReturn(new PrintWriter(System.out));
-        final ArrayList<Part> partsList = new ArrayList<Part>();
+        final ArrayList<Part> partsList = new ArrayList<>();
         partsList.add(part);
         when(part.getSubmittedFileName()).thenReturn("dummy.csv");
         when(part.getInputStream()).thenReturn(new ByteArrayInputStream("\"20111222\",\"1350002 NS-TIEL 201>\\TIEL> \\N\",\"5521208\",\"425008215\",\"BA\",\"Af\",\"13,00\",\"Betaalautomaat\",\"PASVOLGNR 017     22-12-2011 06:03TRANSACTIENR 1100332       \"".getBytes()));

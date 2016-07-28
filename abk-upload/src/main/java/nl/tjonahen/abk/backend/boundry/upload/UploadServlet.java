@@ -34,6 +34,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -55,51 +56,17 @@ import nl.tjonahen.abk.backend.model.FinancialTransaction;
  */
 @WebServlet(urlPatterns = {"/upload"})
 @MultipartConfig(location = "/tmp")
-public class UploadResource extends HttpServlet {
+@ApplicationScoped
+public class UploadServlet extends HttpServlet {
 
-    private static final Logger LOGGER = Logger.getLogger(UploadResource.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(UploadServlet.class.getName());
     private static final long serialVersionUID = 1L;
     private static final String UT_F8 = "UTF-8";
 
     @Inject
     private TransactionProcessor transactionProcessor;
 
-    @PersistenceContext(unitName = "abk")
-    private EntityManager entityManager;
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @param reader CsvReader
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response, CsvReader reader)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>CSV Transactions Upload Servlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("Receiving the uploaded file ...<br>");
-            out.println("Received " + request.getParts().size() + " parts ...<br>");
-            for (Part part : request.getParts()) {
-                final String fileName = part.getSubmittedFileName();
-                if (processPartJsParsing(part.getInputStream(), reader)) {
-                    out.println("... process sucess... " + fileName + " part<br>");
-                } else {
-                    out.println("... process error... " + fileName + " part<br>");
-                }
-            }
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
 
     @SuppressWarnings("squid:S1166") // Log or rethrow exception, ProcessingException handling is as designed. Exception is thrown from a lambda where it is also logged.
     private boolean processPartJsParsing(InputStream inputStream, CsvReader reader) {
@@ -177,18 +144,56 @@ public class UploadResource extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            final CsvReader reader = entityManager.createNamedQuery("CsvReader.findAll",
-                    CsvReader.class).getResultList().get(0);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>CSV Transactions Upload Servlet</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("Receiving the uploaded file ...<br>");
+            out.println("Received " + request.getParts().size() + " parts ...<br>");
+            final CsvReader reader = transactionProcessor.getCsvReader();
 
-            processRequest(request, response, reader);
-        } catch (IOException | ServletException ex) {
-            LOGGER.log(Level.SEVERE, "{0} {1}", new Object[]{ex, ex.getMessage()});
 
+            for (Part part : request.getParts()) {
+                final String fileName = part.getSubmittedFileName();
+                if (processPartJsParsing(part.getInputStream(), reader)) {
+                    out.println("... process sucess... " + fileName + " part<br>");
+                } else {
+                    out.println("... process error... " + fileName + " part<br>");
+                }
+            }
+            out.println("</body>");
+            out.println("</html>");
         }
     }
+
+    /**
+     * Getter to set origin headers
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>CSV Transactions Upload Servlet</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
+
+
 
     /**
      * Returns a short description of the servlet.
