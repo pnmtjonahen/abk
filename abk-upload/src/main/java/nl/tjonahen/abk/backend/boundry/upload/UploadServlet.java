@@ -36,8 +36,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -99,9 +97,9 @@ public class UploadServlet extends HttpServlet {
             trans.setMutatiesoort(ft.getMutatiesoort());
             trans.setMededeling(ft.getDescription());
             updateHash(trans);
-            if (!reader.isDryRun()) {
+//            if (!reader.isDryRun()) {
                 transactionProcessor.process(trans);
-            }
+//            }
         } catch (NumberFormatException | CsvJSScripting.CsvJSScriptingException | javax.persistence.PersistenceException  ex) {
             LOGGER.log(Level.SEVERE, "{0} {1} data->{2}", new Object[]{ex, ex.getMessage(), s});
             throw new ProcessingException(ex);

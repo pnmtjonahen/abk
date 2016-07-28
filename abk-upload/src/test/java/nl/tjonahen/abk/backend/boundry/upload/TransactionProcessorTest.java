@@ -18,6 +18,7 @@ package nl.tjonahen.abk.backend.boundry.upload;
 
 import java.util.ArrayList;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import nl.tjonahen.abk.backend.entity.Fintransactie;
 import nl.tjonahen.abk.backend.entity.Rekening;
@@ -36,13 +37,16 @@ public class TransactionProcessorTest {
 
     @Mock
     private EntityManager entityManager;
-    
-    @Mock 
+
+    @Mock
+    private EntityTransaction entityTransaction;
+
+    @Mock
     private TypedQuery<Rekening> findHashQuery;
 
     @InjectMocks
     private TransactionProcessor systemUnderTest;
-    
+
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -68,8 +72,9 @@ public class TransactionProcessorTest {
         trans.setHash("123456789abcdef");
         when(entityManager.createNamedQuery("Fintransactie.findByHash")).thenReturn(findHashQuery);
         when(findHashQuery.setParameter("hash", trans.getHash())).thenReturn(findHashQuery);
-        when(findHashQuery.getResultList()).thenReturn(new ArrayList<Rekening>());
+        when(findHashQuery.getResultList()).thenReturn(new ArrayList<>());
+        when(entityManager.getTransaction()).thenReturn(entityTransaction);
         systemUnderTest.process(trans);
     }
-    
+
 }

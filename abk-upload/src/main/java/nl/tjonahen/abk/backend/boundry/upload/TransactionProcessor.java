@@ -54,13 +54,15 @@ public class TransactionProcessor {
      */
     public void process(final Fintransactie trans) {
         if (isExisting(trans)) {
-            LOGGER.log(Level.INFO, "Transaction added {0} {1} {2}", new Object[]{trans.getDatum(), trans.getBijaf(), trans.getBedrag()});
             final Rekening rekening = bepaalRekening(trans);
+            entityManager.getTransaction().begin();
             entityManager.persist(trans);
             trans.setAccountRekening(rekening);
             entityManager.persist(rekening);
+            entityManager.flush();
+            entityManager.getTransaction().commit();
         } else {
-            LOGGER.log(Level.INFO, "Transaction exists {0} {1} {2}", new Object[]{trans.getDatum(), trans.getBijaf(), trans.getBedrag()});
+            LOGGER.log(Level.INFO, "Skipping existing Transaction {0} {1} {2}", new Object[]{trans.getDatum(), trans.getBijaf(), trans.getBedrag()});
         }
     }
 
