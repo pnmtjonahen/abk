@@ -58,6 +58,7 @@ var d3Graph = angular.module('d3Graph', []);
  *  @param {Array} xdomain an Array of a minimum and maximum scale of the x axis. Be aware that screen coordinates start with 0,0 in the upper left corner
  *  @param {Array} ydomain an Array of a minimum and maximum scale of the y axis. Be aware that screen coordinates start with 0,0 in the upper left corner
  *  @param {Array} colornames an Array of css color names. index of the array is the line color of the same index in the data.
+ *  @param {Array} linenames an Array of line names. index of the array is the name of the same index in the data.
  *  @param {Array} data an Array of {id:id, data:[]}. each entry is a single line. The data points are in the form of {key:key, value:value}.
  *  @param {string} yaxislabel y axis label.
  *
@@ -71,7 +72,8 @@ d3Graph.directive('lineGraph', ['$window',
                 data: '=',
                 xdomain: '=',
                 ydomain: '=',
-                linecolors: '='
+                linecolors: '=',
+                linenames: '='
             },
             link: function (scope, element, attributes) {
                 var margin = {top: 10, bottom: 10, left: 0, right: 60};
@@ -100,7 +102,7 @@ d3Graph.directive('lineGraph', ['$window',
                         .append('svg')
                         .attr('id', 'graph')
                         .attr('width', width)
-                        .attr('height', height)
+                        .attr('height', height + 100)
                         .append('g')
                         .attr('transform', 'translate(' + margin.right + ',' + margin.top + ')');
 
@@ -132,12 +134,16 @@ d3Graph.directive('lineGraph', ['$window',
                             })
                             .interpolate('linear');
 
-                    var lineColor = function (id) {
+                    var lineColor = function(id) {
                         return scope.linecolors[id];
+                    };
+                    var lineName = function(id) {
+                       return scope.linenames[id];
                     };
                     svg.selectAll('.x.axis').remove();
                     svg.selectAll('.y.axis').remove();
                     svg.selectAll('path').remove();
+                    svg.selectAll('.legend').remove();
 
 
                     svg.append('svg:g')
@@ -155,14 +161,32 @@ d3Graph.directive('lineGraph', ['$window',
                             .style('text-anchor', 'end')
                             .text(attributes['yaxislabel']);
 
-                    scope.data.forEach(function (e) {
+                    scope.data.forEach(function (e, id) {
                         svg.append('svg:path')
                                 .attr('d', lineFunc(e.data))
-                                .attr('stroke', lineColor(e.id))
+                                .attr('stroke', lineColor(id))
                                 .attr('stroke-width', 2)
                                 .attr('fill', 'none')
-                                .attr('id', 'line-' + e.id);
+                                .attr('id', 'line-' + id);
                     });
+                    svg.append('svg:g')
+                         .attr('class', 'legend');
+
+                    var legend = svg.selectAll('.legend');
+
+                    scope.data.forEach(function (d, id) {
+
+                    legend.append('rect')
+                              .attr('y', height + 20)
+                              .attr('x', id *  50)
+                              .attr('width', 10)
+                              .attr('height', 10)
+                              .style('fill', lineColor(id));
+                    legend.append('text')
+                              .attr('y', height + 20)
+                              .attr('x', (id *  50) + 15)
+                              .text(lineName(id));
+                      });
 
                 };
 
@@ -172,9 +196,10 @@ d3Graph.directive('lineGraph', ['$window',
                     scope.render();
                 }, false);
 
-                scope.$watchCollection(['data', 'xdomain', 'ydomain', 'linecolors'], function () {
+                scope.$watchCollection(['data', 'xdomain', 'ydomain', 'linecolors', 'linenames'], function () {
                     if (scope.data !== undefined
                             && scope.linecolors !== undefined
+                            && scope.linenames !== undefined
                             && scope.xdomain !== undefined
                             && scope.ydomain !== undefined) {
                         scope.render();

@@ -25,9 +25,10 @@
  */
 angular.module('abkClientApp').controller("ReportsController", function(currentDate, transactionsService) {
 
-    this.colornames = ['AliceBlue', 'AntiqueWhite', 'Aqua', 'Aquamarine', 'Azure', 'Beige', 'Bisque', 'Black', 'BlanchedAlmond', 'Blue', 'BlueViolet', 'Brown', 'BurlyWood', 'CadetBlue', 'Chartreuse', 'Chocolate', 'Coral', 'CornflowerBlue', 'Cornsilk', 'Crimson', 'Cyan', 'DarkBlue', 'DarkCyan', 'DarkGoldenRod', 'DarkGray', 'DarkGrey', 'DarkGreen', 'DarkKhaki', 'DarkMagenta', 'DarkOliveGreen', 'Darkorange', 'DarkOrchid', 'DarkRed', 'DarkSalmon', 'DarkSeaGreen', 'DarkSlateBlue', 'DarkSlateGray', 'DarkSlateGrey', 'DarkTurquoise', 'DarkViolet', 'DeepPink', 'DeepSkyBlue', 'DimGray', 'DimGrey', 'DodgerBlue', 'FireBrick', 'FloralWhite', 'ForestGreen', 'Fuchsia', 'Gainsboro', 'GhostWhite', 'Gold', 'GoldenRod', 'Gray', 'Grey', 'Green', 'GreenYellow', 'HoneyDew', 'HotPink', 'IndianRed', 'Indigo', 'Ivory', 'Khaki', 'Lavender', 'LavenderBlush', 'LawnGreen', 'LemonChiffon', 'LightBlue', 'LightCoral', 'LightCyan', 'LightGoldenRodYellow', 'LightGray', 'LightGrey', 'LightGreen', 'LightPink', 'LightSalmon', 'LightSeaGreen', 'LightSkyBlue', 'LightSlateGray', 'LightSlateGrey', 'LightSteelBlue', 'LightYellow', 'Lime', 'LimeGreen', 'Linen', 'Magenta', 'Maroon', 'MediumAquaMarine', 'MediumBlue', 'MediumOrchid', 'MediumPurple', 'MediumSeaGreen', 'MediumSlateBlue', 'MediumSpringGreen', 'MediumTurquoise', 'MediumVioletRed', 'MidnightBlue', 'MintCream', 'MistyRose', 'Moccasin', 'NavajoWhite', 'Navy', 'OldLace', 'Olive', 'OliveDrab', 'Orange', 'OrangeRed', 'Orchid', 'PaleGoldenRod', 'PaleGreen', 'PaleTurquoise', 'PaleVioletRed', 'PapayaWhip', 'PeachPuff', 'Peru', 'Pink', 'Plum', 'PowderBlue', 'Purple', 'Red', 'RosyBrown', 'RoyalBlue', 'SaddleBrown', 'Salmon', 'SandyBrown', 'SeaGreen', 'SeaShell', 'Sienna', 'Silver', 'SkyBlue', 'SlateBlue', 'SlateGray', 'SlateGrey', 'Snow', 'SpringGreen', 'SteelBlue', 'Tan', 'Teal', 'Thistle', 'Tomato', 'Turquoise', 'Violet', 'Wheat', 'White', 'WhiteSmoke', 'Yellow', 'YellowGreen'];
+    this.colornames = ['Pink', 'Red', 'Orange', 'Yellow', 'Brown', 'Green', 'Cyan', 'Blue', 'Purple', 'Gray', 'Black', 'DeepPink', 'CadetBlue', 'Chartreuse', 'Chocolate', 'Coral', 'CornflowerBlue', 'Cornsilk', 'Crimson', 'Cyan', 'DarkBlue', 'DarkCyan', 'DarkGoldenRod', 'DarkGray', 'DarkGrey', 'DarkGreen', 'DarkKhaki', 'DarkMagenta', 'DarkOliveGreen', 'Darkorange', 'DarkOrchid', 'DarkRed', 'DarkSalmon', 'DarkSeaGreen', 'DarkSlateBlue', 'DarkSlateGray', 'DarkSlateGrey', 'DarkTurquoise', 'DarkViolet', 'DeepPink', 'DeepSkyBlue', 'DimGray', 'DimGrey', 'DodgerBlue', 'FireBrick', 'FloralWhite', 'ForestGreen', 'Fuchsia', 'Gainsboro', 'GhostWhite', 'Gold', 'GoldenRod', 'Gray', 'Grey', 'Green', 'GreenYellow', 'HoneyDew', 'HotPink', 'IndianRed', 'Indigo', 'Ivory', 'Khaki', 'Lavender', 'LavenderBlush', 'LawnGreen', 'LemonChiffon', 'LightBlue', 'LightCoral', 'LightCyan', 'LightGoldenRodYellow', 'LightGray', 'LightGrey', 'LightGreen', 'LightPink', 'LightSalmon', 'LightSeaGreen', 'LightSkyBlue', 'LightSlateGray', 'LightSlateGrey', 'LightSteelBlue', 'LightYellow', 'Lime', 'LimeGreen', 'Linen', 'Magenta', 'Maroon', 'MediumAquaMarine', 'MediumBlue', 'MediumOrchid', 'MediumPurple', 'MediumSeaGreen', 'MediumSlateBlue', 'MediumSpringGreen', 'MediumTurquoise', 'MediumVioletRed', 'MidnightBlue', 'MintCream', 'MistyRose', 'Moccasin', 'NavajoWhite', 'Navy', 'OldLace', 'Olive', 'OliveDrab', 'Orange', 'OrangeRed', 'Orchid', 'PaleGoldenRod', 'PaleGreen', 'PaleTurquoise', 'PaleVioletRed', 'PapayaWhip', 'PeachPuff', 'Peru', 'Pink', 'Plum', 'PowderBlue', 'Purple', 'Red', 'RosyBrown', 'RoyalBlue', 'SaddleBrown', 'Salmon', 'SandyBrown', 'SeaGreen', 'SeaShell', 'Sienna', 'Silver', 'SkyBlue', 'SlateBlue', 'SlateGray', 'SlateGrey', 'Snow', 'SpringGreen', 'SteelBlue', 'Tan', 'Teal', 'Thistle', 'Tomato', 'Turquoise', 'Violet', 'Wheat', 'White', 'WhiteSmoke', 'Yellow', 'YellowGreen'];
+    this.labels     = ['Jan', 'Feb', 'Mar', 'Apr', 'May',   'Jun',   'Jul',    'Aug',   'Sep',  'Oct',  'Nov', 'Dec'];
     this.xdomain = [0, 31];
-    this.ydomain = [8000, -6000];
+    this.ydomain = [1000, -1000];
     this.month = [];
     var that = this;
 
@@ -41,21 +42,21 @@ angular.module('abkClientApp').controller("ReportsController", function(currentD
         limit: 9999,
         fields: 'date,debitCreditIndicator,amount,contraAccountName'},
     function (data) {
-        that.month = [{id: 0, data: []},
-            {id: 1, data: []},
-            {id: 2, data: []},
-            {id: 3, data: []},
-            {id: 4, data: []},
-            {id: 5, data: []},
-            {id: 6, data: []},
-            {id: 7, data: []},
-            {id: 8, data: []},
-            {id: 9, data: []},
-            {id: 10, data: []},
-            {id: 11, data: []},
-            {id: 12, data: []}];
+        that.month = [{data: []},
+            {data: []},
+            {data: []},
+            {data: []},
+            {data: []},
+            {data: []},
+            {data: []},
+            {data: []},
+            {data: []},
+            {data: []},
+            {data: []},
+            {data: []}];
         //clean the data (reset to zero)
-        for (var m = 0; m < 13; ++m) {
+        // month is 0-11 and day in month is 1-31
+        for (var m = 0; m < 12; m++) {
             for (var index = 0; index < 32; ++index) {
                 that.month[m].data.push({key: index, value: 0});
             }
@@ -72,9 +73,23 @@ angular.module('abkClientApp').controller("ReportsController", function(currentD
             }
         });
 
-        for (var mo = 0; mo < 13; ++mo) {
+        for (var mo = 0; mo < 12; mo++) {
             for (var ix = 1; ix < 32; ++ix) {
                 that.month[mo].data[ix].value += that.month[mo].data[ix - 1].value;
+            }
+        }
+        for (var mo = 0; mo < 12; mo++) {
+            for (var day = 0; day < 32; ++day) {
+                if (that.month[mo].data[day].value > 0) {
+                   if (that.ydomain[0] < that.month[mo].data[day].value) {
+                      that.ydomain[0] = that.month[mo].data[day].value + 100;
+                   }
+                } else {
+                   if (that.ydomain[1] > that.month[mo].data[day].value) {
+                      that.ydomain[1] = that.month[mo].data[day].value - 100;
+                   }
+
+                }
             }
         }
 
