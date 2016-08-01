@@ -36,7 +36,7 @@ angular.module('abkClientApp').controller("ReportsController", function(currentD
 
     var now = currentDate.current();
     var pref = currentDate.current();
-    pref.setYear(now.getYear() - 1);
+    pref.setFullYear(now.getFullYear() - 1);
 
     transactionsService.get({q: 'date=[' + pref.toJSON() + ' ' + now.toJSON() + ']',
         limit: 9999,
@@ -80,13 +80,14 @@ angular.module('abkClientApp').controller("ReportsController", function(currentD
         }
         for (var mo = 0; mo < 12; mo++) {
             for (var day = 0; day < 32; ++day) {
-                if (that.month[mo].data[day].value > 0) {
-                   if (that.ydomain[0] < that.month[mo].data[day].value) {
-                      that.ydomain[0] = that.month[mo].data[day].value + 100;
+               var ceilValue = Math.ceil(that.month[mo].data[day].value);
+                if (ceilValue > 0) {
+                   if (that.ydomain[0] < ceilValue) {
+                      that.ydomain[0] = ceilValue + 100;
                    }
                 } else {
-                   if (that.ydomain[1] > that.month[mo].data[day].value) {
-                      that.ydomain[1] = that.month[mo].data[day].value - 100;
+                   if (that.ydomain[1] > ceilValue) {
+                      that.ydomain[1] = ceilValue - 100;
                    }
 
                 }
