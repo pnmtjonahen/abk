@@ -251,27 +251,36 @@ d3Graph.directive('piGraph', ['$window',
                         .append('g')
                         .attr('transform', 'translate(' + width / 2 + ',' + height * .52 + ')');
 
-                  function stash(d) {
-                    d.x0 = d.x;
-                    d.dx0 = d.dx;
-                  };
-                  var partition = d3.layout.partition()
-                      .sort(null)
-                      .size([2 * Math.PI, radius * radius])
-                      .value(function(d) { return d.size; });
+               function stash(d) {
+                 d.x0 = d.x;
+                 d.dx0 = d.dx;
+               };
+               var partition = d3.layout.partition()
+                   .sort(null)
+                   .size([2 * Math.PI, radius * radius])
+                   .value(function(d) { return d.size; });
 
-                  var arc = d3.svg.arc()
-                      .startAngle(function(d) { return d.x; })
-                      .endAngle(function(d) { return d.x + d.dx; })
-                      .innerRadius(function(d) { return Math.sqrt(d.y); })
-                      .outerRadius(function(d) { return Math.sqrt(d.y + d.dy); });
-
+               var arc = d3.svg.arc()
+                   .startAngle(function(d) { return d.x; })
+                   .endAngle(function(d) { return d.x + d.dx; })
+                   .innerRadius(function(d) { return Math.sqrt(d.y); })
+                   .outerRadius(function(d) { return Math.sqrt(d.y + d.dy); });
+               function getAngle(d) {
+                   // Offset the angle by 90 deg since the '0' degree axis for arc is Y axis, while
+                   // for text it is the X axis.
+                   var thetaDeg = (180 / Math.PI * (arc.startAngle()(d) + arc.endAngle()(d)) / 2 - 90);
+                   // If we are rotating the text by more than 90 deg, then "flip" it.
+                   // This is why "text-anchor", "middle" is important, otherwise, this "flip" would
+                   // a little harder.
+                   return (thetaDeg > 90) ? thetaDeg - 180 : thetaDeg;
+               }
                //Render graph based on 'data'
                 scope.render = function () {
 
-                   svg.datum(scope.data).selectAll("path")
+                  var path = svg.datum(scope.data).selectAll("path")
                        .data(partition.nodes)
-                       .enter().append("path")
+                       .enter().append("g");
+                  path.append("path")
                        .attr("display", function (d) {
                           return d.depth ? null : "none";
                        }) // hide inner ring
@@ -282,6 +291,24 @@ d3Graph.directive('piGraph', ['$window',
                        })
                        .style("fill-rule", "evenodd")
                        .each(stash);
+
+                  path.append("text")
+                           .text(function(d) { return d.name})
+                           .classed("label", true)
+                           .attr("x", function(d) { return d.x; })
+                           .attr("text-anchor", "middle")
+                           // translate to the desired point and set the rotation
+                           .attr("transform", function(d) {
+                               if (d.depth > 0) {
+                                   return "translate(" + arc.centroid(d) + ")" +
+                                          "rotate(" + getAngle(d) + ")";
+                               }  else {
+                                   return null;
+                               }
+                           })
+                           .attr("dx", "6") // margin
+                           .attr("dy", ".35em") // vertical-align
+                           .attr("pointer-events", "none");
 
                 };
 
