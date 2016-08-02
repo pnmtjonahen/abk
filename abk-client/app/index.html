@@ -38,12 +38,13 @@
                     </div>
                     <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
+                            <li ng-class="{ active: isActive('/transaction')}"><a ui-sref="transaction">Transaction</a></li>
                             <li ng-class="{ active: isActive('/costcalculation')}"><a ui-sref="costcalculation">Cost-Calculation(Month)</a></li>
                             <li ng-class="{ active: isActive('/costcalculationyear')}"><a ui-sref="costcalculationyear">Cost-Calculation(Year)</a></li>
-                            <li ng-class="{ active: isActive('/transaction')}"><a ui-sref="transaction">Transaction</a></li>
+                            <li ng-class="{ active: isActive('/costreport')}"><a ui-sref="costreport">Cost Report</a></li>
+                            <li ng-class="{ active: isActive('/reports')}"><a ui-sref="reports">12 Month Report</a></li>
                             <li ng-class="{ active: isActive('/costcenter')}"><a ui-sref="costcenter">Cost-Center</a></li>
                             <li ng-class="{ active: isActive('/upload')}"><a ui-sref="upload">Upload</a></li>
-                            <li ng-class="{ active: isActive('/reports')}"><a ui-sref="reports">Reports</a></li>
                             <li ng-class="{ active: isActive('/csvreader')}"><a ui-sref="csvreader">CsvReader</a></li>
                             <li ng-class="{ active: isActive('/about')}"><a ui-sref="about">About</a></li>
                             <li ng-class="{ active: isActive('/contact')}"><a ui-sref="contact">Contact</a></li>
@@ -107,6 +108,7 @@
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/controllers/contact.js"></script>
         <script src="scripts/controllers/reports.js"></script>
+        <script src="scripts/controllers/costreport.js"></script>
         <script src="scripts/controllers/transaction.js"></script>
         <script src="scripts/controllers/costcenter.js"></script>
         <script src="scripts/controllers/upload.js"></script>

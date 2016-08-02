@@ -87,6 +87,15 @@ angular.module('abkClientApp').config(function ($stateProvider, $urlRouterProvid
                     requireLogin: false
                 }
             })
+            .state('costreport', {
+                url:'/costreport',
+                templateUrl: 'views/costreport.html',
+                controller: 'CostReportController',
+                controllerAs: 'costReportCtrl',
+                data : {
+                    requireLogin: false
+                }
+            })
             .state('costcenter', {
                 url:'/costcenter',
                 templateUrl: 'views/costcenter.html',

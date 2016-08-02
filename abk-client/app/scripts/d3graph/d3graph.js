@@ -209,4 +209,98 @@ d3Graph.directive('lineGraph', ['$window',
         };
     }
 ]);
+d3Graph.directive('piGraph', ['$window',
+    function ($window) {
+        return {
+            restrict: 'E',
+            scope: {
+                data: '=',
+                xdomain: '=',
+                ydomain: '='
+            },
+            link: function (scope, element, attributes) {
+                var width = 1024,
+                        height = 600,
+                        radius = Math.min(width, height) / 2,
+                        color = d3.scale.category20c();
+
+
+                var windowWidth = function () {
+                    return parseInt(d3.select('.container-fluid').style('width')) - 50;
+                };
+
+                scope.$watch(windowWidth, function (newval, oldval) {
+                    if (oldval !== newval) {
+                        width = newval;
+                        d3.select('#graph').attr('width', width);
+                        scope.render();
+                    }
+                }, true);
+
+                angular.element($window).bind('resize', function () {
+                    scope.$apply();
+                });
+
+                width = windowWidth();
+
+                var svg = d3.select(element[0])
+                        .append('svg')
+                        .attr('id', 'graph')
+                        .attr('width', width)
+                        .attr('height', height + 100)
+                        .append('g')
+                        .attr('transform', 'translate(' + width / 2 + ',' + height * .52 + ')');
+
+                  function stash(d) {
+                    d.x0 = d.x;
+                    d.dx0 = d.dx;
+                  };
+                  var partition = d3.layout.partition()
+                      .sort(null)
+                      .size([2 * Math.PI, radius * radius])
+                      .value(function(d) { return d.size; });
+
+                  var arc = d3.svg.arc()
+                      .startAngle(function(d) { return d.x; })
+                      .endAngle(function(d) { return d.x + d.dx; })
+                      .innerRadius(function(d) { return Math.sqrt(d.y); })
+                      .outerRadius(function(d) { return Math.sqrt(d.y + d.dy); });
+
+               //Render graph based on 'data'
+                scope.render = function () {
+
+                   svg.datum(scope.data).selectAll("path")
+                       .data(partition.nodes)
+                       .enter().append("path")
+                       .attr("display", function (d) {
+                          return d.depth ? null : "none";
+                       }) // hide inner ring
+                       .attr("d", arc)
+                       .style("stroke", "#fff")
+                       .style("fill", function (d) {
+                          return color((d.children ? d : (d.parent ? d.parent:d)).name);
+                       })
+                       .style("fill-rule", "evenodd")
+                       .each(stash);
+
+                };
+
+                //Watch 'data' and run scope.render(newVal) whenever it changes
+                //Use true for 'objectEquality' property so comparisons are done on equality and not reference
+                scope.$watch('data', function () {
+                    scope.render();
+                }, false);
+
+                scope.$watchCollection(['data', 'xdomain', 'ydomain'], function () {
+                    if (scope.data !== undefined
+                            && scope.xdomain !== undefined
+                            && scope.ydomain !== undefined) {
+                        scope.render();
+                    }
+                }, true);
+            }
+        };
+    }
+]);
+
 })();
