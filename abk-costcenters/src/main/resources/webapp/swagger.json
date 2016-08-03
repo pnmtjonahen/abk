@@ -157,14 +157,8 @@
         "name" : {
           "type" : "string"
         },
-        "parent" : {
-          "$ref" : "#/definitions/CostCenter"
-        },
         "list" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/CostCenter"
-          }
+          "$ref" : "#/definitions/List"
         }
       }
     },

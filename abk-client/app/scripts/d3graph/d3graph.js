@@ -214,9 +214,7 @@ d3Graph.directive('piGraph', ['$window',
         return {
             restrict: 'E',
             scope: {
-                data: '=',
-                xdomain: '=',
-                ydomain: '='
+                data: '='
             },
             link: function (scope, element, attributes) {
                 var width = 1024,
@@ -318,10 +316,8 @@ d3Graph.directive('piGraph', ['$window',
                     scope.render();
                 }, false);
 
-                scope.$watchCollection(['data', 'xdomain', 'ydomain'], function () {
-                    if (scope.data !== undefined
-                            && scope.xdomain !== undefined
-                            && scope.ydomain !== undefined) {
+                scope.$watchCollection(['data'], function () {
+                    if (scope.data !== undefined) {
                         scope.render();
                     }
                 }, true);
