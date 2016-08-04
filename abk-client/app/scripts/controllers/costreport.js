@@ -136,14 +136,14 @@
       this.debitData = {
          "name": "debit",
          "parent" : this.debitData,
-         "children": [{"name":"debit", "size":1}]
+         "size" : 1
 
       };
 
       this.creditData = {
          "name": "credit",
          "parent" : this.creditData,
-         "children": [{"name":"credit", "size":1}]
+         "size" : 1
       };
       var that = this;
 
