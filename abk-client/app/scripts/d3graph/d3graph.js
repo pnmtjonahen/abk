@@ -209,6 +209,36 @@ d3Graph.directive('lineGraph', ['$window',
         };
     }
 ]);
+/**
+ * @ngdoc directive
+ * @name d3Graph.directive:piGraph
+ * @restrict E
+ * @description
+ * A pichart graph. Draws a sunburst graph using D3 library, make sure that you embed the graph into a bootstrap container-fluid div.
+ * @example
+ * @example
+ <doc:example module="d3Graph">
+ <doc:source>
+ <div class="container-fluid">
+ <div ng-controller="Ctrl">
+ <pi-graph
+ data='report'
+  />
+ </div>
+ </div>
+ <script>
+ angular.module('d3Graph').controller('Ctrl',['$scope', function($scope) {
+ $scope.report = [{id: 0, data: [{key:0, value:0}, {key:1, value:5}, {key:2, value:5}, {key:3, value:6}, {key:4, value:2}, {key:5, value:8}]},
+ {id: 1, data: [{key:1, value:1}, {key:5, value:5}, {key:7, value:3}]}];
+ }]);
+ </script>
+ </doc:source>
+ </doc:example>
+ *
+ *  @param {Array} data an Array of {id:id, data:[]}. each entry is a single line. The data points are in the form of {key:key, value:value}.
+ *
+ *
+ */
 d3Graph.directive('piGraph', ['$window',
     function ($window) {
         return {
@@ -217,68 +247,31 @@ d3Graph.directive('piGraph', ['$window',
                 data: '='
             },
             link: function (scope, element, attributes) {
-                var width = 600,
-                        height = 600,
-                        radius = Math.min(width, height) / 2,
-                        color = d3.scale.category20c();
+                var windowWidth = function () {
+                    return parseInt(d3.select(element[0].parentNode).style('width')) -50;
+                };
+                var color = d3.scale.category20c();
 
-
-//                var windowWidth = function () {
-//                    return parseInt(d3.select(element[0].parent).style('width')) - 50;
-//                };
-//
-//                scope.$watch(windowWidth, function (newval, oldval) {
-//                    if (oldval !== newval) {
-//                        width = newval;
-//                        d3.select('#graph').attr('width', width);
-//                        scope.render();
-//                    }
-//                }, true);
-//
-//                angular.element($window).bind('resize', function () {
-//                    scope.$apply();
-//                });
-//
-//                width = windowWidth();
-
-//var formatNumber = d3.format(",d");
-//
-//var x = d3.scale.linear()
-//    .range([0, 2 * Math.PI]);
-//
-//var y = d3.scale.sqrt()
-//    .range([0, radius]);
-//
-//var color = d3.scale.category20c();
-//
-//var partition = d3.layout.partition()
-//    .value(function(d) { return d.size; });
-//
-//var arc = d3.svg.arc()
-//    .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x))); })
-//    .endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx))); })
-//    .innerRadius(function(d) { return Math.max(0, y(d.y)); })
-//    .outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); });
-//
-//var svg = d3.select("body").append("svg")
-//    .attr("width", width)
-//    .attr("height", height)
-//  .append("g")
-//    .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
+                var width = windowWidth();
+                var radius = (width / 2) -100;
 
 
                 var svg = d3.select(element[0])
                         .append('svg')
-                        .attr('id', 'graph')
-                        .attr('width', width)
-                        .attr('height', height + 100)
+                        .attr('id', 'graph_' + element[0].id)
+                        .attr('width', '100%')
+                        .attr('height', '100%')
+                        .attr('viewBox', '0 0 '+width+' '+width)
+                        .attr('preserveAspectRatio', 'xMidYMid meet')
                         .append('g')
-                        .attr('transform', 'translate(' + width / 2 + ',' + height * .52 + ')');
+                        .attr('transform', 'translate(' + width / 2 + ',' + width * .52 + ')');
 
                function stash(d) {
                  d.x0 = d.x;
                  d.dx0 = d.dx;
                };
+
+               var color = d3.scale.category20c();
 
                var partition = d3.layout.partition()
                    .sort(null)
@@ -299,34 +292,9 @@ d3Graph.directive('piGraph', ['$window',
                    // a little harder.
                    return (thetaDeg > 90) ? thetaDeg - 180 : thetaDeg;
                }
-               function click(d) {
-                 svg.transition()
-                     .duration(750)
-                     .tween("scale", function() {
-                       var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
-                           yd = d3.interpolate(y.domain(), [d.y, 1]),
-                           yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius]);
-                       return function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); };
-                     })
-                   .selectAll("path")
-                     .attrTween("d", function(d) { return function() { return arc(d); }; });
-               }
                //Render graph based on 'data'
                 scope.render = function () {
-//                  var path = svg.datum(scope.data).selectAll("path")
-//                       .data(partition.nodes)
-//                       .enter();
-//                  path.append("path")
-//                       .attr("d", arc)
-//                       .style("fill", function (d) {
-//                          return color((d.children ? d : (d.parent ? d.parent : d)).name);
-//                       })
-//                       .on("click", click)
-//                       .append("title")
-//                       .text(function (d) {
-//                          return d.name + "\n" + formatNumber(d.size);
-//                       });
-//
+
                   var path = svg.datum(scope.data).selectAll("path")
                        .data(partition.nodes)
                        .enter().append("g");
@@ -348,15 +316,14 @@ d3Graph.directive('piGraph', ['$window',
                        });
 
                   path.append("text")
-                           .text(function(d) { return d.name})
+                           .text(function(d) { return d.name;})
                            .classed("label", true)
                            .attr("x", function(d) { return d.x; })
                            .attr("text-anchor", "middle")
                            // translate to the desired point and set the rotation
                            .attr("transform", function(d) {
                                if (d.depth > 0) {
-                                   return "translate(" + arc.centroid(d) + ")" +
-                                          "rotate(" + getAngle(d) + ")";
+                                   return "translate(" + arc.centroid(d) + ")" + " rotate(" + getAngle(d) + ")";
                                }  else {
                                    return null;
                                }
@@ -373,11 +340,6 @@ d3Graph.directive('piGraph', ['$window',
                     scope.render();
                 }, false);
 
-                scope.$watchCollection(['data'], function () {
-                    if (scope.data !== undefined) {
-                        scope.render();
-                    }
-                }, true);
             }
         };
     }
