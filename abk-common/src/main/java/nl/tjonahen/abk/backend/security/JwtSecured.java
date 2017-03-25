@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Philippe Tjon - A - Hen, philippe@tjonahen.nl
+ * Copyright (C) 2017 Philippe Tjon - A - Hen philippe@tjonahen.nl
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,35 +14,22 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package nl.tjonahen.abk.backend;
 
-import javax.xml.bind.annotation.XmlRootElement;
+package nl.tjonahen.abk.backend.security;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import javax.ws.rs.NameBinding;
 
 /**
  *
- * @author Philippe Tjon - A - Hen, philippe@tjonahen.nl
+ * @author Philippe Tjon - A - Hen
  */
-@XmlRootElement
-public class Error {
-    private String message;
-
-    /**
-     * Constructor needed for XML marshalling/unmarshalling
-     */
-    public Error() {
-    }
-
-
-    public Error(String message) {
-        this.message = message;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
+@NameBinding
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD, ElementType.TYPE})
+public @interface JwtSecured {
 
 }

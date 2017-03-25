@@ -14,27 +14,37 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+(function () {
+    'use strict';
 
-angular.module('abkClientApp').controller("UploadController", function ($scope, FileUploader, backendConfig, uploadService) {
+    angular.module('abkClientApp').controller("UploadController", uploadController);
 
-   uploadService.get({}, function(data) {
-      console.info(data);
-   });
+    function uploadController($scope, FileUploader, backendConfig, uploadService, userCheckService) {
 
-   var uploader = $scope.uploader = new FileUploader({
-      url: backendConfig.uploadPath
-   });
+        uploadService.get({}, function (data) {
+            console.info(data);
+        });
 
-   // FILTERS
+        var uploader = $scope.uploader = new FileUploader({
+            url: backendConfig.uploadPath
+        });
 
-   uploader.filters.push({
-      name: 'customFilter',
-      fn: function (item, options) {
-         return this.queue.length < 10;
-      }
-   });
+        // FILTERS
 
-   uploader.onErrorItem = function (fileItem, response, status, headers) {
-      console.info('onErrorItem', fileItem, response, status, headers);
-   };
-});
+        uploader.filters.push({
+            name: 'customFilter',
+            fn: function (item, options) {
+                return this.queue.length < 10;
+            }
+        });
+
+        uploader.onErrorItem = function (fileItem, response, status, headers) {
+            console.info('onErrorItem', fileItem, response, status, headers);
+        };
+        
+        userCheckService.check();
+        
+    }
+    ;
+
+})();

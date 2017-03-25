@@ -24,9 +24,9 @@ import com.wordnik.swagger.annotations.ApiResponses;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
@@ -45,22 +45,23 @@ import nl.tjonahen.abk.backend.model.CostCenter;
 import nl.tjonahen.abk.backend.model.CostCenters;
 import nl.tjonahen.abk.backend.model.HRef;
 import nl.tjonahen.abk.backend.entity.Kostenplaats;
+import nl.tjonahen.abk.backend.security.JwtSecured;
 
 /**
  *
  * @author Philippe Tjon - A - Hen, philippe@tjonahen.nl
  */
 @Api(value = "Cost centers resource.")
-@RequestScoped
-@Path("/costcenters")
+@Path("/")
 public class CostCentersResource {
 
-    @PersistenceContext(unitName = "abk")
+    @PersistenceContext
     private EntityManager entityManager;
 
     @ApiOperation(value = "Get list of all cost centers", response = CostCenters.class)
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @JwtSecured
     public CostCenters get(@Context UriInfo uriInfo,
             @ApiParam(value = "Level (integer) to expand the result", name = "expand")
             @DefaultValue("0")
@@ -75,6 +76,7 @@ public class CostCentersResource {
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
+    @JwtSecured
     public Response get(@Context UriInfo uriInfo,
             @ApiParam(value = "id of the cost center", name = "id")
             @PathParam("id")
@@ -99,6 +101,8 @@ public class CostCentersResource {
     @ApiOperation(value = "Add new cost center to the collection of cost centers", response = CostCenter.class)
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Transactional
+    @JwtSecured
     public Response post(@Context UriInfo uriInfo, CostCenter costCenter) {
         return Response.status(Response.Status.CREATED)
                 .entity(this.create(costCenter).updateHref(uriInfo.getAbsolutePath().toString()))
@@ -108,12 +112,14 @@ public class CostCentersResource {
     @ApiOperation(value = "Replace the collection of cost centers")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
+    @Transactional
+    @JwtSecured
     public Response post(List<CostCenter> costcenters) {
-        entityManager.getTransaction().begin();
+//        entityManager.getTransaction().begin();
         nullIds(costcenters);
         removeAll();
         insertAll(costcenters);
-        entityManager.getTransaction().commit();
+//        entityManager.getTransaction().commit();
 
         return Response.status(Response.Status.ACCEPTED).build();
     }
@@ -133,6 +139,7 @@ public class CostCentersResource {
     @PUT
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
+    @JwtSecured
     public Response put(
             @ApiParam(value = "id of the cost center", name = "id")
             @PathParam("id")
@@ -150,6 +157,7 @@ public class CostCentersResource {
     )
     @DELETE
     @Path("/{id}")
+    @JwtSecured
     public Response delete(
             @ApiParam(value = "id of the cost center", name = "id")
             @PathParam("id") final Long id) {
@@ -178,11 +186,11 @@ public class CostCentersResource {
 
     private CostCenter create(CostCenter costCenter) {
         final Kostenplaats newKostenplaats = newKostenplaats(costCenter);
-        entityManager.getTransaction().begin();
+//        entityManager.getTransaction().begin();
         entityManager.persist(newKostenplaats);
         entityManager.flush();
         entityManager.refresh(newKostenplaats);
-        entityManager.getTransaction().commit();
+//        entityManager.getTransaction().commit();
         return new ConvertCostCenter(1).convert(newKostenplaats);
     }
 
@@ -206,10 +214,10 @@ public class CostCentersResource {
         }
         current.setFilter(costCenter.getFilter());
         current.setNaam(costCenter.getName());
-        entityManager.getTransaction().begin();
+//        entityManager.getTransaction().begin();
         entityManager.merge(current);
         entityManager.flush();
-        entityManager.getTransaction().commit();
+//        entityManager.getTransaction().commit();
         return true;
     }
 
@@ -218,9 +226,9 @@ public class CostCentersResource {
         if (null == current) {
             return false;
         }
-        entityManager.getTransaction().begin();
+//        entityManager.getTransaction().begin();
         entityManager.remove(current);
-        entityManager.getTransaction().commit();
+//        entityManager.getTransaction().commit();
         return true;
     }
 

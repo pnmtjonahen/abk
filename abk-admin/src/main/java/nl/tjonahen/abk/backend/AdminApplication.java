@@ -24,7 +24,7 @@ import javax.ws.rs.ApplicationPath;
  *
  * @author Philippe Tjon - A - Hen, philippe@tjonahen.nl
  */
-@ApplicationPath("/")
+@ApplicationPath("/admin")
 public class AdminApplication extends AbstractAbkApplication {
 
     @Override

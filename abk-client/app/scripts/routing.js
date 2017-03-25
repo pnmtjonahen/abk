@@ -37,7 +37,7 @@ angular.module('abkClientApp').config(function ($stateProvider, $urlRouterProvid
                 controller: 'CostCalculationController',
                 controllerAs: 'costcalculationCtrl',
                 data : {
-                    requireLogin: false
+                    requireLogin: true
                 }
             })
             .state('costcalculationyear', {
@@ -46,7 +46,7 @@ angular.module('abkClientApp').config(function ($stateProvider, $urlRouterProvid
                 controller: 'CostCalculationYearController',
                 controllerAs: 'costcalculationYearCtrl',
                 data : {
-                    requireLogin: false
+                    requireLogin: true
                 }
             })
 
@@ -75,7 +75,7 @@ angular.module('abkClientApp').config(function ($stateProvider, $urlRouterProvid
                 controller: 'TransactionController',
                 controllerAs: 'transactionCtrl',
                 data : {
-                    requireLogin: false
+                    requireLogin: true
                 }
             })
             .state('reports', {
@@ -84,7 +84,7 @@ angular.module('abkClientApp').config(function ($stateProvider, $urlRouterProvid
                 controller: 'ReportsController',
                 controllerAs: 'reportCtrl',
                 data : {
-                    requireLogin: false
+                    requireLogin: true
                 }
             })
             .state('costreport', {
@@ -93,7 +93,7 @@ angular.module('abkClientApp').config(function ($stateProvider, $urlRouterProvid
                 controller: 'CostReportController',
                 controllerAs: 'costReportCtrl',
                 data : {
-                    requireLogin: false
+                    requireLogin: true
                 }
             })
             .state('costcenter', {
@@ -102,7 +102,7 @@ angular.module('abkClientApp').config(function ($stateProvider, $urlRouterProvid
                 controller: 'CostCenterController',
                 controllerAs: 'costCenterCtrl',
                 data : {
-                    requireLogin: false
+                    requireLogin: true
                 }
             })
             .state('upload', {
@@ -110,7 +110,7 @@ angular.module('abkClientApp').config(function ($stateProvider, $urlRouterProvid
                 templateUrl: 'views/upload.html',
                 controller: 'UploadController',
                 data : {
-                    requireLogin: false
+                    requireLogin: true
                 }
             })
             .state('csvreader', {
@@ -119,7 +119,7 @@ angular.module('abkClientApp').config(function ($stateProvider, $urlRouterProvid
                 controller: 'CsvReaderController',
                 controllerAs: 'csvReaderCtrl',
                 data : {
-                    requireLogin: false
+                    requireLogin: true
                 }
             });
 });

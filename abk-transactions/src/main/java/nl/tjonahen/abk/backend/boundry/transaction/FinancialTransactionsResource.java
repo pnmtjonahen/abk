@@ -25,7 +25,6 @@ import java.util.Arrays;
 import nl.tjonahen.abk.backend.model.OrderBy;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -45,17 +44,18 @@ import nl.tjonahen.abk.backend.model.FinancialTransactions;
 import nl.tjonahen.abk.backend.model.HRef;
 import nl.tjonahen.abk.backend.model.Where;
 import nl.tjonahen.abk.backend.entity.Fintransactie;
+import nl.tjonahen.abk.backend.security.JwtSecured;
 
 /**
  *
  * @author Philippe Tjon - A - Hen, philippe@tjonahen.nl
  */
 @Api(value = "Transaction resources.")
-@RequestScoped
-@Path("/transactions")
+@Path("/")
+@JwtSecured
 public class FinancialTransactionsResource {
 
-    @PersistenceContext(unitName = "abk")
+    @PersistenceContext
     private EntityManager entityManager;
 
     @Inject
@@ -92,7 +92,8 @@ public class FinancialTransactionsResource {
      * @return the requested financial transaction or not found.
      */
     @ApiOperation(value = "Get a single transaction", response = FinancialTransaction.class)
-    @ApiResponses(@ApiResponse(code = 404, message = "In case of missing transaction"))
+    @ApiResponses(
+            @ApiResponse(code = 404, message = "In case of missing transaction"))
     @GET
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -117,12 +118,12 @@ public class FinancialTransactionsResource {
         return new FinancialTransactions(
                 entityManager.createQuery(
                         financialTransactionQueryBuilder.start().where(where).orderBy(orderBy).createSelect())
-                .getResultList()
-                .stream()
-                .skip(offset)
-                .limit(limit)
-                .map(fintransactie -> createFinTransaction(fields, fintransactie))
-                .collect(Collectors.toList()), offset, limit, count(where));
+                        .getResultList()
+                        .stream()
+                        .skip(offset)
+                        .limit(limit)
+                        .map(fintransactie -> createFinTransaction(fields, fintransactie))
+                        .collect(Collectors.toList()), offset, limit, count(where));
     }
 
     private FinancialTransaction createFinTransaction(Fields fields, Fintransactie fintransactie) {

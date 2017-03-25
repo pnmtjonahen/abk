@@ -19,7 +19,6 @@ package nl.tjonahen.abk.backend.boundry.admin;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import java.util.stream.Collectors;
-import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.GET;
@@ -28,14 +27,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import nl.tjonahen.abk.backend.entity.CsvReader;
 import nl.tjonahen.abk.backend.model.CsvJsReader;
+import nl.tjonahen.abk.backend.security.JwtSecured;
 
 /**
  *
  * @author Philippe Tjon - A - Hen, philippe@tjonahen.nl
  */
 @Api(value = "Admin resources")
-@Path("/admin")
-@RequestScoped
+@Path("/")
 public class AdminResource {
 
     @PersistenceContext(unitName = "abk")
@@ -45,6 +44,7 @@ public class AdminResource {
     @GET
     @Path("/csvreader")
     @Produces(MediaType.APPLICATION_JSON)
+    @JwtSecured
     public CsvJsReader getCsvReader() {
         return entityManager.createNamedQuery("CsvReader.findAll", CsvReader.class)
                 .getResultList()

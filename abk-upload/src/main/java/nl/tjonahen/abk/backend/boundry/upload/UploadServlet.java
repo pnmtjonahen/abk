@@ -43,7 +43,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import nl.tjonahen.abk.backend.CsvJSScripting;
 import nl.tjonahen.abk.backend.entity.CsvReader;
 import nl.tjonahen.abk.backend.entity.Fintransactie;
 import nl.tjonahen.abk.backend.model.FinancialTransaction;

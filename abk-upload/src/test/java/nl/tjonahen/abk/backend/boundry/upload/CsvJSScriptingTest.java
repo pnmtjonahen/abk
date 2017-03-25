@@ -14,11 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package nl.tjonahen.abk.backend;
+package nl.tjonahen.abk.backend.boundry.upload;
 
 import nl.tjonahen.abk.backend.model.FinancialTransaction;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
