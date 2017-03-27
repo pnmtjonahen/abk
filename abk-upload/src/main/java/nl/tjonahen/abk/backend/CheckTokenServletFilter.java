@@ -34,7 +34,7 @@ import nl.tjonahen.abk.backend.security.JsonWebTokenService;
  *
  * @author Philippe Tjon - A - Hen
  */
-@WebFilter(filterName = "2CheckTokenServletFilter", urlPatterns = {"/*"})
+@WebFilter(filterName = "CheckTokenServletFilter", urlPatterns = {"/*"})
 public class CheckTokenServletFilter implements Filter {
 
     @Inject
@@ -46,6 +46,11 @@ public class CheckTokenServletFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        if ("OPTIONS".equalsIgnoreCase(((HttpServletRequest) request).getMethod())) {
+            chain.doFilter(request, response);
+            return;
+
+        }
         final String token = ((HttpServletRequest) request).getHeader("Authorization");
         if (token != null) {
             if (jwtService.isValidToken(token.substring("Bearer ".length()))) {

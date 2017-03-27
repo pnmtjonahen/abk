@@ -62,37 +62,11 @@ angular.module('abkClientApp').controller('LoginController', function ($scope, $
 });
 
 
-//angular.module('abkClientApp').run(function ($rootScope, $state, loginModal, userCheckService) {
-//
-//    $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-//        var requireLogin = toState.data.requireLogin;
-//
-//        if (requireLogin) {
-//            event.preventDefault();
-//            var result = null;
-//            userCheckService.check("", function (data) {
-//                result = $state.go(toState.name, toParams);
-//            }).$promise.catch(function (response) {
-//                loginModal().then(function () {
-//                    result = $state.go(toState.name, toParams);
-//                }, function () {
-//                    result = $state.go('home');
-//                });
-//            });
-//            // wait for result
-//            while (!result) {};
-//            return result;
-//        }
-//    });
-//
-//});
 
 angular.module('abkClientApp').config(function ($httpProvider) {
 
     $httpProvider.interceptors.push(function ($timeout, $q, $injector) {
-        var loginModal, loginModalInstance, $http, $state, ngDialog;
-        var rejections = [];
-        var deferres = [];
+        var loginModal, $http, $state, ngDialog;
 
         // this trick must be done so that we don't receive
         // `Uncaught Error: [$injector:cdep] Circular dependency found`

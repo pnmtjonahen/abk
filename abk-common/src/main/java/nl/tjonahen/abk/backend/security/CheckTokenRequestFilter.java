@@ -29,7 +29,7 @@ import javax.ws.rs.core.Response;
  * @author Philippe Tjon - A - Hen
  */
 @JwtSecured
-public class CheckTokenInterceptor implements ContainerRequestFilter {
+public class CheckTokenRequestFilter implements ContainerRequestFilter {
 
     @Inject
     private JsonWebTokenService jwtService;

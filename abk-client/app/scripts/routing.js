@@ -102,7 +102,7 @@ angular.module('abkClientApp').config(function ($stateProvider, $urlRouterProvid
                 controller: 'CostCenterController',
                 controllerAs: 'costCenterCtrl',
                 data : {
-                    requireLogin: true
+                    requireLogin: false
                 }
             })
             .state('upload', {

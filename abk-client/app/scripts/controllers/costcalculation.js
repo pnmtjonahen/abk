@@ -153,6 +153,14 @@
         that.totalUnAccounted = undefined;
 
     };
+    function retrieveData($q, that, transactionsService, costCentersService, userCheckService) {
+        userCheckService.check().$promise.then(function () {
+            $q.all([transactionsService.get({q: 'date=[' + that.range.start.toJSON() + ' ' + that.range.end.toJSON() + ']', limit: 9999,
+                    fields: 'date,debitCreditIndicator,amount,description,contraAccountName'}).$promise,
+                costCentersService.get({expand: 3}).$promise]).then(processResult.bind(null, that));
+        });
+    };
+    
     function costCalculationController($q, currentDate, transactionsService, costCentersService, userCheckService) {
         this.range = currentDate.range();
         this.lastDay = undefined;
@@ -166,16 +174,9 @@
 
         var that = this;
 
-        var retrieveData = function () {
-            userCheckService.check().$promise.then(function () {
-                $q.all([transactionsService.get({q: 'date=[' + that.range.start.toJSON() + ' ' + that.range.end.toJSON() + ']', limit: 9999,
-                        fields: 'date,debitCreditIndicator,amount,description,contraAccountName'}).$promise,
-                    costCentersService.get({expand: 3}).$promise]).then(processResult.bind(null, that));
-            });
-        };
 
         init(that);
-        retrieveData();
+        retrieveData($q, that, transactionsService, costCentersService, userCheckService);
 
         this.previous = function () {
             that.range.previous();
@@ -190,8 +191,8 @@
         };
 
         this.showRow = function (row) {
-            if (row.costcenter.parent !== undefined) {
-                if (that.current !== undefined) {
+            if (row.costcenter.parent) {
+                if (that.current) {
                     return that.current.id === row.costcenter.parent.id;
                 }
                 return false;

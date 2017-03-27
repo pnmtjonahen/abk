@@ -24,6 +24,8 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,10 +54,12 @@ public class JsonWebTokenService {
 
     public String createToken(final String naam) {
         try {
+            final LocalDateTime ldt = LocalDateTime.now().plusMinutes(30);
+            
             return JWT.create()
                     .withIssuer(ISSUER)
                     .withClaim(CLAIM1, naam)
-                    .withExpiresAt(new Date(System.currentTimeMillis() + 30000)) // 5min
+                    .withExpiresAt(Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant())) 
                     .sign(algorithm);
         } catch (IllegalArgumentException | JWTCreationException exception) {
             LOGGER.log(Level.SEVERE, "Error create JWT", exception);
@@ -81,13 +85,18 @@ public class JsonWebTokenService {
     public String refreshToken(String token) {
         try {
             final DecodedJWT jwt = verifier.verify(token);
+            final LocalDateTime ldt = LocalDateTime.now().plusMinutes(30);
             return JWT.create()
                     .withIssuer(ISSUER)
                     .withClaim(CLAIM1, jwt.getClaim(CLAIM1).asString())
-                    .withExpiresAt(new Date(System.currentTimeMillis() + 30000)) // 5min
+                    .withExpiresAt(Date.from(ldt.atZone(ZoneId.systemDefault()).toInstant())) 
                     .sign(algorithm);
         } catch (JWTVerificationException exception) {
-            LOGGER.log(Level.SEVERE, "Error decoding JWT", exception);
+            if (exception instanceof InvalidClaimException) {
+                LOGGER.info(() -> " Invalid token " + exception.getMessage());
+            } else {
+                LOGGER.log(Level.SEVERE, "Error decoding JWT", exception);
+            }
         }
         return token;
     }

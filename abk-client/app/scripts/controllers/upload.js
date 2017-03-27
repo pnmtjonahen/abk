@@ -19,14 +19,25 @@
 
     angular.module('abkClientApp').controller("UploadController", uploadController);
 
-    function uploadController($scope, FileUploader, backendConfig, uploadService, userCheckService) {
+    var getJwt = function ($localstorage) {
+        var user = $localstorage.getObject('user');
+        if (user) {
+            return user.token;
+        }
+        return "";
+    };
+
+    function uploadController($scope, FileUploader, backendConfig, uploadService, userCheckService, $localstorage) {
 
         uploadService.get({}, function (data) {
             console.info(data);
         });
 
         var uploader = $scope.uploader = new FileUploader({
-            url: backendConfig.uploadPath
+            url: backendConfig.uploadPath,
+            headers: {
+                "Authorization" : getJwt($localstorage)
+            }
         });
 
         // FILTERS
@@ -41,9 +52,9 @@
         uploader.onErrorItem = function (fileItem, response, status, headers) {
             console.info('onErrorItem', fileItem, response, status, headers);
         };
-        
+
         userCheckService.check();
-        
+
     }
     ;
 

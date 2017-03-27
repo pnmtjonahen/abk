@@ -168,8 +168,8 @@
 
 
         this.showRow = function (row) {
-            if (row.costcenter.parent !== undefined) {
-                if (that.current !== undefined) {
+            if (row.costcenter.parent) {
+                if (that.current) {
                     return that.current.id === row.costcenter.parent.id;
                 }
                 return false;

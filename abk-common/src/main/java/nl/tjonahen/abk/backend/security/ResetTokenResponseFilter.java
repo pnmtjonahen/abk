@@ -22,16 +22,15 @@ import javax.inject.Inject;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
-import javax.ws.rs.ext.Provider;
 
 /**
  * JAX-RS response filter to update the JWT with a new expiration date.
  * @author Philippe Tjon - A - Hen
  */
-@Provider
-public class ResetTokenInterceptor implements ContainerResponseFilter {
+@JwtSecured
+public class ResetTokenResponseFilter implements ContainerResponseFilter {
 
-    private final static Logger LOGGER = Logger.getLogger(ResetTokenInterceptor.class.getName());
+    private final static Logger LOGGER = Logger.getLogger(ResetTokenResponseFilter.class.getName());
 
     @Inject
     private JsonWebTokenService JwtService;
