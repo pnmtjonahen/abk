@@ -11,7 +11,7 @@
   } ],
   "schemes" : [ "http" ],
   "paths" : {
-    "/costcenters" : {
+    "" : {
       "get" : {
         "tags" : [ "Cost centers resource." ],
         "summary" : "Get list of all cost centers",
@@ -64,7 +64,7 @@
         }
       }
     },
-    "/costcenters/{id}" : {
+    "/{id}" : {
       "get" : {
         "tags" : [ "Cost centers resource." ],
         "summary" : "Get a cost center by id",

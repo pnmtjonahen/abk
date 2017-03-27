@@ -23,48 +23,55 @@
  */
 angular.module('abkConfig', []);
 
-/**
- * @ngdoc service
- * @name abkConfig.backendConfig
- * @description
- * holds the backend configuration items
- */
-angular.module('abkConfig').constant('backendConfig', {
-    /**
-     * @ngdoc property
-     * @name abkConfig.backendConfig#resourcePath
-     * @propertyOf abkConfig.backendConfig
-     * @returns {string} the server url
-     */
-    resourcePath: 'http://localhost:8080/abk-backend/rest',
-    /**
-     * @ngdoc property
-     * @name abkConfig.backendConfig#costCentersPath
-     * @propertyOf abkConfig.backendConfig
-     * @returns {string} the cost-centers server url
-     */
-    costCentersPath: 'http://localhost:3002',
-    /**
-     * @ngdoc property
-     * @name abkConfig.backendConfig#transactionsPath
-     * @propertyOf abkConfig.backendConfig
-     * @returns {string} the transaction server url
-     */
-    transactionsPath: 'http://localhost:3003',
-    /**
-     * @ngdoc property
-     * @name abkConfig.backendConfig#adminPath
-     * @propertyOf abkConfig.backendConfig
-     * @returns {string} the admin server url
-     */
-    adminPath:'http://localhost:3000',
-    /**
-     * @ngdoc property
-     * @name abkConfig.backendConfig#uploadPath
-     * @propertyOf abkConfig.backendConfig
-     * @returns {string} the server url where uploads should be posted
-     */
-    uploadPath: 'http://localhost:3004/upload'
-});
+///**
+// * @ngdoc service
+// * @name abkConfig.backendConfig
+// * @description
+// * holds the backend configuration items
+// */
+//angular.module('abkConfig').constant('backendConfig', {
+//    /**
+//     * @ngdoc property
+//     * @name abkConfig.backendConfig#costCentersPath
+//     * @propertyOf abkConfig.backendConfig
+//     * @returns {string} the cost-centers server url
+//     */
+//    costCentersPath: 'http://localhost:3002',
+//    /**
+//     * @ngdoc property
+//     * @name abkConfig.backendConfig#transactionsPath
+//     * @propertyOf abkConfig.backendConfig
+//     * @returns {string} the transaction server url
+//     */
+//    transactionsPath: 'http://localhost:3003',
+//    /**
+//     * @ngdoc property
+//     * @name abkConfig.backendConfig#userPath
+//     * @propertyOf abkConfig.backendConfig
+//     * @returns {string} the user server url
+//     */
+//    userPath: 'http://localhost:3005',
+//    /**
+//     * @ngdoc property
+//     * @name abkConfig.backendConfig#adminPath
+//     * @propertyOf abkConfig.backendConfig
+//     * @returns {string} the admin server url
+//     */
+//    adminPath:'http://localhost:3000',
+//    /**
+//     * @ngdoc property
+//     * @name abkConfig.backendConfig#uploadPath
+//     * @propertyOf abkConfig.backendConfig
+//     * @returns {string} the server url where uploads should be posted
+//     */
+//    uploadPath: 'http://localhost:3004/upload'
+//});
+
+
+// Import variables if present (from env.js)
+if(window){  
+    angular.module('abkConfig').constant('backendConfig',window.__env);
+}
+
 
 

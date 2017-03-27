@@ -11,7 +11,7 @@
   } ],
   "schemes" : [ "http" ],
   "paths" : {
-    "/admin/csvreader" : {
+    "/csvreader" : {
       "get" : {
         "tags" : [ "Admin resources" ],
         "summary" : "Get current configured JavaScript CSV reader",

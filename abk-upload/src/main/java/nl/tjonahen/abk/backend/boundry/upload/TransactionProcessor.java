@@ -19,6 +19,7 @@ package nl.tjonahen.abk.backend.boundry.upload;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import nl.tjonahen.abk.backend.entity.CsvReader;
 import nl.tjonahen.abk.backend.entity.Fintransactie;
@@ -55,12 +56,13 @@ public class TransactionProcessor {
     public void process(final Fintransactie trans) {
         if (isExisting(trans)) {
             final Rekening rekening = bepaalRekening(trans);
-            entityManager.getTransaction().begin();
+            final EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
             entityManager.persist(trans);
             trans.setAccountRekening(rekening);
             entityManager.persist(rekening);
             entityManager.flush();
-            entityManager.getTransaction().commit();
+            transaction.commit();
         } else {
             LOGGER.log(Level.INFO, "Skipping existing Transaction {0} {1} {2}", new Object[]{trans.getDatum(), trans.getBijaf(), trans.getBedrag()});
         }

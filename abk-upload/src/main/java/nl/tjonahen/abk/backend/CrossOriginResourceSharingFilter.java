@@ -36,11 +36,6 @@ public class CrossOriginResourceSharingFilter implements Filter {
     private FilterConfig filterConfig = null;
 
 
-
-    public CrossOriginResourceSharingFilter() {
-    }
-
-
     /**
      *
      * @param request The servlet request we are processing
@@ -56,7 +51,9 @@ public class CrossOriginResourceSharingFilter implements Filter {
 
         ((HttpServletResponse)response).addHeader("Access-Control-Allow-Origin", "*");
         ((HttpServletResponse)response).addHeader("Access-Control-Allow-Methods", "OPTIONS, GET, POST, PUT, DELETE");
-        ((HttpServletResponse)response).addHeader("Access-Control-Allow-Headers", "Content-Type");
+        ((HttpServletResponse)response).addHeader("Access-Control-Allow-Headers", "Content-Type, Accept, Authorization");
+        ((HttpServletResponse)response).addHeader("Access-Control-Expose-Headers", "Authorization");
+        
 
     }
 

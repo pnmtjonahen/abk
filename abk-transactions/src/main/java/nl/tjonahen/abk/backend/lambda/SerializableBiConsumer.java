@@ -23,6 +23,6 @@ import java.util.function.BiConsumer;
  *
  * @author Philippe Tjon - A - Hen, philippe@tjonahen.nl
  */
-public interface SerializableBiConsumer<T, U> extends BiConsumer<T, U>, Serializable{
+public interface SerializableBiConsumer<T, U> extends BiConsumer<T, U>, Serializable {
     
 }

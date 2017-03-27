@@ -35,9 +35,14 @@ public abstract class AbstractAbkApplication extends Application {
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(getClass().getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        resources.add(nl.tjonahen.abk.backend.CrossOriginResourceSharingFilter.class);
-        resources.add(nl.tjonahen.abk.backend.HttpHeaderLoggingFilter.class);
-        resources.add(nl.tjonahen.abk.backend.UnhandledExceptionMapper.class);
+        resources.add(nl.tjonahen.rs.logging.LoggingRequestFilter.class);
+        resources.add(nl.tjonahen.abk.backend.security.CheckTokenRequestFilter.class);
+        
+        resources.add(nl.tjonahen.abk.backend.security.ResetTokenResponseFilter.class);
+        resources.add(nl.tjonahen.rs.cors.CrossOriginResourceSharingFilter.class);
+        resources.add(nl.tjonahen.rs.error.UnhandledExceptionMapper.class);
+        resources.add(nl.tjonahen.rs.logging.LoggingResponseFilter.class);
+        
 
         addRestResourceClasses(resources);
 

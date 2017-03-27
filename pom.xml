@@ -19,7 +19,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <kumuluzee.version>2.0.0</kumuluzee.version>
+        <kumuluzee.version>2.1.0-SNAPSHOT</kumuluzee.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -75,23 +75,40 @@
                 <artifactId>swagger-annotations</artifactId>
                 <version>1.5.3-M1</version>
             </dependency>
+            <dependency>
+                <groupId>nl.tjonahen</groupId>
+                <artifactId>cdi-support</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>3.1.0</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>nl.tjonahen</groupId>
+                <artifactId>support</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+                <scope>test</scope>
+            </dependency>
 
             <dependency>
                 <groupId>org.apache.derby</groupId>
                 <artifactId>derbyclient</artifactId>
-                <version>10.12.1.1</version>
+                <version>10.13.1.1</version>
             </dependency>
             <dependency>
                 <groupId>org.mockito</groupId>
                 <artifactId>mockito-all</artifactId>
-                <version>1.9.5</version>
+                <version>1.10.19</version>
                 <scope>test</scope>
             </dependency>
 
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
-                <version>4.10</version>
+                <version>4.12</version>
                 <scope>test</scope>
             </dependency>
 
@@ -213,6 +230,7 @@
         <module>abk-common</module>
         <module>abk-transactions</module>
         <module>abk-upload</module>
+        <module>abk-user</module>
         <module>abk-client</module>
     </modules>
 

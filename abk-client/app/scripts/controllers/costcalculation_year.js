@@ -25,6 +25,7 @@
      * Controller of the abkClientApp
      */
     angular.module('abkClientApp').controller("CostCalculationYearController", costCalculationYearController);
+    
     var buildDataRow = function () {
         var data = [];
         for (var i = 0; i < 12; i++) {
@@ -125,14 +126,9 @@
     }
     ;
 
-    var retrieveData = function ($q, that, transactionsService, costCentersService) {
-        $q.all([transactionsService.get({q: 'date=[' + that.range.start.toJSON() + ' ' + that.range.end.toJSON() + ']', limit: 9999,
-                fields: 'date,debitCreditIndicator,amount,description,contraAccountName'}).$promise,
-            costCentersService.get({expand: 3}).$promise]).then(processResult.bind(null, that));
-    };
 
 
-    function costCalculationYearController($q, currentDate, transactionsService, costCentersService) {
+    function costCalculationYearController($q, currentDate, transactionsService, costCentersService, userCheckService) {
 
         this.range = currentDate.rangeYear();
         this.data = undefined;
@@ -145,28 +141,35 @@
         this.current;
 
         var that = this;
+        var retrieveData = function () {
+            userCheckService.check().$promise.then(function () {
+                $q.all([transactionsService.get({q: 'date=[' + that.range.start.toJSON() + ' ' + that.range.end.toJSON() + ']', limit: 9999,
+                        fields: 'date,debitCreditIndicator,amount,description,contraAccountName'}).$promise,
+                    costCentersService.get({expand: 3}).$promise]).then(processResult.bind(null, that));
+            });
+        };
 
         init(that);
-        retrieveData($q, that, transactionsService, costCentersService);
+        retrieveData();
 
 
         this.previous = function () {
             that.range.previous();
             init(that);
-            retrieveData($q, that, transactionsService, costCentersService);
+            retrieveData();
         };
 
         this.next = function () {
             that.range.next();
             init(that);
-            retrieveData($q, that, transactionsService, costCentersService);
+            retrieveData();
         };
 
 
 
         this.showRow = function (row) {
-            if (row.costcenter.parent !== undefined) {
-                if (that.current !== undefined) {
+            if (row.costcenter.parent) {
+                if (that.current) {
                     return that.current.id === row.costcenter.parent.id;
                 }
                 return false;

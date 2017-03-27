@@ -18,11 +18,11 @@
 
 angular.module('abkClientApp').service('loginModal', function (ngDialog) {
 
-
     return function () {
         var instance = ngDialog.openConfirm({
             templateUrl: "views/login.html",
-            controller: 'LoginController'
+            controller: 'LoginController',
+            controllerAs: 'LoginController'
         });
 
         return instance;
@@ -31,75 +31,89 @@ angular.module('abkClientApp').service('loginModal', function (ngDialog) {
 });
 
 
-angular.module('abkClientApp').controller('LoginController', function ($scope, $rootScope) {
-    function assignCurrentUser(user) {
-        $rootScope.currentUser = user;
-        return user;
-    }
+angular.module('abkClientApp').controller('LoginController', function ($scope, $rootScope, $localstorage, userLoginService) {
+    this.name = '';
+    this.password = '';
 
-  $scope.cancel = function() {
-      $scope.closeThisDialog();
-  };
+    var that = this;
 
-  $scope.submit = function () {
-      // call backend login method
-      assignCurrentUser({user:'name'});
-      $scope.confirm();
-  };
+
+    $scope.cancel = function () {
+        $scope.closeThisDialog();
+    };
+
+    $scope.submit = function () {
+        // call backend login method
+        var user = {'username': that.name, 'password': that.password};
+        userLoginService.login(user, function (data, status) {
+            console.log(data);
+
+            var token = status('Authorization');
+            if (token) {
+                user.token = token;
+                $localstorage.setObject("user", user);
+                $rootScope.currentUser = user;
+            }
+            $scope.confirm();
+        }, function (error) {
+            console.log(error);
+        });
+    };
 });
 
 
-angular.module('abkClientApp').run(function ($rootScope, $state, loginModal) {
-
-    $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-        var requireLogin = toState.data.requireLogin;
-
-        if (requireLogin && typeof $rootScope.currentUser === 'undefined') {
-            event.preventDefault();
-            loginModal().then(function () {
-                return $state.go(toState.name, toParams);
-            }, function () {
-                return $state.go('home');
-
-            });
-        }
-    });
-
-});
 
 angular.module('abkClientApp').config(function ($httpProvider) {
 
-  $httpProvider.interceptors.push(function ($timeout, $q, $injector) {
-    var loginModal, $http, $state;
+    $httpProvider.interceptors.push(function ($timeout, $q, $injector) {
+        var loginModal, $http, $state, ngDialog;
 
-    // this trick must be done so that we don't receive
-    // `Uncaught Error: [$injector:cdep] Circular dependency found`
-    $timeout(function () {
-      loginModal = $injector.get('loginModal');
-      $http = $injector.get('$http');
-      $state = $injector.get('$state');
+        // this trick must be done so that we don't receive
+        // `Uncaught Error: [$injector:cdep] Circular dependency found`
+        $timeout(function () {
+            loginModal = $injector.get('loginModal');
+            $http = $injector.get('$http');
+            $state = $injector.get('$state');
+            ngDialog = $injector.get('ngDialog');
+        });
+
+        return {
+            responseError: function (rejection) {
+                if (rejection.status !== 401) {
+                    return rejection;
+                }
+
+
+                var deferred = $q.defer();
+                loginModal()
+                        .then(function () {
+                            deferred.resolve($http(rejection.config));
+                        })
+                        .catch(function () {
+                            $state.go('home');
+                            deferred.reject(rejection);
+                        });
+
+                return deferred.promise;
+            }
+        };
     });
 
-    return {
-      responseError: function (rejection) {
-        if (rejection.status !== 401) {
-          return rejection;
-        }
+    // Injects an HTTP interceptor that replaces a "Bearer" authorization header
+// with the current Bearer token.
+    $httpProvider.interceptors.push(function ($localstorage) {
+        return {
+            request: function (config) {
+                var user = $localstorage.getObject('user');
+                if (user) {
+                    config.headers.Authorization = user.token;
+                }
+                return config;
+            }
+        };
+    });
 
-        var deferred = $q.defer();
-
-        loginModal()
-          .then(function () {
-            deferred.resolve( $http(rejection.config) );
-          })
-          .catch(function () {
-            $state.go('home');
-            deferred.reject(rejection);
-          });
-        return deferred.promise;
-      }
-    };
-  });
 
 });
+
 

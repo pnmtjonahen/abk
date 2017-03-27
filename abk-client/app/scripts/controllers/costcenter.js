@@ -73,8 +73,8 @@
         };
 
         this.showRow = function (row) {
-            if (row.parent !== undefined) {
-                if (that.current !== undefined) {
+            if (row.parent) {
+                if (that.current) {
                     return that.current.id === row.parent.id;
                 }
                 return false;

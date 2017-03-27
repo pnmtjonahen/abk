@@ -57,9 +57,20 @@ angular.module('abkServices').factory('csvReaderService', function($resource, ba
     });
 });
 
-angular.module('abkServices').factory('UsersApi', function($resource, backendConfig) {
-    return $resource(backendConfig.resourcePath + '/login', {}, {
-        login: {method: 'PUT', params: {}, isArray: true}
+angular.module('abkServices').factory('userLoginService', function($resource, backendConfig) {
+    return $resource(backendConfig.userPath + '/user/login', {}, {
+        login: {method: 'POST', params: {}, isArray: false}
+    });
+});
+angular.module('abkServices').factory('userCheckService', function($resource, backendConfig) {
+    return $resource(backendConfig.userPath + '/user/check', {}, {
+        check: {method: 'GET', params: {}, isArray: false}
+    });
+});
+
+angular.module('abkServices').factory('userCreateService', function($resource, backendConfig) {
+    return $resource(backendConfig.userPath + '/user/create', {}, {
+        create: {method: 'POST', params: {}, isArray: false}
     });
 });
 

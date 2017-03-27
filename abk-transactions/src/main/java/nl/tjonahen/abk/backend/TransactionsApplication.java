@@ -24,7 +24,7 @@ import javax.ws.rs.ApplicationPath;
  *
  * @author Philippe Tjon - A - Hen, philippe@tjonahen.nl
  */
-@ApplicationPath("/")
+@ApplicationPath("/transactions")
 public class TransactionsApplication extends AbstractAbkApplication {
 
     @Override

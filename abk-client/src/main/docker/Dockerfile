@@ -4,4 +4,6 @@
 FROM tjonahen/http-server
 MAINTAINER Philippe Tjon-A-Hen <philippe.tjonahen.nl>
 COPY maven/dist content
+#set environment variables 
+COPY docker_env.js content/env.js
 WORKDIR content

@@ -14,27 +14,48 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+(function () {
+    'use strict';
 
-angular.module('abkClientApp').controller("UploadController", function ($scope, FileUploader, backendConfig, uploadService) {
+    angular.module('abkClientApp').controller("UploadController", uploadController);
 
-   uploadService.get({}, function(data) {
-      console.info(data);
-   });
+    var getJwt = function ($localstorage) {
+        var user = $localstorage.getObject('user');
+        if (user) {
+            return user.token;
+        }
+        return "";
+    };
 
-   var uploader = $scope.uploader = new FileUploader({
-      url: backendConfig.uploadPath
-   });
+    function uploadController($scope, FileUploader, backendConfig, uploadService, userCheckService, $localstorage) {
 
-   // FILTERS
+        uploadService.get({}, function (data) {
+            console.info(data);
+        });
 
-   uploader.filters.push({
-      name: 'customFilter',
-      fn: function (item, options) {
-         return this.queue.length < 10;
-      }
-   });
+        var uploader = $scope.uploader = new FileUploader({
+            url: backendConfig.uploadPath,
+            headers: {
+                "Authorization" : getJwt($localstorage)
+            }
+        });
 
-   uploader.onErrorItem = function (fileItem, response, status, headers) {
-      console.info('onErrorItem', fileItem, response, status, headers);
-   };
-});
+        // FILTERS
+
+        uploader.filters.push({
+            name: 'customFilter',
+            fn: function (item, options) {
+                return this.queue.length < 10;
+            }
+        });
+
+        uploader.onErrorItem = function (fileItem, response, status, headers) {
+            console.info('onErrorItem', fileItem, response, status, headers);
+        };
+
+        userCheckService.check();
+
+    }
+    ;
+
+})();

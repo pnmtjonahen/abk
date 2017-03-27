@@ -312,12 +312,14 @@ d3Graph.directive('piGraph', ['$window',
 
                   path.append("title")
                        .text(function (d) {
-                          return d.size;
+                          return d.size !== undefined ? d.size.toFixed(2) : 0;
                        });
 
                   path.append("text")
                            .text(function(d) { return d.name;})
-                           .classed("label", true)
+//                           .classed("label", true)
+//                           .attr('font-family','Verdana')
+                           .attr('font-size','.8vw')
                            .attr("x", function(d) { return d.x; })
                            .attr("text-anchor", "middle")
                            // translate to the desired point and set the rotation
