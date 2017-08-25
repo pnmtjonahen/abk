@@ -14,106 +14,114 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-'use strict';
+(function () {
+    'use strict';
 
-angular.module('abkClientApp').service('loginModal', function (ngDialog) {
+    angular.module('abkClientApp').service('loginModal', loginModalService);
 
-    return function () {
-        var instance = ngDialog.openConfirm({
-            templateUrl: "views/login.html",
-            controller: 'LoginController',
-            controllerAs: 'LoginController'
-        });
+    function loginModalService(ngDialog) {
 
-        return instance;
-    };
+        return function () {
+            var instance = ngDialog.openConfirm({
+                templateUrl: "views/login.html",
+                controller: 'LoginController',
+                controllerAs: 'LoginController'
+            });
 
-});
-
-
-angular.module('abkClientApp').controller('LoginController', function ($scope, $rootScope, $localstorage, userLoginService) {
-    this.name = '';
-    this.password = '';
-
-    var that = this;
-
-
-    $scope.cancel = function () {
-        $scope.closeThisDialog();
-    };
-
-    $scope.submit = function () {
-        // call backend login method
-        var user = {'username': that.name, 'password': that.password};
-        userLoginService.login(user, function (data, status) {
-            console.log(data);
-
-            var token = status('Authorization');
-            if (token) {
-                user.token = token;
-                $localstorage.setObject("user", user);
-                $rootScope.currentUser = user;
-            }
-            $scope.confirm();
-        }, function (error) {
-            console.log(error);
-        });
-    };
-});
-
-
-
-angular.module('abkClientApp').config(function ($httpProvider) {
-
-    $httpProvider.interceptors.push(function ($timeout, $q, $injector) {
-        var loginModal, $http, $state, ngDialog;
-
-        // this trick must be done so that we don't receive
-        // `Uncaught Error: [$injector:cdep] Circular dependency found`
-        $timeout(function () {
-            loginModal = $injector.get('loginModal');
-            $http = $injector.get('$http');
-            $state = $injector.get('$state');
-            ngDialog = $injector.get('ngDialog');
-        });
-
-        return {
-            responseError: function (rejection) {
-                if (rejection.status !== 401) {
-                    return rejection;
-                }
-
-
-                var deferred = $q.defer();
-                loginModal()
-                        .then(function () {
-                            deferred.resolve($http(rejection.config));
-                        })
-                        .catch(function () {
-                            $state.go('home');
-                            deferred.reject(rejection);
-                        });
-
-                return deferred.promise;
-            }
+            return instance;
         };
-    });
 
-    // Injects an HTTP interceptor that replaces a "Bearer" authorization header
+    }
+    ;
+
+
+    angular.module('abkClientApp').controller('LoginController', LoginController);
+    
+    function LoginController($scope, $rootScope, $localstorage, userLoginService) {
+        this.name = '';
+        this.password = '';
+
+        var that = this;
+
+
+        $scope.cancel = function () {
+            $scope.closeThisDialog();
+        };
+
+        $scope.submit = function () {
+            // call backend login method
+            var user = {'username': that.name, 'password': that.password};
+            userLoginService.login(user, function (data, status) {
+                console.log(data);
+
+                var token = status('Authorization');
+                if (token) {
+                    user.token = token;
+                    $localstorage.setObject("user", user);
+                    $rootScope.currentUser = user;
+                }
+                $scope.confirm();
+            }, function (error) {
+                console.log(error);
+            });
+        };
+    }
+    ;
+
+
+
+    angular.module('abkClientApp').config(function ($httpProvider) {
+
+        $httpProvider.interceptors.push(function ($timeout, $q, $injector) {
+            var loginModal, $http, $state, ngDialog;
+
+            // this trick must be done so that we don't receive
+            // `Uncaught Error: [$injector:cdep] Circular dependency found`
+            $timeout(function () {
+                loginModal = $injector.get('loginModal');
+                $http = $injector.get('$http');
+                $state = $injector.get('$state');
+                ngDialog = $injector.get('ngDialog');
+            });
+
+            return {
+                responseError: function (rejection) {
+                    if (rejection.status !== 401) {
+                        return rejection;
+                    }
+
+
+                    var deferred = $q.defer();
+                    loginModal()
+                            .then(function () {
+                                deferred.resolve($http(rejection.config));
+                            })
+                            .catch(function () {
+                                $state.go('home');
+                                deferred.reject(rejection);
+                            });
+
+                    return deferred.promise;
+                }
+            };
+        });
+
+        // Injects an HTTP interceptor that replaces a "Bearer" authorization header
 // with the current Bearer token.
-    $httpProvider.interceptors.push(function ($localstorage) {
-        return {
-            request: function (config) {
-                var user = $localstorage.getObject('user');
-                if (user) {
-                    config.headers.Authorization = user.token;
+        $httpProvider.interceptors.push(function ($localstorage) {
+            return {
+                request: function (config) {
+                    var user = $localstorage.getObject('user');
+                    if (user) {
+                        config.headers.Authorization = user.token;
+                    }
+                    return config;
                 }
-                return config;
-            }
-        };
+            };
+        });
+
+
     });
 
 
-});
-
-
+})();

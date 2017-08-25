@@ -153,14 +153,7 @@
         that.totalUnAccounted = undefined;
 
     };
-    function retrieveData($q, that, transactionsService, costCentersService, userCheckService) {
-        userCheckService.check().$promise.then(function () {
-            $q.all([transactionsService.get({q: 'date=[' + that.range.start.toJSON() + ' ' + that.range.end.toJSON() + ']', limit: 9999,
-                    fields: 'date,debitCreditIndicator,amount,description,contraAccountName'}).$promise,
-                costCentersService.get({expand: 3}).$promise]).then(processResult.bind(null, that));
-        });
-    };
-    
+
     function costCalculationController($q, currentDate, transactionsService, costCentersService, userCheckService) {
         this.range = currentDate.range();
         this.lastDay = undefined;
@@ -174,9 +167,17 @@
 
         var that = this;
 
+        var retrieveData = function () {
+            userCheckService.check().$promise.then(function () {
+                $q.all([transactionsService.get({q: 'date=[' + that.range.start.toJSON() + ' ' + that.range.end.toJSON() + ']', limit: 9999,
+                        fields: 'date,debitCreditIndicator,amount,description,contraAccountName'}).$promise,
+                    costCentersService.get({expand: 3}).$promise]).then(processResult.bind(null, that));
+            });
+        };
+
 
         init(that);
-        retrieveData($q, that, transactionsService, costCentersService, userCheckService);
+        retrieveData();
 
         this.previous = function () {
             that.range.previous();
