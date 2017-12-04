@@ -45,7 +45,6 @@ public class ConvertCostCenter {
         if (kostenplaats.getParent() != null) {
             costCenter.setParent(convertReferenceOnly(kostenplaats.getParent()));
         }
-        
         if (currentExpand <= expand) {
             costCenter.setList(kostenplaats.getKostenplaatsCollection()
                     .stream()
@@ -60,7 +59,7 @@ public class ConvertCostCenter {
         currentExpand--;
         return costCenter;
     }
-    
+
     private static CostCenter convertReferenceOnly(Kostenplaats kostenplaats) {
         final CostCenter costCenter = new CostCenter();
         costCenter.setId(kostenplaats.getId());

@@ -68,6 +68,9 @@ public class Kostenplaats implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private Kostenplaats parent;
 
+    @OneToMany(mappedBy = "kostenplaats", fetch = FetchType.EAGER)
+    private Collection<Filter> filterCollection;
+    
     /**
      * 
      */
@@ -126,6 +129,15 @@ public class Kostenplaats implements Serializable {
         this.parent = parent;
     }
 
+    public Collection<Filter> getFilterCollection() {
+        return filterCollection;
+    }
+
+    public void setFilterCollection(Collection<Filter> filterCollection) {
+        this.filterCollection = filterCollection;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 0;

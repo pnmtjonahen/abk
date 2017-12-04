@@ -45,22 +45,23 @@ public class ConvertCostCenter {
         if (kostenplaats.getParent() != null) {
             costCenter.setParent(convertReferenceOnly(kostenplaats.getParent()));
         }
-        
-        if (currentExpand <= expand) {
-            costCenter.setList(kostenplaats.getKostenplaatsCollection()
-                    .stream()
-                    .map(this::convert)
-                    .collect(Collectors.toList()));
-        } else {
-            costCenter.setList(kostenplaats.getKostenplaatsCollection()
-                    .stream()
-                    .map(ConvertCostCenter::convertReferenceOnly)
-                    .collect(Collectors.toList()));
+        if (kostenplaats.getKostenplaatsCollection() != null) {
+            if (currentExpand <= expand) {
+                costCenter.setList(kostenplaats.getKostenplaatsCollection()
+                        .stream()
+                        .map(this::convert)
+                        .collect(Collectors.toList()));
+            } else {
+                costCenter.setList(kostenplaats.getKostenplaatsCollection()
+                        .stream()
+                        .map(ConvertCostCenter::convertReferenceOnly)
+                        .collect(Collectors.toList()));
+            }
         }
         currentExpand--;
         return costCenter;
     }
-    
+
     private static CostCenter convertReferenceOnly(Kostenplaats kostenplaats) {
         final CostCenter costCenter = new CostCenter();
         costCenter.setId(kostenplaats.getId());

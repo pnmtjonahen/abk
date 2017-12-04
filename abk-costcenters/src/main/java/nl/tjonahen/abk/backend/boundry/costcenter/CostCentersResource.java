@@ -21,10 +21,12 @@ import com.wordnik.swagger.annotations.ApiOperation;
 import com.wordnik.swagger.annotations.ApiParam;
 import com.wordnik.swagger.annotations.ApiResponse;
 import com.wordnik.swagger.annotations.ApiResponses;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
@@ -115,11 +117,12 @@ public class CostCentersResource {
     @Transactional
     @JwtSecured
     public Response post(List<CostCenter> costcenters) {
-//        entityManager.getTransaction().begin();
+        final EntityTransaction et = entityManager.getTransaction();
+        et.begin();
         nullIds(costcenters);
         removeAll();
         insertAll(costcenters);
-//        entityManager.getTransaction().commit();
+        et.commit();
 
         return Response.status(Response.Status.ACCEPTED).build();
     }
@@ -186,11 +189,12 @@ public class CostCentersResource {
 
     private CostCenter create(CostCenter costCenter) {
         final Kostenplaats newKostenplaats = newKostenplaats(costCenter);
-//        entityManager.getTransaction().begin();
+        final EntityTransaction et = entityManager.getTransaction();
+        et.begin();
         entityManager.persist(newKostenplaats);
         entityManager.flush();
         entityManager.refresh(newKostenplaats);
-//        entityManager.getTransaction().commit();
+        et.commit();
         return new ConvertCostCenter(1).convert(newKostenplaats);
     }
 
@@ -214,10 +218,11 @@ public class CostCentersResource {
         }
         current.setFilter(costCenter.getFilter());
         current.setNaam(costCenter.getName());
-//        entityManager.getTransaction().begin();
+        final EntityTransaction et = entityManager.getTransaction();
+        et.begin();
         entityManager.merge(current);
         entityManager.flush();
-//        entityManager.getTransaction().commit();
+        et.commit();
         return true;
     }
 
@@ -226,9 +231,11 @@ public class CostCentersResource {
         if (null == current) {
             return false;
         }
-//        entityManager.getTransaction().begin();
+        final EntityTransaction et = entityManager.getTransaction();
+
+        et.begin();
         entityManager.remove(current);
-//        entityManager.getTransaction().commit();
+        et.commit();
         return true;
     }
 
@@ -245,6 +252,7 @@ public class CostCentersResource {
         Kostenplaats current = new Kostenplaats();
         current.setFilter(costCenter.getFilter());
         current.setNaam(costCenter.getName());
+        current.setKostenplaatsCollection(new ArrayList<>());
         entityManager.persist(current);
         entityManager.flush();
 
@@ -258,11 +266,13 @@ public class CostCentersResource {
         current.setFilter(costCenter.getFilter());
         current.setNaam(costCenter.getName());
         current.setParent(parent);
+        current.setKostenplaatsCollection(new ArrayList<>());
+        parent.getKostenplaatsCollection().add(current);
         entityManager.persist(current);
         entityManager.flush();
 
         if (costCenter.getList() != null) {
-            costCenter.getList().stream().forEach(cc -> insertNewSub(current, cc) );
+            costCenter.getList().stream().forEach(cc -> insertNewSub(current, cc));
         }
 
     }
