@@ -88,6 +88,10 @@ public class Fintransactie implements Serializable {
     @Column(name = "hash", unique = true)
     private String hash;
 
+    @Size(max = 255)
+    @Column(name = "KOSTENPLAATS_NAAM")
+    private String kostenplaatsNaam;        
+
     /**
      * 
      */
@@ -197,6 +201,14 @@ public class Fintransactie implements Serializable {
 
     public void setHash(String hash) {
         this.hash = hash;
+    }
+
+    public String getKostenplaatsNaam() {
+        return kostenplaatsNaam;
+    }
+
+    public void setKostenplaatsNaam(String kostenplaatsNaam) {
+        this.kostenplaatsNaam = kostenplaatsNaam;
     }
 
     

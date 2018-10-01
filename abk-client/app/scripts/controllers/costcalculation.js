@@ -58,14 +58,20 @@
         /* Update day column per costcenter */
         that.data.forEach(function (c) {
             if (c.costcenter.filter &&
-                    (c.costcenter.filter.test(t.description) || c.costcenter.filter.test(t.contraAccountName))) {
+                    (c.costcenter.filter.test(t.description) 
+                    || c.costcenter.filter.test(t.contraAccountName)
+                    || c.costcenter.filter.test(t.contraAccountNumber)
+                    )) {
                 updateAmount(that, c.data, t);
 
             }
             if (c.costcenter.list) {
                 c.costcenter.list.forEach(function (sc) {
                     if (sc.filter &&
-                            (sc.filter.test(t.description) || sc.filter.test(t.contraAccountName))) {
+                            (sc.filter.test(t.description) 
+                            || sc.filter.test(t.contraAccountName)
+                            || sc.filter.test(t.contraAccountNumber)
+                            )) {
                         updateAmount(that, c.data, t);
                     }
                 });
@@ -170,7 +176,7 @@
         var retrieveData = function () {
             userCheckService.check().$promise.then(function () {
                 $q.all([transactionsService.get({q: 'date=[' + that.range.start.toJSON() + ' ' + that.range.end.toJSON() + ']', limit: 9999,
-                        fields: 'date,debitCreditIndicator,amount,description,contraAccountName'}).$promise,
+                        fields: 'date,debitCreditIndicator,amount,description,contraAccountName,contraAccountNumber'}).$promise,
                     costCentersService.get({expand: 3}).$promise]).then(processResult.bind(null, that));
             });
         };

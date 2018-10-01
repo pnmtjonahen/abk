@@ -91,7 +91,7 @@
         var retrieveData = function () {
             userCheckService.check().$promise.then(function () {
                 $q.all([transactionsService.get({q: 'date=[' + that.range.start.toJSON() + ' ' + that.range.end.toJSON() + ']', limit: 9999,
-                        fields: 'date,debitCreditIndicator,amount,description,contraAccountName', orderby: 'date desc'}).$promise,
+                        fields: 'date,debitCreditIndicator,amount,description,contraAccountName,contraAccountNumber', orderby: 'date desc'}).$promise,
                     costCentersService.get({expand: 3}).$promise]).then(processTransactionsAndCosteCenters);
             });
 

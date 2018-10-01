@@ -23,7 +23,8 @@
             <th>Date</th>
             <th>Amount</th>
             <th class="screentablet">Description</th>
-            <th>ContraAccountName</th>
+            <th>ContraAccount -name</th>
+            <th>number</th>
         </tr>
     </thead>
     <tbody ng-if="!transactionCtrl.showall">
@@ -32,6 +33,7 @@
             <td><amount data='t.amount'/></td>
             <td class="screentablet">{{t.description}}</td>
             <td>{{t.contraAccountName}}</td>
+            <td>{{t.contraAccountNumber}}</td>
         </tr>
     </tbody>
     <tbody ng-if="transactionCtrl.showall">
@@ -41,6 +43,7 @@
             <td ng-class="t.matched ? 'matched' : 'unmatched'"><amount data='t.amount'/></td>
             <td class="screentablet" ng-class="t.matched ? 'matched' : 'unmatched'">{{t.description}}</td>
             <td ng-class="t.matched ? 'matched' : 'unmatched'">{{t.contraAccountName}}</td>
+            <td ng-class="t.matched ? 'matched' : 'unmatched'">{{t.contraAccountNumber}}</td>
         </tr>
     </tbody>
 </table>

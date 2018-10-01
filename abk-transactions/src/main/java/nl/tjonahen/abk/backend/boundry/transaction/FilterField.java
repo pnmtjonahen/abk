@@ -45,7 +45,9 @@ public enum FilterField {
     DESCRIPTION((ft, t) -> ft.setDescription(t.getMededeling())),
     CODE((ft, t)  -> ft.setCode(t.getCode())),
     MUTATIESOORT((ft, t) -> ft.setMutatiesoort(t.getMutatiesoort())),
-    CONTRAACCOUNTNUMBER((ft, t) -> ft.setContraAccountNumber(t.getTegenrekeningrekening()));
+    CONTRAACCOUNTNUMBER((ft, t) -> ft.setContraAccountNumber(t.getTegenrekeningrekening())),
+    COSTCENTERNAME((ft, t) -> ft.setCostCenterName(t.getKostenplaatsNaam()));
+
 
     private final SerializableBiConsumer<FinancialTransaction, Fintransactie> consumer;
     private FilterField(SerializableBiConsumer<FinancialTransaction, Fintransactie> consumer) {

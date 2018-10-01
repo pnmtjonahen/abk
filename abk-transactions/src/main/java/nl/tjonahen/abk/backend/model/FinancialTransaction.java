@@ -51,6 +51,8 @@ public class FinancialTransaction {
     private String contraAccountName;
     @XmlElement(name = "contraAccountNumber", required = false)
     private String contraAccountNumber;
+    @XmlElement(name = "costCenterName", required = false)
+    private String costCenterName;
 
     public Meta getMeta() {
         return meta;
@@ -150,5 +152,13 @@ public class FinancialTransaction {
     public void setContraAccountNumber(String contraAccountNumber) {
         this.contraAccountNumber = contraAccountNumber;
     }
+    public String getCostCenterName() {
+        return costCenterName;
+    }
+
+    public void setCostCenterName(String costCenterName) {
+        this.costCenterName = costCenterName;
+    }
+
 
 }
